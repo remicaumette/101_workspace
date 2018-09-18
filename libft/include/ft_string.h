@@ -1,0 +1,21 @@
+#ifndef FT_STRING_H
+# define FT_STRING_H
+# include "ft_std.h"
+
+void	ft_strclr(char *s);
+int		ft_strcmp(const char *s1, const char *s2);
+void	ft_strdel(char **as);
+int		ft_strequ(char const *s1, char const *s2);
+void	ft_striter(char *s, void (*f)(char *));
+void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+size_t	ft_strlen(const char *s);
+char	*ft_strmap(char const *s, char (*f)(char));
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strnequ(char const *s1, char const *s2, size_t n);
+char	*ft_strnew(size_t size);
+char	*ft_strsub(char const *s, unsigned int start, size_t len);
+char	*ft_strtrim(char const *s);
+char	*ft_strcpy(char * dst, const char * src);
+char	*ft_strdup(const char *s1);
+#endif

@@ -1,15 +1,14 @@
 int	ft_sqrt(int nb)
 {
-	int n;
+	int sol;
 
-	if (nb <= 1)
-		return (nb == 1);
-	n = 2;
-	while (n < nb)
-		if (nb % n == 0)
-			return (n);
-		else
-			n >>= 2;
-	return (0);
+	if (nb <= 0)
+		return (0);
+	sol = 1;
+	while (sol * sol < nb)
+		sol++;
+	if (sol * sol == nb)
+		return (sol);
+	else
+		return (0);
 }
-
