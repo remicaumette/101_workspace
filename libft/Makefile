@@ -23,6 +23,7 @@ SOURCES=\
 	src/std/ft_memcpy.c				\
 	src/std/ft_memdel.c				\
 	src/std/ft_memset.c				\
+	src/string/ft_strcat.c			\
 	src/string/ft_strclr.c			\
 	src/string/ft_strcmp.c			\
 	src/string/ft_strcpy.c			\
@@ -31,10 +32,13 @@ SOURCES=\
 	src/string/ft_strequ.c			\
 	src/string/ft_striter.c			\
 	src/string/ft_striteri.c		\
+	src/string/ft_strlcat.c			\
 	src/string/ft_strlen.c			\
 	src/string/ft_strmap.c			\
 	src/string/ft_strmapi.c			\
+	src/string/ft_strncat.c			\
 	src/string/ft_strncmp.c			\
+	src/string/ft_strncpy.c			\
 	src/string/ft_strnequ.c			\
 	src/string/ft_strnew.c			\
 	src/string/ft_strsub.c			\

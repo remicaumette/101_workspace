@@ -9,10 +9,10 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	s1 = dst;
 	s2 = src;
 	i = 0;
-	while (s2[i] && i < n)
+	while (s2[i] != c && i < n)
 	{
 		s1[i] = s2[i];
 		i++;
 	}
-	return (i == n ? NULL : s2[i]);
+	return (i == n ? NULL : (dst + i));
 }
