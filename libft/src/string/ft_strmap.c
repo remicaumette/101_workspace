@@ -2,11 +2,13 @@
 
 char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char *tmp;
+	char	*tmp;
+	int		i;
 
 	if ((tmp = ft_strnew(ft_strlen(s))) == NULL)
 		return (NULL);
+	i = 0;
 	while (*s)
-		*tmp++ = f(*s++);
+		tmp[i++] = f(*s++);
 	return (tmp);
 }

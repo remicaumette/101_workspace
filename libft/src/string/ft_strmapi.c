@@ -5,10 +5,10 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char			*tmp;
 	unsigned int	i;
 
-	i = 0;
 	if ((tmp = ft_strnew(ft_strlen(s))) == NULL)
 		return (NULL);
-	while (*s)
-		*tmp++ = f(*s++, i++);
+	i = 0;
+	while (*s && ++i)
+		tmp[i - 1] = f(i - 1, *s++);
 	return (tmp);
 }

@@ -19,4 +19,5 @@ int main(void)
 	printf("%s\n", s2);
 	printf("%lu\n", ft_strlcat(s2, "hello", 3));
 	printf("%s\n", s2);
+	return (0);
 }

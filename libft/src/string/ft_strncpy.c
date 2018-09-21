@@ -7,7 +7,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 	i = 0;
 	while (*src && i < len)
 		dst[i++] = *src++;
-	while (i < len)
+	while (i < len + 1)
 		dst[i++] = 0;
 	return (dst);
 }
