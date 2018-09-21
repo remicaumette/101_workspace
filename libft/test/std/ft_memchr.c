@@ -15,13 +15,7 @@ int	main(void)
 {
 	char *s1 = ft_strdup("helloworld");
 	char *s2 = ft_strdup("helloworld");
-	printf("%s = %s\n", ft_memccpy(s1, "despacito 2", ' ', 9), memccpy(s2, "despacito 2", ' ', 9));
-	check_mem(s1, s2, 11);
-
-	char *s3 = ft_strdup("helloworld123");
-	char *s4 = ft_strdup("helloworld123");
-	printf("%s = %s\n", ft_memccpy(s3, "despacito 2", ' ', 14), memccpy(s4, "despacito 2", ' ', 14));
-	check_mem(s3, s4, 11);
-
+	printf("%s = %s\n", ft_memchr(s1, 'o', 11), memchr(s2, 'o', 11));
+	printf("%s = %s\n", ft_memchr(s1, 'a', 11), memchr(s2, 'a', 11));
 	return (0);
 }

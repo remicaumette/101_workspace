@@ -2,8 +2,8 @@
 
 int	ft_atoi(const char *s)
 {
-	int r;
-	int n;
+	int	r;
+	int	n;
 
 	r = 0;
 	while ((*s >= 9 && *s <= 13) || *s == 32)
