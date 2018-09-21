@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include "ft_std.h"
+#include "ft_string.h"
+
+static int	arr_size(char const *s, char c)
+{
+	int	i;
+	int	locked;
+	int	size;
+
+	i = -1;
+	locked = 1;
+	size = 1;
+	while (s[++i])
+		if (s[i] == c && !locked && ++size)
+			locked = 1;
+		else if (s[i] != c && locked)
+			locked = 0;
+	return (size);
+}
+
+static int	str_length(char const *s, char c)
+{
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
+}
+
+char		**ft_strsplit(char const *s, char c)
+{
+	char	**v;
+	int		locked;
+	int		index;
+	int		curr;
+
+	if ((v = (char **) ft_memalloc(sizeof(*v) * arr_size(s, c))) == NULL)
+		return (NULL);
+	locked = 1;
+	index = 0;
+	curr = -1;
+	while (s[++curr])
+		if (s[curr] == c && !locked && ++index)
+			locked = 1;
+		else if (s[curr] != c && locked)
+		{
+			v[index] = ft_strsub(s, curr, str_length(s + curr, c));
+			if (v[index] == NULL)
+				return (NULL);
+			locked = 0;
+		}
+	v[index] = 0;
+	return (v);
+}

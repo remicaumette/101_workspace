@@ -47,7 +47,10 @@ SOURCES=\
 	src/string/ft_strncpy.c			\
 	src/string/ft_strnequ.c			\
 	src/string/ft_strnew.c			\
+	src/string/ft_strnstr.c			\
 	src/string/ft_strrchr.c			\
+	src/string/ft_strsplit.c		\
+	src/string/ft_strstr.c			\
 	src/string/ft_strsub.c			\
 	src/string/ft_strtrim.c			\
 	src/type/ft_isalnum.c			\
