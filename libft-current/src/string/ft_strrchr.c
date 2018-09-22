@@ -2,8 +2,8 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		length;
-	int		curr;
+	int	length;
+	int	curr;
 
 	length = ft_strlen(s);
 	curr = length + 1;
