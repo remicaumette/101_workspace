@@ -1,4 +1,4 @@
-NAME=display_file
+NAME=ft_display_file
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -Iinclude
 SOURCES=src/main.c

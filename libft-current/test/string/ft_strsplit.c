@@ -4,7 +4,7 @@
 
 int		main(void)
 {
-	char **v = ft_strsplit("*salut*les***etudiants*", '*');
+	char **v = ft_strsplit("                       w", ' ');
 	while (*v)
 		printf("%s\n", *v++);
 	return (0);

@@ -10,4 +10,3 @@ int		main(void)
 	ft_swap(&a, &b);
 	printf("a: %d b: %d\n", a, b);
 }
-

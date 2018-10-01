@@ -9,4 +9,3 @@ int		main(void)
 	ft_ft(&a);
 	printf("%d\n", a);
 }
-
