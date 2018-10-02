@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:41:33 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 17:38:45 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 15:06:13 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,8 @@ char		*ft_strtrim(char const *s)
 	int	offset;
 	int	limit;
 
+	if (!s)
+		return (NULL);
 	offset = 0;
 	limit = ft_strlen(s) - 1;
 	while (s[offset] && is_whitespace(s[offset]))

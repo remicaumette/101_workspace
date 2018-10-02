@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:41:04 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:06:46 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 16:32:00 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,8 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 	while (++j < len)
 	{
 		i = 0;
+		if (!s1[j])
+			return (NULL);
 		while (s2[i] && j + i < len)
 		{
 			if (s2[i] != s1[j + i])

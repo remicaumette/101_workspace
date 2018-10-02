@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:41:30 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:07:01 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 14:48:02 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	char			*tmp;
 
 	i = -1;
-	if ((tmp = ft_strnew(len)) == NULL)
+	if (!s || (tmp = ft_strnew(len)) == NULL)
 		return (NULL);
 	while (++i < len)
 		tmp[i] = s[start + i];

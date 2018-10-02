@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:39:18 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:05:52 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 14:43:00 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,5 +15,6 @@
 
 void	ft_strclr(char *s)
 {
-	ft_bzero(s, ft_strlen(s));
+	if (s)
+		ft_bzero(s, ft_strlen(s));
 }

@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:39:31 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:06:03 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 14:42:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,5 +15,6 @@
 
 void	ft_strdel(char **as)
 {
-	ft_memdel((void *)as);
+	if (as && *as)
+		ft_memdel((void *)as);
 }

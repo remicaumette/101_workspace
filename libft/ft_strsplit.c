@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:41:17 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 18:32:30 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 15:01:55 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ char		**ft_strsplit(char const *s, char c)
 	int		index;
 	int		curr;
 
-	if ((v = (char **)ft_memalloc(sizeof(*v) * arr_size(s, c))) == NULL)
+	if (!s || (v = (char **)ft_memalloc(sizeof(*v) * arr_size(s, c))) == NULL)
 		return (NULL);
 	locked = 1;
 	index = 0;

@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:40:07 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:06:08 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 15:04:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,5 +15,7 @@
 
 int	ft_strequ(char const *s1, char const *s2)
 {
+	if (!s1 || !s2)
+		return (0);
 	return (ft_strcmp(s1, s2) == 0);
 }
