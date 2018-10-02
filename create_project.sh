@@ -11,11 +11,11 @@ fi
 echo "Creating structure..."
 mkdir -p $1/{src,include}
 echo "Copying libft..."
-cp -r libft-current $1/libft
+cp -r libft $1/libft
 echo "Cleanup libft..."
 rm -rf $1/libft/{test,.gitignore,auteur}
 
-echo "$1/Makefile"
+echo "Generating $1/Makefile..."
 cat <<EOF >$1/Makefile
 NAME=$1
 CC=gcc
@@ -41,7 +41,7 @@ fclean: clean
 re: fclean all
 EOF
 
-echo "$1/include/$1.h"
+echo "Generating $1/include/$1.h..."
 cat <<EOF >$1/include/$1.h
 #ifndef $(echo $1 | tr '[a-z]' '[A-Z]')_H
 # define $(echo $1 | tr '[a-z]' '[A-Z]')_H
@@ -49,7 +49,7 @@ cat <<EOF >$1/include/$1.h
 #endif
 EOF
 
-echo "$1/src/main.c"
+echo "Generating $1/src/main.c..."
 cat <<EOF >$1/src/main.c
 #include "$1.h"
 
@@ -59,12 +59,12 @@ int	main(void)
 }
 EOF
 
-echo "$1/.gitignore"
+echo "Generating $1/.gitignore..."
 cat <<EOF >$1/.gitignore
 $1
 EOF
 
-echo "$1/auteur"
+echo "Generating $1/auteur..."
 cat <<EOF >$1/auteur
 rcaumett
 EOF

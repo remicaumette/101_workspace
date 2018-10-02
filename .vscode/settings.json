@@ -4,5 +4,8 @@
     "editor.renderWhitespace": "all",
     "files.insertFinalNewline": false,
     "editor.formatOnPaste": false,
-    "editor.insertSpaces": false,
+	"editor.insertSpaces": false,
+	"files.associations": {
+		"ft_container.h": "c"
+	},
 }

@@ -15,14 +15,17 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	offset;
-	char	*ptr;
+	size_t	dst_length;
+	size_t	src_length;
+	size_t	curr;
 
-	offset = ft_strlen(dst);
-	if (dstsize <= offset + ft_strlen(src))
-		return (dstsize + 1);
-	ptr = dst;
-	while (*src)
-		*(ptr++ + offset) = *src++;
-	return (ft_strlen(dst));
+	dst_length = ft_strlen(dst);
+	src_length = ft_strlen(src);
+	if (dstsize <= dst_length)
+		return (src_length + dstsize);
+	curr = dst_length;
+	while (*src && curr < dstsize - 1)
+		*(dst + curr++) = *src++;
+	*(dst + curr) = 0;
+	return (dst_length + src_length);
 }

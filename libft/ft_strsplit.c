@@ -23,9 +23,9 @@ static int	arr_size(char const *s, char c)
 	locked = 1;
 	size = 1;
 	while (s[++i])
-		if (s[i] == c && !locked && ++size)
+		if (s[i] == c)
 			locked = 1;
-		else if (s[i] != c && locked)
+		else if (s[i] != c && locked && ++size)
 			locked = 0;
 	return (size);
 }
@@ -53,12 +53,12 @@ char		**ft_strsplit(char const *s, char c)
 	index = 0;
 	curr = -1;
 	while (s[++curr])
-		if (s[curr] == c && !locked && ++index)
+		if (s[curr] == c)
 			locked = 1;
 		else if (s[curr] != c && locked)
 		{
 			v[index] = ft_strsub(s, curr, str_size(s + curr, c));
-			if (v[index] == NULL)
+			if (v[index++] == NULL)
 				return (NULL);
 			locked = 0;
 		}

@@ -19,6 +19,8 @@ char	*ft_strstr(const char *s1, const char *s2)
 	int length;
 
 	length = ft_strlen(s2);
+	if (!length)
+		return ((char *)s1);
 	s1--;
 	while (*++s1)
 	{
