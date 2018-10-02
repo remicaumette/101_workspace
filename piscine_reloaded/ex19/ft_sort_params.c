@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:10:28 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 14:10:30 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 20:35:18 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,9 +32,7 @@ void	ft_sort_params(int argc, char **argv)
 	char	*buf;
 
 	i = argc;
-	while (--i > 0)
-	{
-		j = 0;
+	while (--i > 0 && (j = 0) == 0)
 		while (++j < i)
 			if (ft_strcmp(argv[i], argv[j]) < 0)
 			{
@@ -42,7 +40,6 @@ void	ft_sort_params(int argc, char **argv)
 				argv[i] = argv[j];
 				argv[j] = buf;
 			}
-	}
 }
 
 int		main(int argc, char **argv)
