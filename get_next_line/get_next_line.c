@@ -1,6 +1,5 @@
-#include "libft.h"
 #include "get_next_line.h"
-
+/*
 static t_file	*file_add(t_file **begin, int fd)
 {
 	t_file *file;
@@ -25,52 +24,61 @@ static t_file	*file_find_or_create(t_file **begin, const int fd)
 		else
 			file = file->next;
 	return (file_add(begin, fd));
-}
+}*/
 // free impossible car deplacement ptr
-static int		append(char **s1, char *s2)
+static int		append(char **s1, char *s2, int *size, int readed)
 {
-	char *new;
+	char	*new;
+	int		i;
 
-	if (*s1)
-		new = ft_strjoin(*s1, s2);
-	else
-		new = ft_strdup(s2);
-	if (new == NULL)
+	if ((new = ft_memalloc(*size + readed)) == NULL)
 		return (0);
+	if (s1 && *s1)
+		ft_memcpy(new, *s1, *size);
+	i = -1;
+	while (++i < readed)
+		new[i + *size] = s2[i];
+	*size += i;
+	if (s1 && *s1)
+		ft_strdel(s1);
 	*s1 = new;
 	return (1);
 }
-#include <stdio.h>
 
 int				get_next_line(const int fd, char **line)
 {
 	static char	*content = NULL;
 	static int	size = 0;
-	char			buf[BUFF_SIZE];
-	int				readed;
+	char		buf[BUFF_SIZE];
+	int			readed;
 	char		*tmp;
+	int			run;
 	int	i;
 
 	i = -1;
-	while ((readed = read(fd, buf, BUFF_SIZE)) > 0)
+	run = 1;
+	while (run && (readed = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		size += readed;
-		if ((tmp = (char *)ft_memalloc(size)) == NULL)
+		if (append(&content, buf, &size, readed) == 0)
 			return (-1);
-		if (content)
-			ft_strdel(&content);
-		content = tmp;
 		while (++i < size)
 			if (content[i] == '\n')
+			{
+				run = 0;
 				break ;
+			}
 	}
-	if (readed == 0 && size <= 0)
+	if (readed == -1)
+		return (-1);
+	if (size <= 0)
 		return (0);
-	printf("%d\n", i);
-	printf("%s\n", content);
+	if (line && *line)
+		ft_strdel(line);
 	*line = ft_strsub(content, 0, i);
+	tmp = ft_strsub(content, i + 1, size);
 	size -= (i + 1);
-	content += (i + 1);
+	ft_strdel(&content);
+	content = tmp;
 	return (1);
 }
 

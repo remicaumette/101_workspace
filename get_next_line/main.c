@@ -11,6 +11,6 @@ int	main(int argc, char **argv)
 		int fd = open(argv[1], O_RDONLY);
 		int i;
 		while ((i = get_next_line(fd, &str)) > 0)
-			printf("%s\n", str);
+			printf("%d %s\n", i, str);
 	}
 }
