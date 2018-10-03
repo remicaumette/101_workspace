@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   ft_stack_peek.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 19:51:42 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 16:04:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/03 17:45:43 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/03 17:45:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 8
-# include "libft.h"
+#include "libft.h"
 
-typedef struct	s_file
+void	*ft_stack_peek(t_stack *begin)
 {
-	int				fd;
-	char			*content;
-	int				size;
-	struct s_file	*next;
-}				t_file;
-
-int				get_next_line(const int fd, char **line);
-#endif
+	return (begin->content);
+}

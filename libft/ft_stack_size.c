@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   ft_stack_size.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 19:51:42 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 16:04:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/03 17:45:37 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/03 18:10:22 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 8
-# include "libft.h"
+#include "libft.h"
 
-typedef struct	s_file
+int	ft_stack_size(t_stack *stack)
 {
-	int				fd;
-	char			*content;
-	int				size;
-	struct s_file	*next;
-}				t_file;
+	int i;
 
-int				get_next_line(const int fd, char **line);
-#endif
+	i = 0;
+	while (stack && ++i)
+		stack = stack->next;
+	return (i);
+}

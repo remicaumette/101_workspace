@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 14:29:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 16:21:49 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 18:11:59 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,12 @@ typedef struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct	s_stack
+{
+	void			*content;
+	struct s_stack	*next;
+}				t_stack;
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
@@ -82,4 +88,11 @@ int				ft_isascii(int c);
 int				ft_isprint(int c);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
+t_stack			*ft_stack_push(t_stack **begin, void *content);
+void			*ft_stack_pop(t_stack **begin);
+void			*ft_stack_peek(t_stack *begin);
+void			ft_stack_destroy(t_stack **begin, void (*del)(void *));
+int				ft_stack_size(t_stack *stack);
+void			ft_print_memory(void *mem, size_t len);
+void			ft_print_memory_fd(void *mem, size_t len, int fd);
 #endif

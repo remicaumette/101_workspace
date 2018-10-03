@@ -6,6 +6,7 @@
     "editor.formatOnPaste": false,
 	"editor.insertSpaces": false,
 	"files.associations": {
-		"ft_container.h": "c"
+		"ft_container.h": "c",
+		"libft.h": "c"
 	},
 }
