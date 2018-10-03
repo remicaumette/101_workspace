@@ -13,8 +13,15 @@
 
 #ifndef GET_NEXT_LINE
 # define GET_NEXT_LINE
-# define BUFF_SIZE 100
+# define BUFF_SIZE 8
 # include <unistd.h>
+
+typedef struct	s_file {
+	int				fd;
+	unsigned char	status;
+	char			*content;
+	struct s_file	*next;
+}				t_file;
 
 int	get_next_line(const int fd, char **line);
 #endif

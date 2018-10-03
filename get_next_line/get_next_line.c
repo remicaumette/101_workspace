@@ -1,16 +1,38 @@
 #include "libft.h"
 #include "get_next_line.h"
 
-static int	append(char **s1, char *s2)
+static t_file	*file_add(t_file **begin, int fd)
+{
+	t_file *file;
+
+	if ((file = (t_file *)ft_memalloc(sizeof(t_file))) == NULL)
+		return (NULL);
+	file->fd = fd;
+	file->status = 0;
+	file->content = NULL;
+	file->next = *begin;
+	return (*begin = file);
+}
+
+static t_file	*file_find_or_create(t_file **begin, const int fd)
+{
+	t_file *file;
+	
+	file = *begin;
+	while (file)
+		if (file->fd == fd)
+			return (file);
+		else
+			file = file->next;
+	return (file_add(begin, fd));
+}
+// free impossible car deplacement ptr
+static int		append(char **s1, char *s2)
 {
 	char *new;
 
 	if (*s1)
-	{
 		new = ft_strjoin(*s1, s2);
-		//if (s1 && *s1)
-		//	free(*s1);
-	}
 	else
 		new = ft_strdup(s2);
 	if (new == NULL)
@@ -18,45 +40,42 @@ static int	append(char **s1, char *s2)
 	*s1 = new;
 	return (1);
 }
+#include <stdio.h>
 
-int			get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	static char	*curr = NULL;
-	char		buf[BUFF_SIZE + 1];
-	int			readed;
+	static char	*content = NULL;
+	static int	size = 0;
+	char			buf[BUFF_SIZE];
+	int				readed;
 	char		*tmp;
+	int	i;
 
+	i = -1;
 	while ((readed = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		buf[BUFF_SIZE] = 0;
-		if (append(&curr, buf) == 0)
+		size += readed;
+		if ((tmp = (char *)ft_memalloc(size)) == NULL)
 			return (-1);
-		if ((tmp = ft_strchr(curr, '\n')) != NULL)
-		{
-			*line = ft_strsub(curr, 0, tmp - curr);
-			curr = tmp + 1;
-			return (readed == BUFF_SIZE);
-		}
+		if (content)
+			ft_strdel(&content);
+		content = tmp;
+		while (++i < size)
+			if (content[i] == '\n')
+				break ;
 	}
-	return (readed);
+	if (readed == 0 && size <= 0)
+		return (0);
+	printf("%d\n", i);
+	printf("%s\n", content);
+	*line = ft_strsub(content, 0, i);
+	size -= (i + 1);
+	content += (i + 1);
+	return (1);
 }
 
-#include <stdio.h>
-#include <fcntl.h>
-
-int main(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-		char *str = NULL;
-		int fd = open(argv[1], O_RDONLY);
-		int i;
-		while ((i = get_next_line(fd, &str)) != -1)
-		{
-			printf("%d\n", i);
-			printf("%s\n", str);
-			if (i == 0)
-				break;
-		}
-	}
-}
+/*
+0 = lecture terminer donc read < buffsize
+1 = ligne lue donc encore a lire
+-1 = erreur
+*/
