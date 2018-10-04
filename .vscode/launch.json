@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "Debug",
 			"program": "${workspaceFolder}/get_next_line/a.out",
-			"args": ["test5"],
+			"args": ["test2"],
 			"cwd": "${workspaceFolder}/get_next_line"
 		}
 	]

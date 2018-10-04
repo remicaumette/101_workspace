@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 19:51:42 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 13:03:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/03 16:02:16 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/03 19:08:49 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 8
-# include "libft.h"
+#include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
 
-typedef struct	s_file
+int	get_next_line(const int fd, char **line);
+
+int	main(int argc, char **argv)
 {
-	int				fd;
-	char			*content;
-	struct s_file	*next;
-}				t_file;
-
-int				get_next_line(const int fd, char **line);
-#endif
+	if (argc > 1)
+	{
+		char *str = NULL;
+		int fd = open(argv[1], O_RDONLY);
+		int i;
+		while ((i = get_next_line(fd, &str)) > 0)
+			printf("%d %s\n", i, str);
+	}
+}
