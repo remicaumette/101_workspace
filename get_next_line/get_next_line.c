@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 16:01:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 16:05:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 22:29:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,15 +49,33 @@ static int		append(t_file *file, char *buf)
 		ft_strdel(&(file->content));
 	}
 	else
+	{
 		if ((tmp = ft_strdup(buf)) == NULL)
 			return (0);
+	}
 	file->content = tmp;
 	return (1);
 }
 
-static int		has_next_line(t_file *file, char *delimiter, char **line)
+static int		has_next_line(t_file *file, char *delimiter,
+	char **line, int readed)
 {
+	char	*tmp;
 
+	if (readed == -1 || (delimiter == NULL && file->content[0] == 0))
+		return (readed == -1 ? -1 : 0);
+	if (!delimiter)
+	{
+		*line = ft_strdup(file->content);
+		ft_strdel(&(file->content));
+		return (1);
+	}
+	*line = ft_strsub(file->content, 0, delimiter - file->content);
+	tmp = ft_strsub(file->content,
+		delimiter - file->content + 1, ft_strlen(file->content));
+	ft_strdel(&(file->content));
+	file->content = tmp;
+	return (1);
 }
 
 int				get_next_line(const int fd, char **line)
@@ -68,14 +86,18 @@ int				get_next_line(const int fd, char **line)
 	int				readed;
 	char			*delimiter;
 
-	curr = file_find_or_add(&files, fd);
+	if (fd < 0 || !line || read(fd, buf, 0) == -1 ||
+		(curr = file_find_or_add(&files, fd)) == NULL)
+		return (-1);
 	while ((readed = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[readed] = 0;
 		if (append(curr, buf) == 0)
 			return (-1);
 		if ((delimiter = ft_strchr(curr->content, '\n')) != NULL)
-			return (has_next_line(curr, delimiter, line));
+			return (has_next_line(curr, delimiter, line, readed));
 	}
-	return (has_next_line(curr, ft_strchr(curr->content, '\n'), line));
+	if (!curr->content)
+		return (0);
+	return (has_next_line(curr, ft_strchr(curr->content, '\n'), line, readed));
 }
