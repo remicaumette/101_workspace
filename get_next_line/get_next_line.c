@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 16:01:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 22:29:33 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 15:33:52 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,11 +48,8 @@ static int		append(t_file *file, char *buf)
 			return (0);
 		ft_strdel(&(file->content));
 	}
-	else
-	{
-		if ((tmp = ft_strdup(buf)) == NULL)
-			return (0);
-	}
+	else if ((tmp = ft_strdup(buf)) == NULL)
+		return (0);
 	file->content = tmp;
 	return (1);
 }
@@ -66,13 +63,16 @@ static int		has_next_line(t_file *file, char *delimiter,
 		return (readed == -1 ? -1 : 0);
 	if (!delimiter)
 	{
-		*line = ft_strdup(file->content);
+		if ((*line = ft_strdup(file->content)) == NULL)
+			return (-1);
 		ft_strdel(&(file->content));
 		return (1);
 	}
-	*line = ft_strsub(file->content, 0, delimiter - file->content);
-	tmp = ft_strsub(file->content,
-		delimiter - file->content + 1, ft_strlen(file->content));
+	if ((*line = ft_strsub(file->content, 0, delimiter - file->content))
+		== NULL)
+		return (-1);
+	if ((tmp = ft_strdup(delimiter + 1)) == NULL)
+		return (-1);
 	ft_strdel(&(file->content));
 	file->content = tmp;
 	return (1);
