@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   fillit.h                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jarcher <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 12:58:35 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 12:59:53 by jarcher     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 16:51:32 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,9 +32,8 @@ typedef struct	s_tet
 
 typedef struct	s_fillit
 {
-	t_uint8	height;
-	t_uint8	width;
-	char	map[104];
+	t_uint8	size;
+	char	map[676];
 	char	*filename;
 	t_tet	*tetriminos;
 }				t_fillit;

@@ -1,1 +1,4 @@
 fillit
+*.o
+*.a
+*.out

@@ -3,15 +3,16 @@
 /*                                                              /             */
 /*   tetriminos.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jarcher <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 13:05:20 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 13:06:19 by jarcher     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 16:57:34 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 t_tet	*add_tetriminos(t_tet **begin)
 {
@@ -19,7 +20,8 @@ t_tet	*add_tetriminos(t_tet **begin)
 
 	if (!(tet = ft_memalloc(sizeof(*tet))))
 		return (NULL);
-	tet->letter = *begin ? (*begin)->letter + 1 : 'A';
+	if ((tet->letter = *begin ? (*begin)->letter + 1 : 'A') > 'Z')
+		return (NULL);
 	tet->height = 0;
 	tet->width = 0;
 	tet->content[0] = 0;
@@ -47,12 +49,12 @@ t_tet	*reverse_tetriminos_list(t_tet **begin)
 	}
 	return (*begin = prev);
 }
-#include <stdio.h>
+
 t_uint8	get_tetriminos_bit(t_tet *tet, const t_uint8 height,
 					const t_uint8 width)
 {
 	int	calc;
 
 	calc = height * 4 + width;
-	return !!(tet->content[calc > 7] & (1 << (calc - (calc > 7) * 8)));
+	return (!!(tet->content[calc > 7] & (1 << (calc - (calc > 7) * 8))));
 }

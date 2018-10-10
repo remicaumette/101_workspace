@@ -39,6 +39,8 @@ fclean: clean
 	rm -f \$(NAME)
 
 re: fclean all
+
+.PHONY: libft all clean fclean re
 EOF
 
 echo "Generating $1/include/$1.h..."
