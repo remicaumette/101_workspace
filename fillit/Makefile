@@ -15,15 +15,13 @@ libft:
 	make -C libft
 
 $(NAME): $(OBJECTS)
-	gcc -Llibft -lft -o $(NAME) $(OBJECTS)
+	$(CC) -Llibft -lft -o $(NAME) $(OBJECTS)
 
 clean:
 	rm -f $(OBJECTS)
-	make -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -C libft fclean
 
 re: fclean all
 
