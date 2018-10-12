@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   io.h                                             .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jarcher <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/09 13:01:54 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 13:02:32 by jarcher     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
 #ifndef IO_H
 # define IO_H
 # define BUFF_SIZE 1024
 # include <unistd.h>
+
 
 typedef struct	s_file
 {
@@ -34,5 +22,4 @@ void			ft_putstr_fd(char const *s, int fd);
 void			ft_putstr(char const *s);
 void			ft_print_memory_fd(void *mem, size_t len, int fd);
 void			ft_print_memory(void *mem, size_t len);
-
 #endif

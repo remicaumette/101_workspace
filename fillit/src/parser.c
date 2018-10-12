@@ -65,7 +65,7 @@ int			parse_line(t_tet *tet, char *line, int nb)
 	int	i;
 
 	i = -1;
-	while (line[++i] && (line[i] == '.' || line[i] == '#'))
+	while (line[++i])
 		tet->content[nb > 1] += (line[i] == '#') << (i + ((nb % 2) * 4));
 	return (nb == 3 ? validate_tetriminos(tet) : i == 4);
 }
