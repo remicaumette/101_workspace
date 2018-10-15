@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 12:07:53 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 16:58:11 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 14:05:29 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,5 +94,6 @@ t_tet		*parse_file(char *filename)
 			lines = 0;
 		ft_strdel(&line);
 	}
-	return (status == -1 ? NULL : reverse_tetriminos_list(&begin));
+	return ((status == -1 || (lines + 1) % 5) ?
+		NULL : reverse_tetriminos_list(&begin));
 }

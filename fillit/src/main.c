@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 13:04:46 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 16:58:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 13:54:47 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ void	display_map(t_fillit *fillit, int map_size)
 {
 	int	height;
 	int	width;
-	(void) map_size;
+
 	height = -1;
 	while (++height < fillit->size && (width = -1))
 	{
@@ -54,6 +54,5 @@ int		main(int argc, char **argv)
 		ft_putstr(ERROR);
 		return (1);
 	}
-	//display_map(&fillit);
 	return (0);
 }

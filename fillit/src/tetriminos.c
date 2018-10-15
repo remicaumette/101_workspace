@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 13:05:20 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 16:57:34 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 13:53:56 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,8 +66,8 @@ void	place_tet(t_fillit *fillit, t_tet *tet, int map_x, int map_y)
 	i = -1;
 	while (++i < 16)
 		if (get_tetriminos_bit(tet, i / 4, i % 4))
-			fillit->map[map_x + i % 4 + (map_y + i / 4) * fillit->size]
-				= tet->letter;
+			fillit->map[map_x + i % 4 + (map_y + i / 4) * fillit->size] =
+				tet->letter;
 }
 
 void	remove_tet(t_fillit *fillit, t_tet *tet, int map_x, int map_y)

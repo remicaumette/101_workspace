@@ -6,13 +6,12 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 13:05:43 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 16:39:45 by jarcher     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 13:53:25 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 t_uint8	can_place(t_fillit *fillit, t_tet *tet, int map_x, int map_y)
 {
@@ -24,8 +23,7 @@ t_uint8	can_place(t_fillit *fillit, t_tet *tet, int map_x, int map_y)
 				i / 4 + map_y >= fillit->size ||
 				i % 4 + map_x >= fillit->size ||
 				i / 4 + map_y < 0 || i % 4 + map_x < 0 ||
-				fillit->map[map_x + i % 4 + (map_y + i / 4) * fillit->size]
-				))
+				fillit->map[map_x + i % 4 + (map_y + i / 4) * fillit->size]))
 			return (0);
 	return (1);
 }
