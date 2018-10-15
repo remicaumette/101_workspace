@@ -1,6 +1,6 @@
 NAME=fillit
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -Iinclude -Ilibft/include -g
+CFLAGS=-Wall -Werror -Wextra -Iinclude -Ilibft/include
 SOURCES=\
 	src/main.c			\
 	src/solver.c		\

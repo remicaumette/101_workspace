@@ -5,8 +5,8 @@
 
 typedef struct	s_btree_file
 {
-	unsigned long		size;
-
+	char				*filename;
+	struct stat			*stat;
 	struct s_btree_file	*left;
 	struct s_btree_file	*right;
 }				t_btree_file;

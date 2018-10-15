@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   btree_file.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/15 17:16:24 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 17:16:25 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 17:16:17 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 17:28:21 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int	main(void)
+t_btree_file	*btree_file_create(char *filename)
 {
-	ft_putendl("Hello world!");
+	t_btree_file	*file;
+
+	if (!(file = (t_btree_file *)ft_memalloc(sizeof(*file))))
+		return (NULL);
+	file->filename = filename;
+	file->left = NULL;
+	file->right = NULL;
+	file->stat = NULL;
+	return (file);
+}
+
+void			btree_file_insert(t_btree_file **begin, int cmp(), t_btree_file *file)
+{
+
 }

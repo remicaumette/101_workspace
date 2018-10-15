@@ -24,23 +24,23 @@ SOURCES=\\
 	src/main.c
 OBJECTS=\$(SOURCES:.c=.o)
 
-all: libft \$(NAME)
-
-libft:
-	make -C libft
+all: \$(NAME)
 
 \$(NAME): \$(OBJECTS)
+	@make -s -C libft
 	gcc -Llibft -lft -o \$(NAME) \$(OBJECTS)
 
 clean:
+	@make -C libft clean
 	rm -f \$(OBJECTS)
 
 fclean: clean
+	@make -C libft fclean
 	rm -f \$(NAME)
 
 re: fclean all
 
-.PHONY: libft all clean fclean re
+.PHONY: all clean fclean re
 EOF
 
 echo "Generating $1/include/$1.h..."
