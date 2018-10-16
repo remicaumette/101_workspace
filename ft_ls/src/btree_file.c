@@ -22,11 +22,16 @@ t_btree_file	*btree_file_create(char *filename)
 	file->filename = filename;
 	file->left = NULL;
 	file->right = NULL;
-	file->stat = NULL;
+	if (!(file->stat = (struct stat *)ft_memalloc(sizeof(*(file->stat)))))
+		return (NULL);
+	file->group = NULL;
+	file->passwd = NULL;
 	return (file);
 }
 
-void			btree_file_insert(t_btree_file **begin, int cmp(), t_btree_file *file)
+void			btree_file_insert(t_btree_file **begin, int cmp(t_btree_file ), t_btree_file *file)
 {
-
+	(void)begin;
+	(void)cmp;
+	(void)file;
 }
