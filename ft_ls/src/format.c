@@ -14,36 +14,31 @@
 #include "ft_ls.h"
 
 // -l
-char	*long_format(t_fileinfo *file)
+void	long_format(t_dirinfo *info)
 {
-	(void)file;
-	return (NULL);
+	(void)info;
 }
 
 // -1
-char	*one_per_line_format(t_fileinfo *file)
+void	one_per_line_format(t_dirinfo *info)
 {
-	(void)file;
-	return (NULL);
+	(void)info;
 }
 
 // -C
-char	*many_per_line_format(t_fileinfo *file)
+void	many_per_line_format(t_dirinfo *info)
 {
-	(void)file;
-	return (NULL);
+	(void)info;
 }
 
 // -x
-char	*horizontal_format(t_fileinfo *file)
+void	horizontal_format(t_dirinfo *info)
 {
-	(void)file;
-	return (NULL);
+	(void)info;
 }
 
 // -m
-char	*with_commas_format(t_fileinfo *file)
+void	with_commas_format(t_dirinfo *info)
 {
-	(void)file;
-	return (NULL);
+	(void)info;
 }

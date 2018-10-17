@@ -16,6 +16,7 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <dirent.h>
 # include <sys/stat.h>
 # include "libft.h"
 
@@ -36,16 +37,24 @@ typedef struct	s_fileinfo
 	struct s_fileinfo	*right;
 }				t_fileinfo;
 
-typedef struct	s_ls
+typedef struct	s_dirinfo
 {
-	int			total;
-	int			is_root;
-	char		*cwd;
-	t_fileinfo	*file;
-}				t_ls;
+	char				*cwd;
+	int					total;
+	int					total_dir;
+	t_fileinfo			*files;
+	struct s_dirinfo	**dirs;
+}				t_dirinfo;
 
 int				parse_permissions(t_fileinfo *info, struct stat *stat);
 int				parse_date(t_fileinfo *info, struct stat *stat);
+
 t_fileinfo		*fileinfo_create(char *filename);
-void			fileinfo_destroy(t_fileinfo *info);
+void			fileinfo_destroy(t_fileinfo **info);
+void			fileinfo_insert(t_fileinfo **node, t_fileinfo *info);
+
+t_dirinfo		*dirinfo_create(char *cwd);
+t_fileinfo		*dirinfo_aggregate(t_dirinfo *info, int aggregate_dir);
+void			dirinfo_destroy(t_dirinfo **info);
+
 #endif

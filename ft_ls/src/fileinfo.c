@@ -40,16 +40,26 @@ t_fileinfo	*fileinfo_create(char *filename)
 	return (info);
 }
 
-void		fileinfo_destroy(t_fileinfo *info)
+void		fileinfo_destroy(t_fileinfo **info)
 {
-	ft_strdel(&(info->filename));
-	ft_strdel(&(info->permissions));
-	ft_memdel((void **)&info);
+	ft_strdel(&((*info)->filename));
+	ft_strdel(&((*info)->permissions));
+	ft_memdel((void **)info);
 }
 
-t_fileinfo	*fileinfo_insert(t_fileinfo **tree, t_fileinfo *info)
+void		fileinfo_insert(t_fileinfo **node, t_fileinfo *info)
 {
-	(void)tree;
-	(void)info;
-	return (NULL);
+	if (!*node)
+		*node = info; 
+	else if (info->size < (*node)->size) 
+		fileinfo_insert(&(*node)->left, info);
+	else if (info->size > (*node)->size) 
+		fileinfo_insert(&(*node)->right, info);
+	else if (info->size == (*node)->size) 
+	{
+		if (ft_strcmp(info->filename, (*node)->filename) > 0)
+			fileinfo_insert(&(*node)->left, info);
+		else
+			fileinfo_insert(&(*node)->right, info);
+	}
 }

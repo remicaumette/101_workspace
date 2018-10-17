@@ -14,6 +14,7 @@
 #include "ft_ls.h"
 #include <stdio.h>
 
+
 void			print_file(t_fileinfo *info)
 {
 	ft_putstr(info->permissions);
@@ -26,20 +27,28 @@ void			print_file(t_fileinfo *info)
 	ft_putstr("  ");
 	ft_putstr(ft_lltoa(info->size));
 	ft_putstr(" ");
-	ft_putstr(info->date);
+	//ft_putstr(info->date);
 	ft_putstr(" ");
 	ft_putstr(info->filename);
 	ft_putchar('\n');
 }
 
-
+// -r reverse sort
+void	printlol(t_fileinfo *info)
+{
+	if (info->right)
+		printlol(info->right);
+	print_file(info);
+	if (info->left)
+		printlol(info->left);
+}
 
 int	main(void)
 {
-	t_fileinfo	*file;
+	t_dirinfo	*info;
 	
-	file = fileinfo_create(ft_strdup("lol"));
-	print_file(file);
-	fileinfo_destroy(file);
+	info = dirinfo_create(ft_strdup("."));
+	dirinfo_aggregate(info, 0);
+	printlol(info->files);
 	return (0);
 }
