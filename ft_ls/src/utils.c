@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 16:55:26 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/17 16:15:57 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,12 @@ int		parse_permissions(t_fileinfo *info, struct stat *stat)
 
 	if (!(s = ft_strnew(10)))
 		return (0);
-	s[0] = '-';
+	if (stat->st_mode & S_IFDIR)
+		s[0] = 'd';
+	else if (stat->st_mode & S_IFLNK)
+		s[0] = 'l';
+	else
+		s[0] = '-';
 	s[1] = (stat->st_mode & S_IRUSR) ? 'r' : '-';
 	s[2] = (stat->st_mode & S_IWUSR) ? 'w' : '-';
 	s[3] = (stat->st_mode & S_IXUSR) ? 'x' : '-';
@@ -53,12 +58,8 @@ int		parse_date(t_fileinfo *info, struct stat *stat)
 	char	*tmp;
 
 	tmp = ctime(&stat->st_ctime);
-	info->date_day = ft_strsub(tmp, 0, 3);
-	info->date_day = ft_strsub(tmp, 0, 3);
+	(void)info;
+	//info->date_day = ft_strsub(tmp, 0, 3);
+	//info->date_day = ft_strsub(tmp, 0, 3);
 	return (1);
 }
-// Mon Oct 15 15:40:40 2018
-// -rw-r--r--  1 rcaumett  student  9 Oct 15 15:40 auteur
-
-// -rw-r--r--  1 rcaumett  student  9  Mon Oct 15 15:40:40 2018
-//  auteur
