@@ -13,82 +13,52 @@
 
 #include "ft_ls.h"
 
-void	debug_file(t_fileinfo *info)
+void	display_directory(t_dirinfo *dir)
 {
-	printf("t_fileinfo {\n");
-	printf("\tfilename = '%s'\n", info->filename);
-	printf("\tpermissions = '%s'\n", info->permissions);
-	printf("\tnlink = %d\n", info->nlink);
-	printf("\tsnlink = '%s'\n", info->snlink);
-	printf("\tuser = '%s'\n", info->user);
-	printf("\tgroup = '%s'\n", info->group);
-	printf("\tsize = %lld\n", info->size);
-	printf("\tssize = '%s'\n", info->ssize);
-	printf("\tdate_year = '%s'\n", info->date_year);
-	printf("\tdate_month = '%s'\n", info->date_month);
-	printf("\tdate_day = '%s'\n", info->date_day);
-	printf("\tdate_hour = '%s'\n", info->date_hour);
-	printf("\tdate_min = '%s'\n", info->date_min);
-	printf("}\n");
+	if (dir->flags->display == one_per_line)
+		one_per_line_display(dir, dir->files);
+	/*if (info->flags & FLAG_VERTICAL_FORMAT)
+		vertical_display(info);
+	if (info->flags & FLAG)*/
 }
 
-void	print_file(t_fileinfo *info)
+int		list_directory(t_flags *flags, char *path)
 {
-	ft_putstr(info->permissions);
-	ft_putstr("  ");
+	t_dirinfo	*info;
 
-	/*
-	ft_putstr(info->permissions);
-	ft_putstr("  ");
-	ft_putstr(info->snlink);
-	ft_putstr(" ");
-	ft_putstr(info->user);
-	ft_putstr("  ");
-	ft_putstr(info->group);
-	ft_putstr("  ");
-	ft_putstr(info->ssize);
-	ft_putstr(" ");
-	//ft_putstr(info->date);
-	ft_putstr(" ");
-	ft_putstr(info->filename);
-	ft_putchar('\n');*/
-	ft_putchar('\n');
-}
-
-// -r reverse sort
-void	print_directory(t_dirinfo *dir, t_fileinfo *file)
-{
-	if (file->right)
-		print_directory(dir, file->right);
-	print_file(file);
-	if (file->left)
-		print_directory(dir, file->left);
-}
-
-void	print_directory_reverse(t_dirinfo *dir, t_fileinfo *file)
-{
-	if (file->left)
-		print_directory(dir, file->left);
-	print_file(file);
-	if (file->right)
-		print_directory(dir, file->right);
+	if (!(info = dirinfo_create(flags, path)) ||
+		!dirinfo_aggregate(info))
+	{
+		ft_putstr_fd("ft_ls: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		return (1);
+	}
+	display_directory(info);
+	dirinfo_destroy(&info);
+	return (0);
 }
 
 int		main(int argc, char **argv)
 {
-	t_dirinfo	*info;
+	t_flags			*flags;
+	int				i;
+	int				status;
 
-	if (!(info = dirinfo_create(argc == 1 ? "." : argv[1])) ||
-		!dirinfo_aggregate(info, 0))
-	{
-		ft_putstr_fd("ls: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+	if (!(flags = parse_flags(argv)))
 		return (1);
-	}
-	print_directory(info, info->files);
-	dirinfo_destroy(&info);
-	return (0);
+	i = 0;
+	status = 0;
+	while (++i < argc)
+		if (argv[i][0] != '-')
+			break ;
+	i--;
+	if ((i + 1) == argc)
+		status = list_directory(flags, ".");
+	else
+		while (++i < argc)
+			status |= list_directory(flags, argv[i]);
+	ft_memdel((void **)&flags);
+	return (status);
 }

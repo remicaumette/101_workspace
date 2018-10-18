@@ -13,6 +13,7 @@
 
 #ifndef FT_LS_H
 # define FT_LS_H
+# include "libft.h"
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
@@ -20,9 +21,32 @@
 # include <sys/stat.h>
 # include <errno.h>
 # include <string.h>
-# include "libft.h"
+# include <sys/ioctl.h>
 
-#include <stdio.h>
+typedef enum	e_display
+{
+	vertical, // default
+	long_format, // -l
+	one_per_line, // -1
+	many_per_line, // -C
+	with_commas, // -m
+}				t_display;
+
+typedef enum	e_sort
+{
+	sort_name, // default
+	sort_size, // -S
+	sort_time, // -t
+}				t_sort;
+
+typedef struct	s_flags
+{
+	t_display	display;
+	t_sort		sort;
+	int			reverse; // -r
+	int			recursive; // -R
+	int			hidden; // -a
+}				t_flags;
 
 typedef struct	s_fileinfo
 {
@@ -34,18 +58,13 @@ typedef struct	s_fileinfo
 	char				*group;
 	long long			size;
 	char				*ssize;
-	char				*date_year;
-	char				*date_month;
-	char				*date_day;
-	char				*date_hour;
-	char				*date_min;
 	struct s_fileinfo	*left;
 	struct s_fileinfo	*right;
 }				t_fileinfo;
 
 typedef struct	s_dirinfo
 {
-	char				*cwd;
+	char				*path;
 	int					total;
 	int					total_dir;
 	int					size_width;
@@ -53,30 +72,29 @@ typedef struct	s_dirinfo
 	int					group_width;
 	int					link_width;
 	int					filename_width;
+	t_flags				*flags;
 	t_fileinfo			*files;
 	struct s_dirinfo	**dirs;
 }				t_dirinfo;
 
+t_flags			*parse_flags(char **argv);
 int				parse_permissions(t_fileinfo *info, struct stat *stat);
 int				parse_date(t_fileinfo *info, struct stat *stat);
 
 t_fileinfo		*fileinfo_create(char *filename);
 void			fileinfo_destroy(t_fileinfo **info);
-void			fileinfo_recursive_destroy(t_fileinfo **info);
 void			fileinfo_insert(t_fileinfo **node, t_fileinfo *info);
+t_fileinfo		*fileinfo_last_right(t_fileinfo *node);
+t_fileinfo		*fileinfo_last_left(t_fileinfo *node);
 
-t_dirinfo		*dirinfo_create(char *cwd);
-t_fileinfo		*dirinfo_aggregate(t_dirinfo *info, int aggregate_dir);
+t_dirinfo		*dirinfo_create(t_flags *flags, char *path);
+t_fileinfo		*dirinfo_aggregate(t_dirinfo *info);
 void			dirinfo_destroy(t_dirinfo **info);
 
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 
-void			long_format(t_dirinfo *info);
-void			one_per_line_format(t_dirinfo *info);
-void			many_per_line_format(t_dirinfo *info);
-void			horizontal_format(t_dirinfo *info);
-void			with_commas_format(t_dirinfo *info);
+void			one_per_line_display(t_dirinfo *dir, t_fileinfo *file);
 
 // Mon Oct 15 15:40:40 2018
 // -rw-r--r--  1 rcaumett  student  9 Oct 15 15:40 auteur
@@ -87,4 +105,6 @@ void			with_commas_format(t_dirinfo *info);
 
 /* The minimum width of a column is 3: 1 character for the name and 2
    for the separating white space.  */
+#include <stdio.h>
+// poubelle
 #endif

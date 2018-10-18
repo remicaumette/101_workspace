@@ -31,7 +31,6 @@ t_fileinfo	*fileinfo_create(char *filename)
 		!(info->user = ft_strdup(passwd->pw_name)) ||
 		!(info->group = ft_strdup(group->gr_name)))
 		return (NULL);
-	info->filename = filename;
 	info->left = NULL;
 	info->right = NULL;
 	info->nlink = stats->st_nlink;
@@ -51,33 +50,41 @@ void		fileinfo_destroy(t_fileinfo **info)
 	ft_memdel((void **)info);
 }
 
-void		fileinfo_recursive_destroy(t_fileinfo **info)
-{
-	if ((*info)->right)
-		fileinfo_recursive_destroy(&(*info)->right);
-	if ((*info)->left)
-		fileinfo_recursive_destroy(&(*info)->left);
-	fileinfo_destroy(info);
-}
-
-void		fileinfo_insert(t_fileinfo **node, t_fileinfo *info)
+void		fileinfo_insert(t_fileinfo **node, t_fileinfo *info,
+	int cmp(t_fileinfo *f1, t_fileinfo *f2))
 {
 	if (!*node)
 		*node = info;
-	else if (sort_by_name(info, *node) > 0)
-		fileinfo_insert(&(*node)->left, info);
+	else if (cmp(info, *node) > 0)
+		fileinfo_insert(&(*node)->left, info, cmp);
 	else
-		fileinfo_insert(&(*node)->right, info);
-	/*
-	else if (info->size < (*node)->size)
-		fileinfo_insert(&(*node)->left, info);
-	else if (info->size > (*node)->size)
-		fileinfo_insert(&(*node)->right, info);
-	else if (info->size == (*node)->size)
-	{
-		if (ft_strcmp(info->filename, (*node)->filename) > 0)
-			fileinfo_insert(&(*node)->left, info);
-		else
-			fileinfo_insert(&(*node)->right, info);
-	}*/
+		fileinfo_insert(&(*node)->right, info, cmp);
+}
+
+t_fileinfo	*fileinfo_last_right(t_fileinfo *node)
+{
+	if (!node->right)
+		return (node);
+	return (fileinfo_last_right(node->right));
+}
+
+t_fileinfo	*fileinfo_last_left(t_fileinfo *node)
+{
+	if (!node->left)
+		return (node);
+	return (fileinfo_last_left(node->left));
+}
+
+void	debug_file(t_fileinfo *info)
+{
+	printf("t_fileinfo {\n");
+	printf("\tfilename = '%s'\n", info->filename);
+	printf("\tpermissions = '%s'\n", info->permissions);
+	printf("\tnlink = %d\n", info->nlink);
+	printf("\tsnlink = '%s'\n", info->snlink);
+	printf("\tuser = '%s'\n", info->user);
+	printf("\tgroup = '%s'\n", info->group);
+	printf("\tsize = %lld\n", info->size);
+	printf("\tssize = '%s'\n", info->ssize);
+	printf("}\n");
 }

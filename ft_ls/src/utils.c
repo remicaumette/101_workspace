@@ -13,7 +13,7 @@
 
 #include "ft_ls.h"
 
-int		parse_permissions(t_fileinfo *info, struct stat *stat)
+int			parse_permissions(t_fileinfo *info, struct stat *stat)
 {
 	char	*s;
 
@@ -38,28 +38,65 @@ int		parse_permissions(t_fileinfo *info, struct stat *stat)
 	return (1);
 }
 
-char	*ft_strappend(char **s1, char *s2)
-{
-	char	*tmp;
-
-	if (s1 && *s1)
-	{
-		if ((tmp = ft_strjoin(*s1, s2)) == NULL)
-			return (NULL);
-		ft_strdel(s1);
-	}
-	else if ((tmp = ft_strdup(s2)) == NULL)
-		return (NULL);
-	return (*s1 = tmp);
-}
-
-int		parse_date(t_fileinfo *info, struct stat *stat)
+int			parse_date(t_fileinfo *info, struct stat *stat)
 {
 	char	*tmp;
 
 	tmp = ctime(&stat->st_ctime);
 	(void)info;
-	//info->date_day = ft_strsub(tmp, 0, 3);
-	//info->date_day = ft_strsub(tmp, 0, 3);
 	return (1);
+}
+
+static void			parse_flag(t_flags *flags, char c)
+{
+	if (c == 't')
+		flags->sort = sort_time;
+	else if (c == 'S')
+		flags->sort = sort_size;
+	else if (c == 'r')
+		flags->reverse = 1;
+	else if (c == 'R')
+		flags->recursive = 1;
+	else if (c == 'a')
+		flags->hidden = 1;
+	else if (c == 'l')
+		flags->display = long_format;
+	else if (c == '1')
+		flags->display = one_per_line;
+	else if (c == 'C')
+		flags->display = many_per_line;
+	else if (c == 'm')
+		flags->display = with_commas;
+	else
+	{
+		ft_putstr_fd("ft_ls: illegal option -- ", 2);
+		ft_putchar_fd(c, 2);
+		ft_putstr_fd("\nusage: ft_ls [-trRlaC1] [file ...]\n", 2);
+		exit(1);
+	}
+}
+
+t_flags				*parse_flags(char **argv)
+{
+	t_flags	*flags;
+	int		i;
+	int		j;
+
+	if (!(flags = ft_memalloc(sizeof(t_flags))))
+		return (NULL);
+	flags->display = vertical;
+	flags->hidden = 0;
+	flags->recursive = 0;
+	flags->reverse = 0;
+	flags->sort = sort_name;
+	i = 0;
+	while (argv[++i])
+	{
+		j = 0;
+		if (argv[i][j] != '-')
+			break ;
+		while (argv[i][++j])
+			parse_flag(flags, argv[i][j]);
+	}
+	return (flags);
 }

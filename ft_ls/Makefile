@@ -2,11 +2,15 @@ NAME=ft_ls
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -Iinclude -Ilibft/include -g -fsanitize=address
 SOURCES=\
-	src/dirinfo.c		\
-	src/fileinfo.c		\
-	src/format.c		\
-	src/main.c			\
-	src/sort.c			\
+	src/display/long.c			\
+	src/display/many_per_line.c	\
+	src/display/one_per_line.c	\
+	src/display/vertical.c		\
+	src/display/with_commas.c	\
+	src/dirinfo.c				\
+	src/fileinfo.c				\
+	src/main.c					\
+	src/sort.c					\
 	src/utils.c
 OBJECTS=$(SOURCES:.c=.o)
 
