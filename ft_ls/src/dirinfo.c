@@ -48,7 +48,7 @@ t_fileinfo	*dirinfo_aggregate(t_dirinfo *info)
 			continue ;
 		if (!(file = fileinfo_create(entry->d_name)))
 			return (NULL);
-		fileinfo_insert(&info->files, file);
+		fileinfo_insert(&info->files, file, get_sort_func(info->flags->sort));
 		if ((i = ft_strlen(file->filename)) > info->filename_width)
 			info->filename_width = i;
 		if (info->flags->display == long_format)
@@ -63,7 +63,7 @@ t_fileinfo	*dirinfo_aggregate(t_dirinfo *info)
 				info->group_width = i;
 		}
 	}
-	// todo: aggregate dir with dir
+	closedir(dir);
 	return (info->files);
 }
 

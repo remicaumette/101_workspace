@@ -13,20 +13,22 @@
 
 #include "ft_ls.h"
 
-int		(*sort)(t_fileinfo *, t_fileinfo *)get_sort_func(t_sort sort)
+sort_func	get_sort_func(t_sort sort)
 {
-
+	if (sort == sort_size)
+		return sort_by_size;
+	return (sort_by_name);
 }
 
-int	sort_by_name(t_fileinfo *f1, t_fileinfo *f2)
+int			sort_by_name(t_fileinfo *f1, t_fileinfo *f2)
 {
 	return (ft_strcmp(f1->filename, f2->filename) > 0);
 }
 
-int	sort_by_size(t_fileinfo *f1, t_fileinfo *f2)
+int			sort_by_size(t_fileinfo *f1, t_fileinfo *f2)
 {
 	int	i;
 
-	i = f1->size - f2->size;
+	i = f2->size - f1->size;
 	return (i ? i : sort_by_name(f1, f2));
 }

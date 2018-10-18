@@ -22,7 +22,7 @@ t_fileinfo	*fileinfo_create(char *filename)
 
 	if (!(info = ft_memalloc(sizeof(t_fileinfo))) ||
 		!(info->filename = ft_strdup(filename)) ||
-		!(stats = ft_memalloc(sizeof(struct stat))) || stat(filename, stats) ||
+		!(stats = ft_memalloc(sizeof(struct stat))) || lstat(filename, stats) ||
 		!(passwd = getpwuid(stats->st_uid)) ||
 		!(group = getgrgid(stats->st_gid)) ||
 		!parse_permissions(info, stats) || !parse_date(info, stats) ||
@@ -51,7 +51,7 @@ void		fileinfo_destroy(t_fileinfo **info)
 }
 
 void		fileinfo_insert(t_fileinfo **node, t_fileinfo *info,
-	int cmp(t_fileinfo *f1, t_fileinfo *f2))
+	sort_func cmp)
 {
 	if (!*node)
 		*node = info;
@@ -66,25 +66,4 @@ t_fileinfo	*fileinfo_last_right(t_fileinfo *node)
 	if (!node->right)
 		return (node);
 	return (fileinfo_last_right(node->right));
-}
-
-t_fileinfo	*fileinfo_last_left(t_fileinfo *node)
-{
-	if (!node->left)
-		return (node);
-	return (fileinfo_last_left(node->left));
-}
-
-void	debug_file(t_fileinfo *info)
-{
-	printf("t_fileinfo {\n");
-	printf("\tfilename = '%s'\n", info->filename);
-	printf("\tpermissions = '%s'\n", info->permissions);
-	printf("\tnlink = %d\n", info->nlink);
-	printf("\tsnlink = '%s'\n", info->snlink);
-	printf("\tuser = '%s'\n", info->user);
-	printf("\tgroup = '%s'\n", info->group);
-	printf("\tsize = %lld\n", info->size);
-	printf("\tssize = '%s'\n", info->ssize);
-	printf("}\n");
 }

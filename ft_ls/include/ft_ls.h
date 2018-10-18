@@ -77,13 +77,16 @@ typedef struct	s_dirinfo
 	struct s_dirinfo	**dirs;
 }				t_dirinfo;
 
+typedef			int (*sort_func)(t_fileinfo *, t_fileinfo *);
+
 t_flags			*parse_flags(char **argv);
 int				parse_permissions(t_fileinfo *info, struct stat *stat);
 int				parse_date(t_fileinfo *info, struct stat *stat);
 
 t_fileinfo		*fileinfo_create(char *filename);
 void			fileinfo_destroy(t_fileinfo **info);
-void			fileinfo_insert(t_fileinfo **node, t_fileinfo *info);
+void			fileinfo_insert(t_fileinfo **node, t_fileinfo *info,
+					sort_func cmp);
 t_fileinfo		*fileinfo_last_right(t_fileinfo *node);
 t_fileinfo		*fileinfo_last_left(t_fileinfo *node);
 
@@ -91,20 +94,9 @@ t_dirinfo		*dirinfo_create(t_flags *flags, char *path);
 t_fileinfo		*dirinfo_aggregate(t_dirinfo *info);
 void			dirinfo_destroy(t_dirinfo **info);
 
+sort_func		get_sort_func(t_sort sort);
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 
 void			one_per_line_display(t_dirinfo *dir, t_fileinfo *file);
-
-// Mon Oct 15 15:40:40 2018
-// -rw-r--r--  1 rcaumett  student  9 Oct 15 15:40 auteur
-
-// -rw-r--r--  1 rcaumett  student  9  Mon Oct 15 15:40:40 2018
-//  auteur
-
-
-/* The minimum width of a column is 3: 1 character for the name and 2
-   for the separating white space.  */
-#include <stdio.h>
-// poubelle
 #endif
