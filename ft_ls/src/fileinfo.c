@@ -22,48 +22,50 @@ t_fileinfo	*fileinfo_create(char *filename)
 
 	if (!(info = ft_memalloc(sizeof(t_fileinfo))) ||
 		!(info->filename = ft_strdup(filename)) ||
-		!(stats = ft_memalloc(sizeof(struct stat))) || lstat(filename, stats) ||
+		!(stats = ft_memalloc(sizeof(struct stat))) ||
+		lstat(filename, stats) ||
 		!(passwd = getpwuid(stats->st_uid)) ||
 		!(group = getgrgid(stats->st_gid)) ||
-		!parse_permissions(info, stats) || !parse_date(info, stats) ||
-		!(info->ssize = ft_lltoa(stats->st_size)) ||
-		!(info->snlink = ft_itoa(stats->st_nlink)) ||
-		!(info->user = ft_strdup(passwd->pw_name)) ||
-		!(info->group = ft_strdup(group->gr_name)))
+		!(info->size = ft_lltoa(stats->st_size)) ||
+		!(info->nlink = ft_itoa(stats->st_nlink)))
 		return (NULL);
 	info->left = NULL;
 	info->right = NULL;
-	info->nlink = stats->st_nlink;
-	info->size = stats->st_size;
-	ft_memdel((void **)&stats);
 	return (info);
 }
 
 void		fileinfo_destroy(t_fileinfo **info)
 {
 	ft_strdel(&((*info)->filename));
-	ft_strdel(&((*info)->permissions));
-	ft_strdel(&((*info)->user));
-	ft_strdel(&((*info)->group));
-	ft_strdel(&((*info)->ssize));
-	ft_strdel(&((*info)->snlink));
+	ft_strdel(&((*info)->size));
+	ft_strdel(&((*info)->nlink));
+	ft_memdel((void **)&((*info)->stats));
 	ft_memdel((void **)info);
 }
 
-void		fileinfo_insert(t_fileinfo **node, t_fileinfo *info,
+void		fileinfo_recursive_destroy(t_fileinfo **info)
+{
+	if ((*info)->right)
+		fileinfo_recursive_destroy(&(*info)->right);
+	if ((*info)->left)
+		fileinfo_recursive_destroy(&(*info)->left);
+	fileinfo_destroy(info);
+}
+
+void		fileinfo_insert(t_flags *flags, t_fileinfo **node, t_fileinfo *info,
 	sort_func cmp)
 {
 	if (!*node)
 		*node = info;
 	else if (cmp(info, *node) > 0)
-		fileinfo_insert(&(*node)->left, info, cmp);
+		fileinfo_insert(flags, &(*node)->left, info, cmp);
 	else
-		fileinfo_insert(&(*node)->right, info, cmp);
+		fileinfo_insert(flags, &(*node)->right, info, cmp);
 }
 
-t_fileinfo	*fileinfo_last_right(t_fileinfo *node)
+t_fileinfo	*fileinfo_last(t_fileinfo *node)
 {
 	if (!node->right)
 		return (node);
-	return (fileinfo_last_right(node->right));
+	return (fileinfo_last(node->right));
 }

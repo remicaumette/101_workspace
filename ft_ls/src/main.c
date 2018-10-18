@@ -13,21 +13,15 @@
 
 #include "ft_ls.h"
 
-void	display_directory(t_dirinfo *dir)
+void	display_directory(t_flags *flags, t_dirinfo *dir)
 {
-	if (dir->flags->display == one_per_line)
-		one_per_line_display(dir, dir->files);
-	/*if (info->flags & FLAG_VERTICAL_FORMAT)
-		vertical_display(info);
-	if (info->flags & FLAG)*/
+	if (flags->display == one_per_line)
+		one_per_line_display(flags, dir->files);
 }
-
-int		list_directory(t_flags *flags, char *path)
+int		list_directory(t_flags *flags, t_dirinfo *dir, char *path)
 {
-	t_dirinfo	*info;
-
-	if (!(info = dirinfo_create(flags, path)) ||
-		!dirinfo_aggregate(info))
+	dirinfo_init(dir, path);
+	if (!dirinfo_aggregate(dir, flags))
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		ft_putstr_fd(path, 2);
@@ -35,19 +29,19 @@ int		list_directory(t_flags *flags, char *path)
 		ft_putendl_fd(strerror(errno), 2);
 		return (1);
 	}
-	display_directory(info);
-	dirinfo_destroy(&info);
+	display_directory(flags, dir);
+	fileinfo_recursive_destroy(&dir->files);
 	return (0);
 }
 
 int		main(int argc, char **argv)
 {
-	t_flags			*flags;
+	t_flags			flags;
+	t_dirinfo		dir;
 	int				i;
 	int				status;
 
-	if (!(flags = parse_flags(argv)))
-		return (1);
+	parse_flags(&flags, argv);
 	i = 0;
 	status = 0;
 	while (++i < argc)
@@ -55,10 +49,9 @@ int		main(int argc, char **argv)
 			break ;
 	i--;
 	if ((i + 1) == argc)
-		status = list_directory(flags, ".");
+		status = list_directory(&flags, &dir, ".");
 	else
 		while (++i < argc)
-			status |= list_directory(flags, argv[i]);
-	ft_memdel((void **)&flags);
+			status |= list_directory(&flags, &dir, argv[i]);
 	return (status);
 }

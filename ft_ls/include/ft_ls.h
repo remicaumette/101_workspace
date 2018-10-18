@@ -50,14 +50,13 @@ typedef struct	s_flags
 
 typedef struct	s_fileinfo
 {
+	char				*path;
 	char				*filename;
-	char				*permissions;
-	int					nlink;
-	char				*snlink;
-	char				*user;
-	char				*group;
-	long long			size;
-	char				*ssize;
+	char				*nlink;
+	char				*size;
+	struct stat			*stats;
+	struct passwd		*passwd;
+	struct group		*group;
 	struct s_fileinfo	*left;
 	struct s_fileinfo	*right;
 }				t_fileinfo;
@@ -72,31 +71,26 @@ typedef struct	s_dirinfo
 	int					group_width;
 	int					link_width;
 	int					filename_width;
-	t_flags				*flags;
 	t_fileinfo			*files;
-	struct s_dirinfo	**dirs;
 }				t_dirinfo;
 
 typedef			int (*sort_func)(t_fileinfo *, t_fileinfo *);
 
-t_flags			*parse_flags(char **argv);
-int				parse_permissions(t_fileinfo *info, struct stat *stat);
-int				parse_date(t_fileinfo *info, struct stat *stat);
+void			parse_flags(t_flags *flags, char **argv);
 
 t_fileinfo		*fileinfo_create(char *filename);
 void			fileinfo_destroy(t_fileinfo **info);
-void			fileinfo_insert(t_fileinfo **node, t_fileinfo *info,
-					sort_func cmp);
-t_fileinfo		*fileinfo_last_right(t_fileinfo *node);
-t_fileinfo		*fileinfo_last_left(t_fileinfo *node);
+void			fileinfo_recursive_destroy(t_fileinfo **info);
+void			fileinfo_insert(t_flags *flags, t_fileinfo **node,
+					t_fileinfo *info, sort_func cmp);
+t_fileinfo		*fileinfo_last(t_fileinfo *node);
 
-t_dirinfo		*dirinfo_create(t_flags *flags, char *path);
-t_fileinfo		*dirinfo_aggregate(t_dirinfo *info);
-void			dirinfo_destroy(t_dirinfo **info);
+void			dirinfo_init(t_dirinfo *dir, char *path);
+int				dirinfo_aggregate(t_dirinfo *dir, t_flags *flags);
 
 sort_func		get_sort_func(t_sort sort);
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 
-void			one_per_line_display(t_dirinfo *dir, t_fileinfo *file);
+void			one_per_line_display(t_flags *flags, t_fileinfo *file);
 #endif

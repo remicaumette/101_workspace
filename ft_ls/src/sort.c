@@ -29,6 +29,6 @@ int			sort_by_size(t_fileinfo *f1, t_fileinfo *f2)
 {
 	int	i;
 
-	i = f2->size - f1->size;
+	i = f2->stats->st_size - f1->stats->st_size;
 	return (i ? i : sort_by_name(f1, f2));
 }

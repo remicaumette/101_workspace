@@ -13,67 +13,74 @@
 
 #include "ft_ls.h"
 
-t_dirinfo	*dirinfo_create(t_flags *flags, char *path)
+void		dirinfo_init(t_dirinfo *dir, char *path)
 {
-	t_dirinfo	*info;
-
-	if (!path || !(info = ft_memalloc(sizeof(t_dirinfo))))
-		return (NULL);
-	info->flags = flags;
-	info->path = ft_strdup(path);
-	info->total = 0;
-	info->total_dir = 0;
-	info->size_width = 0;
-	info->user_width = 0;
-	info->group_width = 0;
-	info->link_width = 0;
-	info->filename_width = 0;
-	info->files = NULL;
-	info->dirs = NULL;
-	return (info);
+	dir->path = ft_strdup(path);
+	dir->total = 0;
+	dir->total_dir = 0;
+	dir->size_width = 0;
+	dir->user_width = 0;
+	dir->group_width = 0;
+	dir->link_width = 0;
+	dir->filename_width = 0;
+	dir->files = NULL;
 }
 
-t_fileinfo	*dirinfo_aggregate(t_dirinfo *info)
+static int	dirinfo_aggregate_file(t_dirinfo *dir, t_flags *flags, struct dirent *entry)
 {
-	DIR				*dir;
-	struct dirent	*entry;
 	t_fileinfo		*file;
 	int				i;
 
-	if (!(dir = opendir(info->path)))
-		return (NULL);
-	while ((entry = readdir(dir)))
+	if (!(file = fileinfo_create(entry->d_name)))
+		return (0);
+	fileinfo_insert(flags, &dir->files, file, get_sort_func(flags->sort));
+	if ((i = ft_strlen(file->filename)) > dir->filename_width)
+		dir->filename_width = i;
+	if (flags->display == long_format)
 	{
-		if (entry->d_name[0] == '.' && !info->flags->hidden)
-			continue ;
-		if (!(file = fileinfo_create(entry->d_name)))
-			return (NULL);
-		fileinfo_insert(&info->files, file, get_sort_func(info->flags->sort));
-		if ((i = ft_strlen(file->filename)) > info->filename_width)
-			info->filename_width = i;
-		if (info->flags->display == long_format)
-		{
-			if ((i = ft_strlen(file->snlink)) > info->link_width)
-				info->link_width = i;
-			if ((i = ft_strlen(file->ssize)) > info->size_width)
-				info->size_width = i;
-			if ((i = ft_strlen(file->user)) > info->user_width)
-				info->user_width = i;
-			if ((i = ft_strlen(file->group)) > info->group_width)
-				info->group_width = i;
-		}
+		if ((i = ft_strlen(file->nlink)) > dir->link_width)
+			dir->link_width = i;
+		if ((i = ft_strlen(file->size)) > dir->size_width)
+			dir->size_width = i;
+		if ((i = ft_strlen(file->passwd->pw_name)) > dir->user_width)
+			dir->user_width = i;
+		if ((i = ft_strlen(file->group->gr_name)) > dir->group_width)
+			dir->group_width = i;
 	}
-	closedir(dir);
-	return (info->files);
+	return (1);
 }
 
-void		dirinfo_destroy(t_dirinfo **info)
+static int	dirinfo_single_file(t_dirinfo *dir, t_flags *flags)
 {
-	int	i;
+	t_fileinfo	*file;
 
-	i = -1;
-	while (++i < (*info)->total_dir)
-		dirinfo_destroy(&(*info)->dirs[i]);
-	ft_strdel(&(*info)->path);
-	ft_memdel((void **)info);
+	if (!(file = fileinfo_create(dir->path)))
+		return (0);
+	dir->files = file;
+	dir->filename_width = ft_strlen(file->filename);
+	if (flags->display == long_format)
+	{
+		dir->link_width = ft_strlen(file->nlink);
+		dir->size_width = ft_strlen(file->size);
+		dir->user_width = ft_strlen(file->passwd->pw_name);
+		dir->group_width = ft_strlen(file->group->gr_name);
+	}
+	return (1);
+}
+
+int			dirinfo_aggregate(t_dirinfo *info, t_flags *flags)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+
+	if (!(dir = opendir(info->path)))
+		return (dirinfo_single_file(info, flags));
+	while ((entry = readdir(dir)))
+	{
+		if (entry->d_name[0] == '.' && !flags->hidden)
+			continue ;
+		if (!dirinfo_aggregate_file(info, flags, entry))
+			return (0);
+	}
+	return (!closedir(dir));
 }
