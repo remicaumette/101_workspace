@@ -17,13 +17,21 @@ void	display_directory(t_flags *flags, t_dirinfo *dir)
 {
 	if (flags->display == one_per_line)
 		one_per_line_display(flags, dir->files);
+	if (flags->display == long_format)
+	{
+		ft_putstr("total ");
+		ft_putnbr(dir->total);
+		ft_putchar('\n');
+		long_format_display(flags, dir, dir->files);
+	}
 }
+
 int		list_directory(t_flags *flags, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
 	if (!dirinfo_aggregate(dir, flags))
 	{
-		ft_putstr_fd("ft_ls: ", 2);
+		ft_putstr_fd("ls: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
@@ -31,6 +39,7 @@ int		list_directory(t_flags *flags, t_dirinfo *dir, char *path)
 	}
 	display_directory(flags, dir);
 	fileinfo_recursive_destroy(&dir->files);
+	ft_strdel(&dir->path);
 	return (0);
 }
 

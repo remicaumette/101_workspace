@@ -13,22 +13,31 @@
 
 #include "ft_ls.h"
 
-t_fileinfo	*fileinfo_create(char *filename)
+t_fileinfo	*fileinfo_create(char *path, char *filename)
 {
 	t_fileinfo		*info;
-	struct stat		*stats;
-	struct passwd	*passwd;
-	struct group	*group;
+	char			buf[1024];
+	int				size;
 
 	if (!(info = ft_memalloc(sizeof(t_fileinfo))) ||
 		!(info->filename = ft_strdup(filename)) ||
-		!(stats = ft_memalloc(sizeof(struct stat))) ||
-		lstat(filename, stats) ||
-		!(passwd = getpwuid(stats->st_uid)) ||
-		!(group = getgrgid(stats->st_gid)) ||
-		!(info->size = ft_lltoa(stats->st_size)) ||
-		!(info->nlink = ft_itoa(stats->st_nlink)))
+		!(info->path = path_join(path, filename)) ||
+		!(info->stats = ft_memalloc(sizeof(struct stat))) ||
+		lstat(info->path, info->stats) ||
+		!(info->passwd = getpwuid(info->stats->st_uid)) ||
+		!(info->group = getgrgid(info->stats->st_gid)) ||
+		!(info->size = ft_lltoa(info->stats->st_size)) ||
+		!(info->nlink = ft_itoa(info->stats->st_nlink)))
 		return (NULL);
+	if (S_ISLNK(info->stats->st_mode))
+	{
+		size = readlink(info->path, buf, 1024);
+		if (!(info->link = ft_strnew(size)))
+			return (NULL);
+		ft_strncpy(info->link, buf, size);
+	}
+	else
+		info->link = NULL;
 	info->left = NULL;
 	info->right = NULL;
 	return (info);
@@ -37,6 +46,7 @@ t_fileinfo	*fileinfo_create(char *filename)
 void		fileinfo_destroy(t_fileinfo **info)
 {
 	ft_strdel(&((*info)->filename));
+	ft_strdel(&((*info)->path));
 	ft_strdel(&((*info)->size));
 	ft_strdel(&((*info)->nlink));
 	ft_memdel((void **)&((*info)->stats));
@@ -57,10 +67,13 @@ void		fileinfo_insert(t_flags *flags, t_fileinfo **node, t_fileinfo *info,
 {
 	if (!*node)
 		*node = info;
-	else if (cmp(info, *node) > 0)
-		fileinfo_insert(flags, &(*node)->left, info, cmp);
 	else
-		fileinfo_insert(flags, &(*node)->right, info, cmp);
+	{
+		if (cmp(info, *node) > 0)
+			fileinfo_insert(flags, flags->reverse ? &(*node)->right : &(*node)->left, info, cmp);
+		else
+			fileinfo_insert(flags, flags->reverse ? &(*node)->left : &(*node)->right, info, cmp);
+	}
 }
 
 t_fileinfo	*fileinfo_last(t_fileinfo *node)

@@ -18,7 +18,7 @@ static void	foreach_file(t_dirinfo *dir, t_fileinfo *file)
 		if (file->left)
 			foreach_file(dir, file->left);
 }
-*/
+*//*
 void	vertical_display(t_dirinfo *info)
 {
 	struct winsize	ws;
@@ -35,7 +35,7 @@ void	vertical_display(t_dirinfo *info)
 	for (int i = 0; i < ws.ws_col - 1; i++)
 		ft_putchar(' ');
 	ft_putchar('\n');
-}
+}*/
 /*
 static void	print(t_dirinfo *dir, t_fileinfo *file)
 {

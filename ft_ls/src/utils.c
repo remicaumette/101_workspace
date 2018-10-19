@@ -35,9 +35,9 @@ static void			parse_flag(t_flags *flags, char c)
 		flags->display = with_commas;
 	else
 	{
-		ft_putstr_fd("ft_ls: illegal option -- ", 2);
+		ft_putstr_fd("ls: illegal option -- ", 2);
 		ft_putchar_fd(c, 2);
-		ft_putstr_fd("\nusage: ft_ls [-trRlaC1] [file ...]\n", 2);
+		ft_putstr_fd("\nusage: ft_ls [-tSrRal1Cm] [file ...]\n", 2);
 		exit(1);
 	}
 }
@@ -61,4 +61,22 @@ void				parse_flags(t_flags *flags, char **argv)
 		while (argv[i][++j])
 			parse_flag(flags, argv[i][j]);
 	}
+}
+
+char				*path_join(char *path, char *filename)
+{
+	char	*str;
+	char	*tmp;
+
+	if (!path)
+		return (ft_strdup(filename));
+	if (!(str = ft_strnew(ft_strlen(path) + ft_strlen(filename) + 1)))
+		return (NULL);
+	tmp = str;
+	while (*path)
+		*tmp++ = *path++;
+	*tmp++ = '/';
+	while (*filename)
+		*tmp++ = *filename++;
+	return (str);
 }

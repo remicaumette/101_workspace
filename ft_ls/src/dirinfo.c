@@ -17,7 +17,6 @@ void		dirinfo_init(t_dirinfo *dir, char *path)
 {
 	dir->path = ft_strdup(path);
 	dir->total = 0;
-	dir->total_dir = 0;
 	dir->size_width = 0;
 	dir->user_width = 0;
 	dir->group_width = 0;
@@ -31,9 +30,10 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_flags *flags, struct dirent 
 	t_fileinfo		*file;
 	int				i;
 
-	if (!(file = fileinfo_create(entry->d_name)))
+	if (!(file = fileinfo_create(dir->path, entry->d_name)))
 		return (0);
 	fileinfo_insert(flags, &dir->files, file, get_sort_func(flags->sort));
+	dir->total += (int)file->stats->st_blocks;
 	if ((i = ft_strlen(file->filename)) > dir->filename_width)
 		dir->filename_width = i;
 	if (flags->display == long_format)
@@ -54,7 +54,7 @@ static int	dirinfo_single_file(t_dirinfo *dir, t_flags *flags)
 {
 	t_fileinfo	*file;
 
-	if (!(file = fileinfo_create(dir->path)))
+	if (!(file = fileinfo_create(NULL, dir->path)))
 		return (0);
 	dir->files = file;
 	dir->filename_width = ft_strlen(file->filename);

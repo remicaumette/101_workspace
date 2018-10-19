@@ -17,6 +17,8 @@ sort_func	get_sort_func(t_sort sort)
 {
 	if (sort == sort_size)
 		return sort_by_size;
+	if (sort == sort_time)
+		return sort_by_time;
 	return (sort_by_name);
 }
 
@@ -30,5 +32,13 @@ int			sort_by_size(t_fileinfo *f1, t_fileinfo *f2)
 	int	i;
 
 	i = f2->stats->st_size - f1->stats->st_size;
+	return (i ? i : sort_by_name(f1, f2));
+}
+
+int			sort_by_time(t_fileinfo *f1, t_fileinfo *f2)
+{
+	int	i;
+
+	i = f2->stats->st_mtime - f1->stats->st_mtime;
 	return (i ? i : sort_by_name(f1, f2));
 }
