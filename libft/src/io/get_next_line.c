@@ -13,11 +13,11 @@
 
 #include "libft.h"
 
-static t_file	*file_add(t_file **begin, int fd)
+static t_gnl	*file_add(t_gnl **begin, int fd)
 {
-	t_file	*file;
+	t_gnl	*file;
 
-	if ((file = (t_file *)ft_memalloc(sizeof(t_file))) == NULL)
+	if ((file = ft_memalloc(sizeof(t_gnl))) == NULL)
 		return (NULL);
 	file->fd = fd;
 	file->content = NULL;
@@ -25,9 +25,9 @@ static t_file	*file_add(t_file **begin, int fd)
 	return (*begin = file);
 }
 
-static t_file	*file_find_or_add(t_file **begin, const int fd)
+static t_gnl	*file_find_or_add(t_gnl **begin, const int fd)
 {
-	t_file	*file;
+	t_gnl	*file;
 
 	file = *begin;
 	while (file)
@@ -38,7 +38,7 @@ static t_file	*file_find_or_add(t_file **begin, const int fd)
 	return (file_add(begin, fd));
 }
 
-static int		append(t_file *file, char *buf)
+static int		append(t_gnl *file, char *buf)
 {
 	char	*tmp;
 
@@ -54,13 +54,19 @@ static int		append(t_file *file, char *buf)
 	return (1);
 }
 
-static int		has_next_line(t_file *file, char *delimiter,
+static int		has_next_line(t_gnl *file, char *delimiter,
 	char **line, int readed)
 {
 	char	*tmp;
-
-	if (readed == -1 || (delimiter == NULL && file->content[0] == 0))
-		return (readed == -1 ? -1 : 0);
+	
+	if (readed == -1)
+		return (-1);
+	if (!file->content || (delimiter == NULL && file->content[0] == 0))
+	{
+		ft_strdel(&(file->content));
+		ft_memdel((void **)&file);
+		return (0);
+	}
 	if (!delimiter)
 	{
 		if ((*line = ft_strdup(file->content)) == NULL)
@@ -80,8 +86,8 @@ static int		has_next_line(t_file *file, char *delimiter,
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_file	*files = NULL;
-	t_file			*curr;
+	static t_gnl	*files = NULL;
+	t_gnl			*curr;
 	char			buf[BUFF_SIZE + 1];
 	int				readed;
 	char			*delimiter;
@@ -97,7 +103,5 @@ int				get_next_line(const int fd, char **line)
 		if ((delimiter = ft_strchr(curr->content, '\n')) != NULL)
 			return (has_next_line(curr, delimiter, line, readed));
 	}
-	if (!curr->content)
-		return (0);
 	return (has_next_line(curr, ft_strchr(curr->content, '\n'), line, readed));
 }

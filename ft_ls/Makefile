@@ -1,6 +1,7 @@
 NAME=ft_ls
+LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -Iinclude -Ilibft/include -g -fsanitize=address
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g
 SOURCES=\
 	src/display/long_format.c	\
 	src/display/many_per_line.c	\
@@ -17,15 +18,15 @@ OBJECTS=$(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	# @make -s -C libft
-	gcc -Llibft -lft -o $(NAME) $(OBJECTS) -g -fsanitize=address
+	@make -s -C $(LIBFT)
+	gcc $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJECTS)
 
 clean:
-	# @make -C libft clean
+	@make -s -C $(LIBFT) clean
 	rm -f $(OBJECTS)
 
 fclean: clean
-	# @make -C libft fclean
+	@make -s -C $(LIBFT) fclean
 	rm -f $(NAME)
 
 re: fclean all

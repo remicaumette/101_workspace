@@ -26,7 +26,7 @@ char	*ft_itoa(int n)
 	if ((s = ft_strnew(size)) == NULL)
 		return (NULL);
 	curr = n;
-	while (size-- >= (curr < 0))
+	while (--size >= (curr < 0))
 	{
 		s[size] = (curr < 0 ? -(curr % 10) : (curr % 10)) + '0';
 		curr /= 10;

@@ -13,15 +13,15 @@
 
 #ifndef IO_H
 # define IO_H
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 4096
 # include <unistd.h>
 
-typedef struct	s_file
+typedef struct	s_gnl
 {
 	int				fd;
 	char			*content;
-	struct s_file	*next;
-}				t_file;
+	struct s_gnl	*next;
+}				t_gnl;
 
 int				get_next_line(const int fd, char **line);
 void			ft_putchar_fd(char c, int fd);
