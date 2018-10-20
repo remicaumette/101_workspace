@@ -61,14 +61,14 @@ static void parse_date(t_fileinfo *file, char *str, int *cursor)
 	ft_memdel((void **)tmp);
 }
 
-static void	print_line(t_flags *flags, t_dirinfo *dir, t_fileinfo *file)
+static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 {
 	char		str[34 + dir->link_width + dir->user_width + dir->group_width
 		+ dir->size_width + ft_strlen(file->filename) +
 		(file->link ? (ft_strlen(file->link) + 4) : 0)];
 	int			cursor;
 
-	(void)flags;
+	(void)options;
 	cursor = 0;
 	parse_permissions(file, str, &cursor);
 	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2);
@@ -88,11 +88,11 @@ static void	print_line(t_flags *flags, t_dirinfo *dir, t_fileinfo *file)
 	ft_putstr(str);
 }
 
-void		long_format_display(t_flags *flags, t_dirinfo *dir, t_fileinfo *file)
+void		long_format_display(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 {
 	if (file->right)
-		long_format_display(flags, dir, file->right);
-	print_line(flags, dir, file);
+		long_format_display(options, dir, file->right);
+	print_line(options, dir, file);
 	if (file->left)
-		long_format_display(flags, dir, file->left);
+		long_format_display(options, dir, file->left);
 }

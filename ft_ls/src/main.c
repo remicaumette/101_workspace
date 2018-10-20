@@ -12,32 +12,35 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-void	display_directory(t_flags *flags, t_dirinfo *dir)
+# include <stdio.h>
+void	display_directory(t_options *options, t_dirinfo *dir)
 {
-	if (flags->display == one_per_line)
-		one_per_line_display(flags, dir->files);
-	if (flags->display == long_format)
+	if (options->args_count > 1 || options->paths_curr >= 0)
+	{
+		ft_putstr(dir->path);
+		ft_putstr(":\n");
+	}
+	if (options->display == one_per_line)
+		one_per_line_display(options, dir->files);
+	if (options->display == long_format)
 	{
 		ft_putstr("total ");
 		ft_putnbr(dir->total);
 		ft_putchar('\n');
-		long_format_display(flags, dir, dir->files);
+		long_format_display(options, dir, dir->files);
 	}
+	if (options->args_curr + 1 < options->args_count ||
+		options->paths_curr + 1 < options->paths_count)
+		ft_putchar('\n');
 }
 
-int		list_directory(t_flags *flags, t_dirinfo *dir, char *path)
+int		list_directory(t_options *options, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
-	if (!dirinfo_aggregate(dir, flags))
-	{
-		ft_putstr_fd("ls: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+	if (!dirinfo_aggregate(dir, options))
 		return (1);
-	}
-	display_directory(flags, dir);
+	strarr_sort(options->paths, options->reverse);
+	display_directory(options, dir);
 	fileinfo_recursive_destroy(&dir->files);
 	ft_strdel(&dir->path);
 	return (0);
@@ -45,22 +48,23 @@ int		list_directory(t_flags *flags, t_dirinfo *dir, char *path)
 
 int		main(int argc, char **argv)
 {
-	t_flags			flags;
-	t_dirinfo		dir;
-	int				i;
-	int				status;
+	t_options	options;
+	t_dirinfo	dir;
+	int			status;
 
-	parse_flags(&flags, argv);
-	i = 0;
-	status = 0;
-	while (++i < argc)
-		if (argv[i][0] != '-')
-			break ;
-	i--;
-	if ((i + 1) == argc)
-		status = list_directory(&flags, &dir, ".");
-	else
-		while (++i < argc)
-			status |= list_directory(&flags, &dir, argv[i]);
+	(void)argc;
+	status = options_init(&options, argv);
+	options.args_curr = -1;
+	if (!options.args)
+		options.args = strarr_add(options.args, ".");
+	while (options.args[++options.args_curr])
+	{
+		options.paths_curr = -1;
+		status |= list_directory(&options, &dir, options.args[options.args_curr]);
+		while (options.paths && options.paths[++options.paths_curr])
+			status |= list_directory(&options, &dir, options.paths[options.paths_curr]);
+		// todo free dir
+	}
+	// todo free path
 	return (status);
 }

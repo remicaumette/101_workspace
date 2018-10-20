@@ -13,57 +13,7 @@
 
 #include "ft_ls.h"
 
-static void			parse_flag(t_flags *flags, char c)
-{
-	if (c == 't')
-		flags->sort = sort_time;
-	else if (c == 'S')
-		flags->sort = sort_size;
-	else if (c == 'r')
-		flags->reverse = 1;
-	else if (c == 'R')
-		flags->recursive = 1;
-	else if (c == 'a')
-		flags->hidden = 1;
-	else if (c == 'l')
-		flags->display = long_format;
-	else if (c == '1')
-		flags->display = one_per_line;
-	else if (c == 'C')
-		flags->display = many_per_line;
-	else if (c == 'm')
-		flags->display = with_commas;
-	else
-	{
-		ft_putstr_fd("ls: illegal option -- ", 2);
-		ft_putchar_fd(c, 2);
-		ft_putstr_fd("\nusage: ft_ls [-tSrRal1Cm] [file ...]\n", 2);
-		exit(1);
-	}
-}
-
-void				parse_flags(t_flags *flags, char **argv)
-{
-	int	i;
-	int	j;
-
-	flags->display = vertical;
-	flags->hidden = 0;
-	flags->recursive = 0;
-	flags->reverse = 0;
-	flags->sort = sort_name;
-	i = 0;
-	while (argv[++i])
-	{
-		j = 0;
-		if (argv[i][j] != '-')
-			break ;
-		while (argv[i][++j])
-			parse_flag(flags, argv[i][j]);
-	}
-}
-
-char				*path_join(char *path, char *filename)
+char	*path_join(char *path, char *filename)
 {
 	char	*str;
 	char	*tmp;
@@ -79,4 +29,51 @@ char				*path_join(char *path, char *filename)
 	while (*filename)
 		*tmp++ = *filename++;
 	return (str);
+}
+
+char	**strarr_add(char **arr, char *elem)
+{
+	char	**tmp;
+	int		len;
+	int		i;
+
+	len = 0;
+	while (arr && arr[len])
+		len++;
+	if (!(tmp = ft_memalloc(sizeof(*tmp) * (len + 2))))
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		tmp[i] = arr[i];
+	tmp[i++] = ft_strdup(elem);
+	tmp [i] = NULL;
+	ft_memdel((void **)&arr);
+	return (tmp);
+}
+
+void	strarr_sort(char **arr, int reverse)
+{
+	int		i;
+	int		j;
+	char	*buf;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+		i++;
+	while (--i > 0)
+	{
+		j = -1;
+		while (++j < i)
+		{
+			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
+				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
+			{
+				buf = arr[i];
+				arr[i] = arr[j];
+				arr[j] = buf;
+			}
+		}
+	}
 }
