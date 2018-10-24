@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 15:37:09 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 19:37:34 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,7 +82,7 @@ void		fileinfo_insert(t_options *options, t_fileinfo **node,
 
 t_fileinfo	*fileinfo_last(t_fileinfo *node)
 {
-	if (!node->right)
+	if (!node->left)
 		return (node);
-	return (fileinfo_last(node->right));
+	return (fileinfo_last(node->left));
 }

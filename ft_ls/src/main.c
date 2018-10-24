@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 17:16:24 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 15:36:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 19:52:12 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,16 +20,14 @@ void	display_directory(t_options *options, t_dirinfo *dir)
 		ft_putstr(dir->path);
 		ft_putstr(":\n");
 	}
-	if (options->display == one_per_line)
-		one_per_line_display(options, dir->files);
-	if (options->display == long_format)
+	if (options->display == long_format_display && dir->total != -1)
 	{
 		ft_putstr("total ");
 		ft_putnbr(dir->total);
 		ft_putchar('\n');
-		if (dir->files)
-			long_format_display(options, dir, dir->files);
 	}
+	if (dir->files)
+		options->display(options, dir, dir->files, fileinfo_last(dir->files));
 	if (options->args_curr + 1 < options->args_count ||
 		options->paths_curr + 1 < options->paths_count)
 		ft_putchar('\n');

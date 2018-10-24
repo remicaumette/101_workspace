@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 18:54:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 20:32:35 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,37 +22,6 @@
 # include <errno.h>
 # include <string.h>
 # include <sys/ioctl.h>
-
-typedef enum	e_display
-{
-	vertical,
-	long_format,
-	one_per_line,
-	many_per_line,
-	with_commas,
-}				t_display;
-
-typedef enum	e_sort
-{
-	sort_name,
-	sort_size,
-	sort_time,
-}				t_sort;
-
-typedef struct	s_options
-{
-	t_display	display;
-	t_sort		sort;
-	int			reverse;
-	int			recursive;
-	int			hidden;
-	char		**paths;
-	int			paths_curr;
-	int			paths_count;
-	char		**args;
-	int			args_curr;
-	int			args_count;
-}				t_options;
 
 typedef struct	s_fileinfo
 {
@@ -82,6 +51,29 @@ typedef struct	s_dirinfo
 
 typedef int		(*t_sort_func)(t_fileinfo *, t_fileinfo *);
 
+typedef struct	s_options
+{
+	t_sort_func		sort;
+	void			(*display)(struct s_options *, t_dirinfo *,
+						t_fileinfo *, t_fileinfo *);
+	int				slash;
+	int				color;
+	int				reverse;
+	int				recursive;
+	int				hidden;
+	int				width;
+	int				width_curr;
+	char			**paths;
+	int				paths_curr;
+	int				paths_count;
+	char			**args;
+	int				args_curr;
+	int				args_count;
+}				t_options;
+
+typedef void	(*t_display_func)(t_options *, t_dirinfo *,
+					t_fileinfo *, t_fileinfo *);
+
 char			*path_join(char *path, char *filename);
 char			**strarr_add(char **arr, char *elem);
 void			strarr_sort(char **arr, int reverse);
@@ -101,12 +93,14 @@ t_fileinfo		*fileinfo_last(t_fileinfo *node);
 void			dirinfo_init(t_dirinfo *dir, char *path);
 int				dirinfo_aggregate(t_dirinfo *dir, t_options *options);
 
-t_sort_func		get_sort_func(t_sort sort);
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_time(t_fileinfo *f1, t_fileinfo *f2);
 
-void			one_per_line_display(t_options *options, t_fileinfo *file);
+void			one_per_line_display(t_options *options, t_dirinfo *dir,
+					t_fileinfo *file, t_fileinfo *last);
 void			long_format_display(t_options *options, t_dirinfo *dir,
-					t_fileinfo *file);
+					t_fileinfo *file, t_fileinfo *last);
+void			vertical_display(t_options *options, t_dirinfo *dir,
+					t_fileinfo *file, t_fileinfo *last);
 #endif

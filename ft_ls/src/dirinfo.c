@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 15:35:42 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 19:50:36 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,14 +61,12 @@ static int	dirinfo_single_file(t_dirinfo *dir, t_options *options)
 	if (!(file = fileinfo_create(NULL, dir->path)))
 		return (0);
 	dir->files = file;
+	dir->total = -1;
 	dir->filename_width = ft_strlen(file->filename);
-	if (options->display == long_format)
-	{
-		dir->link_width = ft_strlen(file->nlink);
-		dir->size_width = ft_strlen(file->size);
-		dir->user_width = ft_strlen(file->owner);
-		dir->group_width = ft_strlen(file->group);
-	}
+	dir->link_width = ft_strlen(file->nlink);
+	dir->size_width = ft_strlen(file->size);
+	dir->user_width = ft_strlen(file->owner);
+	dir->group_width = ft_strlen(file->group);
 	return (1);
 }
 
