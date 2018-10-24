@@ -33,27 +33,7 @@ char	*path_join(char *path, char *filename)
 	return (str);
 }
 
-char	**strarr_add(char **arr, char *elem)
-{
-	char	**tmp;
-	int		len;
-	int		i;
-
-	len = 0;
-	while (arr && arr[len])
-		len++;
-	if (!(tmp = ft_memalloc(sizeof(*tmp) * (len + 2))))
-		return (NULL);
-	i = -1;
-	while (++i < len)
-		tmp[i] = arr[i];
-	tmp[i++] = ft_strdup(elem);
-	tmp[i] = NULL;
-	ft_memdel((void **)&arr);
-	return (tmp);
-}
-
-void	strarr_sort(char **arr, int reverse)
+void	ft_strarr_sort(char **arr, int reverse)
 {
 	int		i;
 	int		j;
@@ -73,16 +53,6 @@ void	strarr_sort(char **arr, int reverse)
 				arr[i] = arr[j];
 				arr[j] = buf;
 			}
-}
-
-void	strarr_del(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr && arr[++i])
-		ft_strdel(&arr[i]);
-	ft_memdel((void **)&arr);
 }
 
 void	stradd_formatted(char *str, char *content, int *cursor, int width)

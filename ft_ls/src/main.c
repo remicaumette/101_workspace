@@ -13,7 +13,17 @@
 
 #include "ft_ls.h"
 
-void	display_directory(t_options *options, t_dirinfo *dir)
+static void	display_file(t_options *options, t_dirinfo *dir, t_fileinfo *file,
+	t_fileinfo *last)
+{
+	if (file->right)
+		display_file(options, dir, file->right, last);
+	options->display(options, dir, file, last);
+	if (file->left)
+		display_file(options, dir, file->left, last);
+}
+
+static void	display_directory(t_options *options, t_dirinfo *dir)
 {
 	if (options->args_count > 1 || options->paths_curr >= 0)
 	{
@@ -27,18 +37,18 @@ void	display_directory(t_options *options, t_dirinfo *dir)
 		ft_putchar('\n');
 	}
 	if (dir->files)
-		options->display(options, dir, dir->files, fileinfo_last(dir->files));
+		display_file(options, dir, dir->files, fileinfo_last(dir->files));
 	if (options->args_curr + 1 < options->args_count ||
 		options->paths_curr + 1 < options->paths_count)
 		ft_putchar('\n');
 }
 
-int		list_directory(t_options *options, t_dirinfo *dir, char *path)
+static int	list_directory(t_options *options, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
 	if (!dirinfo_aggregate(dir, options))
 		return (1);
-	strarr_sort(options->paths, options->reverse);
+	ft_strarr_sort(options->paths, options->reverse);
 	display_directory(options, dir);
 	fileinfo_recursive_destroy(&dir->files);
 	ft_strdel(&dir->path);
@@ -55,7 +65,7 @@ int		main(int argc, char **argv)
 	status = options_init(&options, argv);
 	options.args_curr = -1;
 	if (!options.args)
-		options.args = strarr_add(options.args, ".");
+		options.args = ft_strarr_add(options.args, ".");
 	while (options.args[++options.args_curr])
 	{
 		options.paths_curr = -1;
@@ -65,9 +75,9 @@ int		main(int argc, char **argv)
 		while (options.paths && options.paths[++options.paths_curr])
 			status |= list_directory(&options, &dir,
 				options.paths[options.paths_curr]);
-		strarr_del(options.paths);
+		ft_strarr_del(options.paths);
 		options.paths = NULL;
 	}
-	strarr_del(options.args);
+	ft_strarr_del(options.args);
 	return (status);
 }

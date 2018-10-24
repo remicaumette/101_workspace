@@ -33,12 +33,12 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
 
 	if (!(file = fileinfo_create(dir->path, entry->d_name)))
 		return (0);
-	fileinfo_insert(options, &dir->files, file, get_sort_func(options->sort));
+	fileinfo_insert(options, &dir->files, file);
 	dir->total += (int)file->stats->st_blocks;
 	if (options->recursive && S_ISDIR(file->stats->st_mode) &&
 		!ft_strequ(file->filename, ".") && !ft_strequ(file->filename, ".."))
 	{
-		options->paths = strarr_add(options->paths, file->path);
+		options->paths = ft_strarr_add(options->paths, file->path);
 		options->paths_count++;
 	}
 	if ((i = ft_strlen(file->filename)) > dir->filename_width)
@@ -54,7 +54,7 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
 	return (1);
 }
 
-static int	dirinfo_single_file(t_dirinfo *dir, t_options *options)
+static int	dirinfo_single_file(t_dirinfo *dir)
 {
 	t_fileinfo	*file;
 
@@ -76,7 +76,7 @@ int			dirinfo_aggregate(t_dirinfo *info, t_options *options)
 	struct dirent	*entry;
 
 	if (!(dir = opendir(info->path)))
-		return (dirinfo_single_file(info, options));
+		return (dirinfo_single_file(info));
 	while ((entry = readdir(dir)))
 	{
 		if (entry->d_name[0] == '.' && !options->hidden)

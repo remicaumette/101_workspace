@@ -39,8 +39,8 @@ static void	parse_date(t_fileinfo *file, char *str, int *cursor)
 
 	if (!(tmp = ft_strsplit(ctime(&file->stats->st_mtime), ' ')))
 		exit(1);
-	stradd_formatted(str, tmp[1], cursor, 4);
 	stradd_formatted(str, tmp[2], cursor, 3);
+	stradd_formatted(str, tmp[1], cursor, 4);
 	str[(*cursor)++] = ' ';
 	i = -1;
 	if (time(NULL) - file->stats->st_mtime > 15768000)
@@ -66,11 +66,13 @@ static int	get_size(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 		(file->link ? (ft_strlen(file->link) + 4) : 0));
 }
 
-static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
+void		long_format_display(t_options *options, t_dirinfo *dir,
+	t_fileinfo *file, t_fileinfo *last)
 {
 	int		cursor;
 	char	str[get_size(options, dir, file)];
 
+	(void)last;
 	cursor = 0;
 	parse_permissions(file, str, &cursor);
 	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2);
@@ -88,14 +90,4 @@ static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 	str[cursor++] = '\n';
 	str[cursor] = 0;
 	ft_putstr(str);
-}
-
-void		long_format_display(t_options *options, t_dirinfo *dir,
-	t_fileinfo *file)
-{
-	if (file->right)
-		long_format_display(options, dir, file->right);
-	print_line(options, dir, file);
-	if (file->left)
-		long_format_display(options, dir, file->left);
 }

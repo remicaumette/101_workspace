@@ -65,7 +65,7 @@ static int	options_process_arg(t_options *options, char *arg, int *started)
 		}
 		else
 		{
-			options->args = strarr_add(options->args, arg);
+			options->args = ft_strarr_add(options->args, arg);
 			options->args_count++;
 		}
 	}
@@ -86,7 +86,7 @@ static int	options_process(t_options *options, char **argv)
 	i = 0;
 	while (argv[++i])
 		status |= options_process_arg(options, argv[i], &started);
-	strarr_sort(options->args, options->reverse);
+	ft_strarr_sort(options->args, options->reverse);
 	return (status);
 }
 

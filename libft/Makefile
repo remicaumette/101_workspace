@@ -28,6 +28,9 @@ SOURCES=\
 	src/strconv/ft_itoa.c				\
 	src/strconv/ft_lltoa.c				\
 	src/strconv/ft_ltoa.c				\
+	src/string/ft_strarr_add.c			\
+	src/string/ft_strarr_del.c			\
+	src/string/ft_strarr_len.c			\
 	src/string/ft_strcat.c				\
 	src/string/ft_strchr.c				\
 	src/string/ft_strclr.c				\

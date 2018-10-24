@@ -13,7 +13,6 @@
 
 #include "ft_ls.h"
 
-#include <stdio.h>
 static void	print_file(t_options *options, t_dirinfo *dir, t_fileinfo *file, t_fileinfo *last)
 {
 	char	s[dir->filename_width + 2];
@@ -24,7 +23,6 @@ static void	print_file(t_options *options, t_dirinfo *dir, t_fileinfo *file, t_f
 	i = -1;
 	while (file->filename[++i])
 		s[i] = file->filename[i];
-	// printf("%d %d %d\n", options->width, options->width_curr, options->width_curr + dir->filename_width + 1);
 	if (file != last && options->width > options->width_curr + ((dir->filename_width + 1) * 2))
 	{
 		--i;

@@ -75,9 +75,7 @@ typedef void	(*t_display_func)(t_options *, t_dirinfo *,
 					t_fileinfo *, t_fileinfo *);
 
 char			*path_join(char *path, char *filename);
-char			**strarr_add(char **arr, char *elem);
-void			strarr_sort(char **arr, int reverse);
-void			strarr_del(char **arr);
+void			ft_strarr_sort(char **arr, int reverse);
 void			stradd_formatted(char *str, char *content,
 					int *cursor, int width);
 
@@ -87,7 +85,7 @@ t_fileinfo		*fileinfo_create(char *path, char *filename);
 void			fileinfo_destroy(t_fileinfo **info);
 void			fileinfo_recursive_destroy(t_fileinfo **info);
 void			fileinfo_insert(t_options *options, t_fileinfo **node,
-					t_fileinfo *info, t_sort_func cmp);
+					t_fileinfo *info);
 t_fileinfo		*fileinfo_last(t_fileinfo *node);
 
 void			dirinfo_init(t_dirinfo *dir, char *path);

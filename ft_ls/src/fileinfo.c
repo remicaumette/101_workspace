@@ -65,18 +65,18 @@ void		fileinfo_recursive_destroy(t_fileinfo **info)
 }
 
 void		fileinfo_insert(t_options *options, t_fileinfo **node,
-	t_fileinfo *info, t_sort_func cmp)
+	t_fileinfo *info)
 {
 	if (!*node)
 		*node = info;
 	else
 	{
-		if (cmp(info, *node) > 0)
+		if (options->sort(info, *node) > 0)
 			fileinfo_insert(options, options->reverse ?
-				&(*node)->right : &(*node)->left, info, cmp);
+				&(*node)->right : &(*node)->left, info);
 		else
 			fileinfo_insert(options, options->reverse ?
-				&(*node)->left : &(*node)->right, info, cmp);
+				&(*node)->left : &(*node)->right, info);
 	}
 }
 
