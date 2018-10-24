@@ -12,7 +12,7 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-# include <stdio.h>
+
 void	display_directory(t_options *options, t_dirinfo *dir)
 {
 	if (options->args_count > 1 || options->paths_curr >= 0)
@@ -27,7 +27,8 @@ void	display_directory(t_options *options, t_dirinfo *dir)
 		ft_putstr("total ");
 		ft_putnbr(dir->total);
 		ft_putchar('\n');
-		long_format_display(options, dir, dir->files);
+		if (dir->files)
+			long_format_display(options, dir, dir->files);
 	}
 	if (options->args_curr + 1 < options->args_count ||
 		options->paths_curr + 1 < options->paths_count)
@@ -60,11 +61,13 @@ int		main(int argc, char **argv)
 	while (options.args[++options.args_curr])
 	{
 		options.paths_curr = -1;
+		options.paths_count = 0;
 		status |= list_directory(&options, &dir, options.args[options.args_curr]);
 		while (options.paths && options.paths[++options.paths_curr])
 			status |= list_directory(&options, &dir, options.paths[options.paths_curr]);
-		// todo free dir
+		strarr_del(options.paths);
+		options.paths = NULL;
 	}
-	// todo free path
+	strarr_del(options.args);
 	return (status);
 }

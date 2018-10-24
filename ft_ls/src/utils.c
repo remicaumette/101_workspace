@@ -47,7 +47,7 @@ char	**strarr_add(char **arr, char *elem)
 		tmp[i] = arr[i];
 	tmp[i++] = ft_strdup(elem);
 	tmp [i] = NULL;
-	ft_memdel((void **)&arr);
+	free(arr);
 	return (tmp);
 }
 
@@ -76,4 +76,14 @@ void	strarr_sort(char **arr, int reverse)
 			}
 		}
 	}
+}
+
+void			strarr_del(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr && arr[++i])
+		ft_strdel(&arr[i]);
+	free(arr);
 }

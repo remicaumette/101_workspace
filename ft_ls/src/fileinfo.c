@@ -24,11 +24,13 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 		!(info->path = path_join(path, filename)) ||
 		!(info->stats = ft_memalloc(sizeof(struct stat))) ||
 		lstat(info->path, info->stats) ||
-		!(info->passwd = getpwuid(info->stats->st_uid)) ||
-		!(info->group = getgrgid(info->stats->st_gid)) ||
 		!(info->size = ft_lltoa(info->stats->st_size)) ||
 		!(info->nlink = ft_itoa(info->stats->st_nlink)))
 		return (NULL);
+	// !(info->owner = ft_strdup(getpwuid(info->stats->st_uid)->pw_name)) ||
+	//	!(info->group = ft_strdup(getgrgid(info->stats->st_gid)->gr_name)) ||
+	info->owner = ft_strdup("ok"); 
+	info->group = ft_strdup("ok"); 
 	if (S_ISLNK(info->stats->st_mode))
 	{
 		size = readlink(info->path, buf, 1024);
@@ -49,6 +51,8 @@ void		fileinfo_destroy(t_fileinfo **info)
 	ft_strdel(&((*info)->path));
 	ft_strdel(&((*info)->size));
 	ft_strdel(&((*info)->nlink));
+	ft_strdel(&((*info)->owner));
+	ft_strdel(&((*info)->group));
 	ft_memdel((void **)&((*info)->stats));
 	ft_memdel((void **)info);
 }

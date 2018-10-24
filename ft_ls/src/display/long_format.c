@@ -39,7 +39,6 @@ static void parse_date(t_fileinfo *file, char *str, int *cursor)
 	char	**tmp;
 	int		i;
 
-	// tmp[4] == annee si + 6 mois
 	if (!(tmp = ft_strsplit(ctime(&file->stats->st_mtime), ' ')))
 		exit(1);
 	stradd_formatted(str, tmp[2], cursor, 3);
@@ -58,7 +57,7 @@ static void parse_date(t_fileinfo *file, char *str, int *cursor)
 	i = -1;
 	while (tmp[++i])
 		ft_strdel(&tmp[i]);
-	ft_memdel((void **)tmp);
+	free(tmp);
 }
 
 static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
@@ -72,8 +71,8 @@ static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 	cursor = 0;
 	parse_permissions(file, str, &cursor);
 	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2);
-	stradd_formatted(str, file->passwd->pw_name, &cursor, dir->user_width + 1);
-	stradd_formatted(str, file->group->gr_name, &cursor, dir->group_width + 2);
+	stradd_formatted(str, file->owner, &cursor, dir->user_width + 1);
+	stradd_formatted(str, file->group, &cursor, dir->group_width + 2);
 	stradd_formatted(str, file->size, &cursor, dir->size_width + 2);
 	parse_date(file, str, &cursor);
 	str[cursor++] = ' ';

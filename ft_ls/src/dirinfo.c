@@ -25,7 +25,8 @@ void		dirinfo_init(t_dirinfo *dir, char *path)
 	dir->files = NULL;
 }
 
-static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options, struct dirent *entry)
+static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
+	struct dirent *entry)
 {
 	t_fileinfo		*file;
 	int				i;
@@ -48,9 +49,9 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options, struct dir
 			dir->link_width = i;
 		if ((i = ft_strlen(file->size)) > dir->size_width)
 			dir->size_width = i;
-		if ((i = ft_strlen(file->passwd->pw_name)) > dir->user_width)
+		if ((i = ft_strlen(file->owner)) > dir->user_width)
 			dir->user_width = i;
-		if ((i = ft_strlen(file->group->gr_name)) > dir->group_width)
+		if ((i = ft_strlen(file->group)) > dir->group_width)
 			dir->group_width = i;
 	}
 	return (1);
@@ -68,8 +69,8 @@ static int	dirinfo_single_file(t_dirinfo *dir, t_options *options)
 	{
 		dir->link_width = ft_strlen(file->nlink);
 		dir->size_width = ft_strlen(file->size);
-		dir->user_width = ft_strlen(file->passwd->pw_name);
-		dir->group_width = ft_strlen(file->group->gr_name);
+		dir->user_width = ft_strlen(file->owner);
+		dir->group_width = ft_strlen(file->group);
 	}
 	return (1);
 }

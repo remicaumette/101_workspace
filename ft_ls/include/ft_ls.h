@@ -61,9 +61,9 @@ typedef struct	s_fileinfo
 	char				*nlink;
 	char				*size;
 	char				*link;
+	char				*owner;
+	char				*group;
 	struct stat			*stats;
-	struct passwd		*passwd;
-	struct group		*group;
 	struct s_fileinfo	*left;
 	struct s_fileinfo	*right;
 }				t_fileinfo;
@@ -85,6 +85,7 @@ typedef			int (*sort_func)(t_fileinfo *, t_fileinfo *);
 char			*path_join(char *path, char *filename);
 char			**strarr_add(char **arr, char *elem);
 void			strarr_sort(char **arr, int reverse);
+void			strarr_del(char **arr);
 
 int				options_init(t_options *options, char **argv);
 

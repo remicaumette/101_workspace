@@ -29,7 +29,7 @@ all: \$(NAME)
 
 \$(NAME): \$(OBJECTS)
 	@make -s -C \$(LIBFT)
-	gcc \$(CFLAGS) -L\$(LIBFT) -lft -o \$(NAME) \$(OBJECTS)
+	\$(CC) \$(CFLAGS) -L\$(LIBFT) -lft -o \$(NAME) \$(OBJECTS)
 
 clean:
 	@make -s -C \$(LIBFT) clean

@@ -1,7 +1,7 @@
 NAME=ft_ls
 LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g # -fsanitize=address
 SOURCES=\
 	src/display/long_format.c	\
 	src/display/many_per_line.c	\
@@ -20,7 +20,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	@make -s -C $(LIBFT)
-	gcc $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJECTS)
+	$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJECTS)
 
 clean:
 	@make -s -C $(LIBFT) clean
