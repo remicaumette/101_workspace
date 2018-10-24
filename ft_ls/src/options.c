@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   options.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/10/24 15:35:01 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/24 15:38:20 by rcaumett    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 static void	options_parse_flag(t_options *options, char c)
@@ -58,7 +71,7 @@ static int	options_process_arg(t_options *options, char *arg, int *started)
 	return (0);
 }
 
-int		options_init(t_options *options, char **argv)
+int			options_init(t_options *options, char **argv)
 {
 	int	started;
 	int	status;

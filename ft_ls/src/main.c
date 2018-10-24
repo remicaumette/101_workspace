@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 17:16:24 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 18:13:55 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 15:36:29 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,9 +62,11 @@ int		main(int argc, char **argv)
 	{
 		options.paths_curr = -1;
 		options.paths_count = 0;
-		status |= list_directory(&options, &dir, options.args[options.args_curr]);
+		status |= list_directory(&options, &dir,
+			options.args[options.args_curr]);
 		while (options.paths && options.paths[++options.paths_curr])
-			status |= list_directory(&options, &dir, options.paths[options.paths_curr]);
+			status |= list_directory(&options, &dir,
+				options.paths[options.paths_curr]);
 		strarr_del(options.paths);
 		options.paths = NULL;
 	}

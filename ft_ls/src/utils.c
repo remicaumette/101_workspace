@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 16:15:57 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 18:53:08 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,8 @@ char	*path_join(char *path, char *filename)
 
 	if (!path)
 		return (ft_strdup(filename));
+	if (*(path + ft_strlen(path) - 1) == '/')
+		return (ft_strjoin(path, filename));
 	if (!(str = ft_strnew(ft_strlen(path) + ft_strlen(filename) + 1)))
 		return (NULL);
 	tmp = str;
@@ -46,8 +48,8 @@ char	**strarr_add(char **arr, char *elem)
 	while (++i < len)
 		tmp[i] = arr[i];
 	tmp[i++] = ft_strdup(elem);
-	tmp [i] = NULL;
-	free(arr);
+	tmp[i] = NULL;
+	ft_memdel((void **)&arr);
 	return (tmp);
 }
 
@@ -62,11 +64,8 @@ void	strarr_sort(char **arr, int reverse)
 	i = 0;
 	while (arr[i])
 		i++;
-	while (--i > 0)
-	{
-		j = -1;
+	while (--i > 0 && (j = -1))
 		while (++j < i)
-		{
 			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
 				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
 			{
@@ -74,16 +73,29 @@ void	strarr_sort(char **arr, int reverse)
 				arr[i] = arr[j];
 				arr[j] = buf;
 			}
-		}
-	}
 }
 
-void			strarr_del(char **arr)
+void	strarr_del(char **arr)
 {
 	int	i;
 
 	i = -1;
 	while (arr && arr[++i])
 		ft_strdel(&arr[i]);
-	free(arr);
+	ft_memdel((void **)&arr);
+}
+
+void	stradd_formatted(char *str, char *content, int *cursor, int width)
+{
+	int i;
+
+	i = -1;
+	while (width != -1 && ++i < (width - (int)ft_strlen(content)))
+		str[(*cursor)++] = ' ';
+	str += *cursor;
+	while (*content)
+	{
+		*str++ = *content++;
+		(*cursor)++;
+	}
 }

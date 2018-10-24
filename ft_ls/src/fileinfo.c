@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 18:00:28 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 15:37:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,13 +24,12 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 		!(info->path = path_join(path, filename)) ||
 		!(info->stats = ft_memalloc(sizeof(struct stat))) ||
 		lstat(info->path, info->stats) ||
+		!(info->owner = ft_strdup(getpwuid(info->stats->st_uid)->pw_name)) ||
+		!(info->group = ft_strdup(getgrgid(info->stats->st_gid)->gr_name)) ||
 		!(info->size = ft_lltoa(info->stats->st_size)) ||
 		!(info->nlink = ft_itoa(info->stats->st_nlink)))
 		return (NULL);
-	// !(info->owner = ft_strdup(getpwuid(info->stats->st_uid)->pw_name)) ||
-	//	!(info->group = ft_strdup(getgrgid(info->stats->st_gid)->gr_name)) ||
-	info->owner = ft_strdup("ok"); 
-	info->group = ft_strdup("ok"); 
+	info->link = NULL;
 	if (S_ISLNK(info->stats->st_mode))
 	{
 		size = readlink(info->path, buf, 1024);
@@ -38,8 +37,6 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 			return (NULL);
 		ft_strncpy(info->link, buf, size);
 	}
-	else
-		info->link = NULL;
 	info->left = NULL;
 	info->right = NULL;
 	return (info);
@@ -51,6 +48,7 @@ void		fileinfo_destroy(t_fileinfo **info)
 	ft_strdel(&((*info)->path));
 	ft_strdel(&((*info)->size));
 	ft_strdel(&((*info)->nlink));
+	ft_strdel(&((*info)->link));
 	ft_strdel(&((*info)->owner));
 	ft_strdel(&((*info)->group));
 	ft_memdel((void **)&((*info)->stats));
@@ -67,7 +65,7 @@ void		fileinfo_recursive_destroy(t_fileinfo **info)
 }
 
 void		fileinfo_insert(t_options *options, t_fileinfo **node,
-	t_fileinfo *info, sort_func cmp)
+	t_fileinfo *info, t_sort_func cmp)
 {
 	if (!*node)
 		*node = info;

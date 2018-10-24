@@ -1,19 +1,17 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   long_format.c                                    .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/10/24 15:34:10 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/24 18:54:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
-
-static void	stradd_formatted(char *str, char *content, int *cursor, int width)
-{
-	int i;
-
-	i = -1;
-	while (width != -1 && ++i < (width - (int)ft_strlen(content)))
-		str[(*cursor)++] = ' ';
-	str += *cursor;
-	while (*content)
-	{
-		*str++ = *content++;
-		(*cursor)++;
-	}
-}
 
 static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 {
@@ -34,15 +32,15 @@ static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 	str[(*cursor)++] = (file->stats->st_mode & S_IXOTH) ? 'x' : '-';
 }
 
-static void parse_date(t_fileinfo *file, char *str, int *cursor)
+static void	parse_date(t_fileinfo *file, char *str, int *cursor)
 {
 	char	**tmp;
 	int		i;
 
 	if (!(tmp = ft_strsplit(ctime(&file->stats->st_mtime), ' ')))
 		exit(1);
-	stradd_formatted(str, tmp[2], cursor, 3);
 	stradd_formatted(str, tmp[1], cursor, 4);
+	stradd_formatted(str, tmp[2], cursor, 3);
 	str[(*cursor)++] = ' ';
 	i = -1;
 	if (time(NULL) - file->stats->st_mtime > 15768000)
@@ -60,14 +58,19 @@ static void parse_date(t_fileinfo *file, char *str, int *cursor)
 	free(tmp);
 }
 
+static int	get_size(t_options *options, t_dirinfo *dir, t_fileinfo *file)
+{
+	(void)options;
+	return (34 + dir->link_width + dir->user_width + dir->group_width +
+		dir->size_width + ft_strlen(file->filename) +
+		(file->link ? (ft_strlen(file->link) + 4) : 0));
+}
+
 static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 {
-	char		str[34 + dir->link_width + dir->user_width + dir->group_width
-		+ dir->size_width + ft_strlen(file->filename) +
-		(file->link ? (ft_strlen(file->link) + 4) : 0)];
-	int			cursor;
+	int		cursor;
+	char	str[get_size(options, dir, file)];
 
-	(void)options;
 	cursor = 0;
 	parse_permissions(file, str, &cursor);
 	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2);
@@ -87,7 +90,8 @@ static void	print_line(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 	ft_putstr(str);
 }
 
-void		long_format_display(t_options *options, t_dirinfo *dir, t_fileinfo *file)
+void		long_format_display(t_options *options, t_dirinfo *dir,
+	t_fileinfo *file)
 {
 	if (file->right)
 		long_format_display(options, dir, file->right);

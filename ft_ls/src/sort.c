@@ -6,19 +6,19 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:49 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 17:06:09 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 15:38:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-sort_func	get_sort_func(t_sort sort)
+t_sort_func	get_sort_func(t_sort sort)
 {
 	if (sort == sort_size)
-		return sort_by_size;
+		return (sort_by_size);
 	if (sort == sort_time)
-		return sort_by_time;
+		return (sort_by_time);
 	return (sort_by_name);
 }
 

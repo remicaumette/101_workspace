@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 18:00:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 15:35:42 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,17 +43,14 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
 	}
 	if ((i = ft_strlen(file->filename)) > dir->filename_width)
 		dir->filename_width = i;
-	if (options->display == long_format)
-	{
-		if ((i = ft_strlen(file->nlink)) > dir->link_width)
-			dir->link_width = i;
-		if ((i = ft_strlen(file->size)) > dir->size_width)
-			dir->size_width = i;
-		if ((i = ft_strlen(file->owner)) > dir->user_width)
-			dir->user_width = i;
-		if ((i = ft_strlen(file->group)) > dir->group_width)
-			dir->group_width = i;
-	}
+	if ((i = ft_strlen(file->nlink)) > dir->link_width)
+		dir->link_width = i;
+	if ((i = ft_strlen(file->size)) > dir->size_width)
+		dir->size_width = i;
+	if ((i = ft_strlen(file->owner)) > dir->user_width)
+		dir->user_width = i;
+	if ((i = ft_strlen(file->group)) > dir->group_width)
+		dir->group_width = i;
 	return (1);
 }
 

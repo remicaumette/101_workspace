@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/17 17:54:15 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/24 18:54:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,18 +25,18 @@
 
 typedef enum	e_display
 {
-	vertical, // default
-	long_format, // -l
-	one_per_line, // -1
-	many_per_line, // -C
-	with_commas, // -m
+	vertical,
+	long_format,
+	one_per_line,
+	many_per_line,
+	with_commas,
 }				t_display;
 
 typedef enum	e_sort
 {
-	sort_name, // default
-	sort_size, // -S
-	sort_time, // -t
+	sort_name,
+	sort_size,
+	sort_time,
 }				t_sort;
 
 typedef struct	s_options
@@ -80,12 +80,14 @@ typedef struct	s_dirinfo
 	t_fileinfo			*files;
 }				t_dirinfo;
 
-typedef			int (*sort_func)(t_fileinfo *, t_fileinfo *);
+typedef int		(*t_sort_func)(t_fileinfo *, t_fileinfo *);
 
 char			*path_join(char *path, char *filename);
 char			**strarr_add(char **arr, char *elem);
 void			strarr_sort(char **arr, int reverse);
 void			strarr_del(char **arr);
+void			stradd_formatted(char *str, char *content,
+					int *cursor, int width);
 
 int				options_init(t_options *options, char **argv);
 
@@ -93,13 +95,13 @@ t_fileinfo		*fileinfo_create(char *path, char *filename);
 void			fileinfo_destroy(t_fileinfo **info);
 void			fileinfo_recursive_destroy(t_fileinfo **info);
 void			fileinfo_insert(t_options *options, t_fileinfo **node,
-					t_fileinfo *info, sort_func cmp);
+					t_fileinfo *info, t_sort_func cmp);
 t_fileinfo		*fileinfo_last(t_fileinfo *node);
 
 void			dirinfo_init(t_dirinfo *dir, char *path);
 int				dirinfo_aggregate(t_dirinfo *dir, t_options *options);
 
-sort_func		get_sort_func(t_sort sort);
+t_sort_func		get_sort_func(t_sort sort);
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_time(t_fileinfo *f1, t_fileinfo *f2);
