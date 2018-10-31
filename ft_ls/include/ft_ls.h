@@ -76,8 +76,6 @@ typedef void	(*t_display_func)(t_options *, t_dirinfo *,
 
 char			*path_join(char *path, char *filename);
 void			ft_strarr_sort(char **arr, int reverse);
-void			stradd_formatted(char *str, char *content,
-					int *cursor, int width);
 
 int				options_init(t_options *options, char **argv);
 
@@ -94,11 +92,12 @@ int				dirinfo_aggregate(t_dirinfo *dir, t_options *options);
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_time(t_fileinfo *f1, t_fileinfo *f2);
+int				sort_by_extension(t_fileinfo *f1, t_fileinfo *f2);
 
 void			one_per_line_display(t_options *options, t_dirinfo *dir,
 					t_fileinfo *file, t_fileinfo *last);
 void			long_format_display(t_options *options, t_dirinfo *dir,
 					t_fileinfo *file, t_fileinfo *last);
-void			vertical_display(t_options *options, t_dirinfo *dir,
+void			with_commas_display(t_options *options, t_dirinfo *dir,
 					t_fileinfo *file, t_fileinfo *last);
 #endif

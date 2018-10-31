@@ -4,9 +4,7 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
 	src/display/long_format.c	\
-	src/display/many_per_line.c	\
 	src/display/one_per_line.c	\
-	src/display/vertical.c		\
 	src/display/with_commas.c	\
 	src/dirinfo.c				\
 	src/fileinfo.c				\

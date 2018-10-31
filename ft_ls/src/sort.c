@@ -33,3 +33,15 @@ int	sort_by_time(t_fileinfo *f1, t_fileinfo *f2)
 	i = f2->stats->st_mtime - f1->stats->st_mtime;
 	return (i ? i : sort_by_name(f1, f2));
 }
+
+int	sort_by_extension(t_fileinfo *f1, t_fileinfo *f2)
+{
+	char	*base1;
+	char	*base2;
+	int		i;
+
+	base1 = ft_strrchr(f1->filename, '.');
+	base2 = ft_strrchr(f2->filename, '.');
+	i = ft_strcmp(base1 ? base1 : "", base2 ? base2 : "");
+	return (i ? i : ft_strcmp(f1->filename, f2->filename));
+}

@@ -13,6 +13,22 @@
 
 #include "ft_ls.h"
 
+static void	stradd_formatted(char *str, char *content, int *cursor, int width)
+{
+	int i;
+
+	i = -1;
+	while (width != -1 && ++i < (width - (int)ft_strlen(content)))
+		str[(*cursor)++] = ' ';
+	str += *cursor;
+	while (*content)
+	{
+		*str++ = *content++;
+		(*cursor)++;
+	}
+}
+
+
 static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 {
 	if (S_ISDIR(file->stats->st_mode))

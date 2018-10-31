@@ -55,17 +55,12 @@ void	ft_strarr_sort(char **arr, int reverse)
 			}
 }
 
-void	stradd_formatted(char *str, char *content, int *cursor, int width)
+void	append_file_color(t_fileinfo *file, char *s)
 {
-	int i;
-
-	i = -1;
-	while (width != -1 && ++i < (width - (int)ft_strlen(content)))
-		str[(*cursor)++] = ' ';
-	str += *cursor;
-	while (*content)
-	{
-		*str++ = *content++;
-		(*cursor)++;
-	}
+	if (S_ISDIR(file->stats->st_mode))
+		ft_strcat(s, "\033[01;34");
+	else if (S_ISLNK(file->stats->st_mode))
+		ft_strcat(s, "\033[01;36");
+	else if (S_ISBLK(file->stats->st_mode))
+		ft_strcat(s, "\033[01;33");
 }

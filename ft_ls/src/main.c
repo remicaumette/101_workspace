@@ -47,10 +47,17 @@ static int	list_directory(t_options *options, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
 	if (!dirinfo_aggregate(dir, options))
+	{
+		ft_putstr_fd("ls: ", 2);
+		ft_putstr_fd(dir->path, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		return (1);
+	}
 	ft_strarr_sort(options->paths, options->reverse);
 	display_directory(options, dir);
-	fileinfo_recursive_destroy(&dir->files);
+	if (dir->files)
+		fileinfo_recursive_destroy(&dir->files);
 	ft_strdel(&dir->path);
 	return (0);
 }
