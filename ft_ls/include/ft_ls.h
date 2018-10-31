@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 20:32:35 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/31 14:37:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,6 +76,7 @@ typedef void	(*t_display_func)(t_options *, t_dirinfo *,
 
 char			*path_join(char *path, char *filename);
 void			ft_strarr_sort(char **arr, int reverse);
+char			get_file_type(struct stat *stats);
 
 int				options_init(t_options *options, char **argv);
 

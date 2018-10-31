@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 18:54:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/31 14:37:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 static void	stradd_formatted(char *str, char *content, int *cursor, int width)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (width != -1 && ++i < (width - (int)ft_strlen(content)))
@@ -28,15 +28,9 @@ static void	stradd_formatted(char *str, char *content, int *cursor, int width)
 	}
 }
 
-
 static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 {
-	if (S_ISDIR(file->stats->st_mode))
-		str[(*cursor)++] = 'd';
-	else if (S_ISLNK(file->stats->st_mode))
-		str[(*cursor)++] = 'l';
-	else
-		str[(*cursor)++] = '-';
+	str[(*cursor)++] = get_file_type(file->stats);
 	str[(*cursor)++] = (file->stats->st_mode & S_IRUSR) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWUSR) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXUSR) ? 'x' : '-';

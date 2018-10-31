@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 18:53:08 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/31 14:39:05 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,4 +63,23 @@ void	append_file_color(t_fileinfo *file, char *s)
 		ft_strcat(s, "\033[01;36");
 	else if (S_ISBLK(file->stats->st_mode))
 		ft_strcat(s, "\033[01;33");
+}
+
+char	get_file_type(struct stat *stats)
+{
+	if (S_ISREG(stats->st_mode))
+		return ('-');
+	if (S_ISDIR(stats->st_mode))
+		return ('d');
+	if (S_ISBLK(stats->st_mode))
+		return ('b');
+	if (S_ISCHR(stats->st_mode))
+		return ('c');
+	if (S_ISLNK(stats->st_mode))
+		return ('l');
+	if (S_ISFIFO(stats->st_mode))
+		return ('p');
+	if (S_ISSOCK(stats->st_mode))
+		return ('s');
+	return ('?');
 }

@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 16:01:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 15:33:52 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/31 11:41:17 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,7 +58,7 @@ static int		has_next_line(t_gnl *file, char *delimiter,
 	char **line, int readed)
 {
 	char	*tmp;
-	
+
 	if (readed == -1)
 		return (-1);
 	if (!file->content || (delimiter == NULL && file->content[0] == 0))
