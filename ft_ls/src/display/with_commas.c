@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 15:56:12 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/02 15:55:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,23 +24,21 @@ void	with_commas_display(t_options *options, t_dirinfo *dir,
 	len = ft_strlen(file->filename);
 	if (options->width_curr)
 	{
-
-		if (options->width_curr + len + 3 < options->width &&
-			options->width_curr <= options->width - len - 2)
+		if (options->width_curr + len + 2 < options->width)
 		{
 			options->width_curr += (len + 2);
 			separator = ' ';
 		}
 		else
 		{
-			options->width_curr = 0;
+			options->width_curr = len + 2;
 			separator = '\n';
 		}
 		ft_putchar(',');
 		ft_putchar(separator);
 	}
 	else
-		options->width_curr += len;
+		options->width_curr += len + 2;
 	ft_putstr(file->filename);
 	if (file == last)
 		ft_putchar('\n');
