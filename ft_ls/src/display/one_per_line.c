@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 15:34:17 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 01:16:40 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,13 @@
 void	one_per_line_display(t_options *options, t_dirinfo *dir,
 	t_fileinfo *file, t_fileinfo *last)
 {
-	(void)options;
 	(void)dir;
 	(void)last;
-	ft_putendl(file->filename);
+	if (options->slash && S_ISDIR(file->stats->st_mode))
+	{
+		ft_putstr(file->filename);
+		ft_putendl("/");
+	}
+	else
+		ft_putendl(file->filename);
 }

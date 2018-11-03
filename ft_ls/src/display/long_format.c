@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 01:03:09 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 02:38:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,15 +34,18 @@ static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 	str[(*cursor)++] = (file->stats->st_mode & S_IRUSR) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWUSR) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXUSR) ? 'x' : '-';
-	str[*cursor - 1] = (file->stats->st_mode & S_ISUID) ? 'S' : str[*cursor - 1];
+	str[*cursor - 1] = (file->stats->st_mode & S_ISUID) ? 'S'
+		: str[*cursor - 1];
 	str[(*cursor)++] = (file->stats->st_mode & S_IRGRP) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWGRP) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXGRP) ? 'x' : '-';
-	str[*cursor - 1] = (file->stats->st_mode & S_ISGID) ? 'S' : str[*cursor - 1];
+	str[*cursor - 1] = (file->stats->st_mode & S_ISGID) ? 'S'
+		: str[*cursor - 1];
 	str[(*cursor)++] = (file->stats->st_mode & S_IROTH) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWOTH) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXOTH) ? 'x' : '-';
-	str[*cursor - 1] = (file->stats->st_mode & S_ISVTX) ? 'T' : str[*cursor - 1];
+	str[*cursor - 1] = (file->stats->st_mode & S_ISVTX) ? 'T'
+		: str[*cursor - 1];
 }
 
 static void	parse_date(t_fileinfo *file, char *str, int *cursor)
@@ -52,8 +55,8 @@ static void	parse_date(t_fileinfo *file, char *str, int *cursor)
 
 	if (!(tmp = ft_strsplit(ctime(&file->stats->st_mtime), ' ')))
 		exit(1);
-	stradd_formatted(str, tmp[2], cursor, 3);
 	stradd_formatted(str, tmp[1], cursor, 4);
+	stradd_formatted(str, tmp[2], cursor, 3);
 	str[(*cursor)++] = ' ';
 	i = -1;
 	if (time(NULL) - file->stats->st_mtime > 15768000)
@@ -76,7 +79,8 @@ static int	get_size(t_options *options, t_dirinfo *dir, t_fileinfo *file)
 	(void)options;
 	return (34 + dir->link_width + dir->user_width + dir->group_width +
 		dir->size_width + ft_strlen(file->filename) +
-		(file->link ? (ft_strlen(file->link) + 4) : 0));
+		(file->link ? (ft_strlen(file->link) + 4) : 0) +
+		(options->slash && S_ISDIR(file->stats->st_mode)));
 }
 
 void		long_format_display(t_options *options, t_dirinfo *dir,
@@ -95,6 +99,8 @@ void		long_format_display(t_options *options, t_dirinfo *dir,
 	parse_date(file, str, &cursor);
 	str[cursor++] = ' ';
 	stradd_formatted(str, file->filename, &cursor, -1);
+	if (options->slash && S_ISDIR(file->stats->st_mode))
+		str[cursor++] = '/';
 	if (file->link)
 	{
 		stradd_formatted(str, " -> ", &cursor, -1);

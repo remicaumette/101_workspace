@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 00:50:33 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 02:31:08 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,6 @@ typedef struct	s_options
 	void			(*display)(struct s_options *, t_dirinfo *,
 						t_fileinfo *, t_fileinfo *);
 	int				slash;
-	int				color;
 	int				reverse;
 	int				recursive;
 	int				hidden;

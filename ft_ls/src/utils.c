@@ -6,14 +6,14 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 00:50:25 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 02:45:14 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char	*path_join(char *path, char *filename)
+char		*path_join(char *path, char *filename)
 {
 	char	*str;
 	char	*tmp;
@@ -33,7 +33,7 @@ char	*path_join(char *path, char *filename)
 	return (str);
 }
 
-void	ft_strarr_sort(char **arr, int reverse)
+void		ft_strarr_sort(char **arr, int reverse)
 {
 	int		i;
 	int		j;
@@ -55,7 +55,7 @@ void	ft_strarr_sort(char **arr, int reverse)
 			}
 }
 
-char	get_file_type(struct stat *stats)
+char		get_file_type(struct stat *stats)
 {
 	if (S_ISREG(stats->st_mode))
 		return ('-');
@@ -72,4 +72,11 @@ char	get_file_type(struct stat *stats)
 	if (S_ISSOCK(stats->st_mode))
 		return ('s');
 	return ('?');
+}
+
+t_fileinfo	*fileinfo_last(t_fileinfo *node)
+{
+	if (!node->left)
+		return (node);
+	return (fileinfo_last(node->left));
 }

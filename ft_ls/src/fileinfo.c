@@ -6,18 +6,37 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 22:51:46 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 02:46:57 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_fileinfo	*fileinfo_create(char *path, char *filename)
+static t_fileinfo	*fileinfo_init(t_fileinfo *info)
 {
-	t_fileinfo		*info;
-	char			buf[1024];
-	int				size;
+	char	buf[1024];
+	int		size;
+
+	info->link = NULL;
+	if (S_ISLNK(info->stats->st_mode))
+	{
+		size = readlink(info->path, buf, 1024);
+		if (!(info->link = ft_strnew(size)))
+		{
+			fileinfo_destroy(&info);
+			return (NULL);
+		}
+		ft_strncpy(info->link, buf, size);
+	}
+	info->left = NULL;
+	info->right = NULL;
+	return (info);
+}
+
+t_fileinfo			*fileinfo_create(char *path, char *filename)
+{
+	t_fileinfo	*info;
 
 	if (!(info = ft_memalloc(sizeof(t_fileinfo))) ||
 		!(info->filename = ft_strdup(filename)) ||
@@ -33,20 +52,10 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 			fileinfo_destroy(&info);
 		return (NULL);
 	}
-	info->link = NULL;
-	if (S_ISLNK(info->stats->st_mode))
-	{
-		size = readlink(info->path, buf, 1024);
-		if (!(info->link = ft_strnew(size)))
-			return (NULL);
-		ft_strncpy(info->link, buf, size);
-	}
-	info->left = NULL;
-	info->right = NULL;
-	return (info);
+	return (fileinfo_init(info));
 }
 
-void		fileinfo_destroy(t_fileinfo **info)
+void				fileinfo_destroy(t_fileinfo **info)
 {
 	if ((*info)->filename)
 		ft_strdel(&((*info)->filename));
@@ -67,7 +76,7 @@ void		fileinfo_destroy(t_fileinfo **info)
 	ft_memdel((void **)info);
 }
 
-void		fileinfo_recursive_destroy(t_fileinfo **info)
+void				fileinfo_recursive_destroy(t_fileinfo **info)
 {
 	if ((*info)->right)
 		fileinfo_recursive_destroy(&(*info)->right);
@@ -76,7 +85,7 @@ void		fileinfo_recursive_destroy(t_fileinfo **info)
 	fileinfo_destroy(info);
 }
 
-void		fileinfo_insert(t_options *options, t_fileinfo **node,
+void				fileinfo_insert(t_options *options, t_fileinfo **node,
 	t_fileinfo *info)
 {
 	if (!*node)
@@ -90,11 +99,4 @@ void		fileinfo_insert(t_options *options, t_fileinfo **node,
 			fileinfo_insert(options, options->reverse ?
 				&(*node)->left : &(*node)->right, info);
 	}
-}
-
-t_fileinfo	*fileinfo_last(t_fileinfo *node)
-{
-	if (!node->left)
-		return (node);
-	return (fileinfo_last(node->left));
 }
