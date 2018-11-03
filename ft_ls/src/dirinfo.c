@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 00:39:39 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 08:41:18 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,7 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
 	{
 		options->paths = ft_strarr_add(options->paths, file->path);
 		options->paths_count++;
+		ft_strarr_sort(options->paths, options->reverse);
 	}
 	if ((i = ft_strlen(file->filename)) > dir->filename_width)
 		dir->filename_width = i;

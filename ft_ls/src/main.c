@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 17:16:24 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 00:50:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 08:35:38 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,20 +68,12 @@ static int	error_directory(t_options *options, t_dirinfo *dir)
 		ft_putchar('\n');
 	return (1);
 }
-
+# include <stdio.h>
 static int	list_directory(t_options *options, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
 	if (dir->path == NULL)
 		return (1);
-	if (options->paths_curr - 1 >= 0 &&
-		ft_strequ(options->paths[options->paths_curr - 1],
-		options->paths[options->paths_curr]))
-	{
-		ft_putstr_fd("ls: directory causes a cycle", 2);
-		ft_strdel(&dir->path);
-		exit(1);
-	}
 	if (!dirinfo_aggregate(dir, options))
 		return (error_directory(options, dir));
 	ft_strarr_sort(options->paths, options->reverse);
@@ -109,6 +101,7 @@ int			main(int argc, char **argv)
 		options.paths_count = 0;
 		status |= list_directory(&options, &dir,
 			options.args[options.args_curr]);
+		ft_strarr_sort(options.paths, options.reverse);
 		while (options.paths && options.paths[++options.paths_curr])
 			status |= list_directory(&options, &dir,
 				options.paths[options.paths_curr]);

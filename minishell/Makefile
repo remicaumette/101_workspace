@@ -3,9 +3,9 @@ LIBFT=../libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
+	src/command.c	\
 	src/main.c		\
-	src/minishell.c	\
-	src/parser.c
+	src/minishell.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(NAME)

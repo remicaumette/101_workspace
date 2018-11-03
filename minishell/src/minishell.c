@@ -6,60 +6,51 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 19:18:03 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 07:20:24 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell_init(t_minishell *minishell)
+int		minishell_init(t_minishell *shell, char **environ)
 {
-	(void)minishell;
-	printf("%s\n", environ[0]);
+	int	i;
+
+	i = 0;
+	while (environ[i])
+		i++;
+	if (!(shell->environ = ft_memalloc(sizeof(*environ) * (i + 1))))
+		return (0);
+	i = -1;
+	while (environ[++i])
+		if (!(shell->environ[i] = ft_strdup(environ[i])))
+			return (0);
+	shell->environ[i] = NULL;
+	return (1);
 }
 
-int		minishell_start(t_minishell *minishell)
+int		minishell_start(t_minishell *shell)
 {
-	t_minishell_cmd	cmd;
-	int				readed;
-	char			*line;
-	char			**args;
+	t_command	cmd;
+	int			readed;
+	char		*line;
 
 	ft_putstr("$> ");
 	while ((readed = get_next_line(0, &line)) > 0)
 	{
-		if (*line)
+		if (*ft_strtrim(line))
 		{
-			if (minishell_parse_cmd(&cmd, line) == 0)
+			if (command_parse(shell, &cmd, line) == 0)
 				return (0);
-			if (minishell_run_cmd(minishell, &cmd) == 0)
-				return (0);
+			printf("cmd: %s\n", cmd.cmd);
+			printf("arguments: ");
+			for (int i = 0; cmd.arguments[i]; i++)
+				printf("%s ", cmd.arguments[i]);
+			printf("\n");
 		}
+		free(line);
 		ft_putstr("$> ");
 	}
-	return (readed != -1 ? 0 : 1);
-}
-
-int		minishell_parse_cmd(t_minishell_cmd *cmd, char *line)
-{
-	char	**split;
-	char	*cmd;
-	char	**args;
-	int		i;
-
-	if (!(args = ft_strsplit(line, ' ')))
-		return (0);
-	cmd = ft_strdup(args[0]);
-	if (!(args = ft_memalloc(sizeof(*args) * ft_strarr_len(args))))
-		return (0);
-	i = 0;
-	while (args[++i])
-		args[i - 1] = split[i];
-	free(args);
-}
-
-int		minishell_run_cmd(t_minishell *minishell, t_minishell_cmd *cmd)
-{
-
+	return (readed != -1);
 }

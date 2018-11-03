@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:07:50 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 19:10:59 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 05:00:55 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,22 +15,21 @@
 # define MINISHELL_H
 # include "libft.h"
 
+# include <stdio.h>
 typedef struct	s_minishell
 {
 	char	**environ;
 }				t_minishell;
 
-typedef struct	s_minishell_cmd
+typedef struct	s_command
 {
 	char	*cmd;
 	char	**arguments;
-}				t_minishell_cmd;
+}				t_command;
 
-void			minishell_init(t_minishell *minishell);
+int				command_parse(t_minishell *minishell,
+					t_command *command, char *line);
+
+int				minishell_init(t_minishell *minishell, char **environ);
 int				minishell_start(t_minishell *minishell);
-int				minishell_parse_cmd(t_minishell_cmd *cmd,
-					char *line);
-int				minishell_run_cmd(t_minishell *minishell,
-					t_minishell_cmd *cmd);
-
 #endif

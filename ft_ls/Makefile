@@ -1,7 +1,7 @@
 NAME=ft_ls
 LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
 	src/display/long_format.c	\
 	src/display/one_per_line.c	\
