@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 14:37:33 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 01:03:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,12 +34,15 @@ static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
 	str[(*cursor)++] = (file->stats->st_mode & S_IRUSR) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWUSR) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXUSR) ? 'x' : '-';
+	str[*cursor - 1] = (file->stats->st_mode & S_ISUID) ? 'S' : str[*cursor - 1];
 	str[(*cursor)++] = (file->stats->st_mode & S_IRGRP) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWGRP) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXGRP) ? 'x' : '-';
+	str[*cursor - 1] = (file->stats->st_mode & S_ISGID) ? 'S' : str[*cursor - 1];
 	str[(*cursor)++] = (file->stats->st_mode & S_IROTH) ? 'r' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IWOTH) ? 'w' : '-';
 	str[(*cursor)++] = (file->stats->st_mode & S_IXOTH) ? 'x' : '-';
+	str[*cursor - 1] = (file->stats->st_mode & S_ISVTX) ? 'T' : str[*cursor - 1];
 }
 
 static void	parse_date(t_fileinfo *file, char *str, int *cursor)

@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 19:50:36 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 00:39:39 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,9 +74,13 @@ int			dirinfo_aggregate(t_dirinfo *info, t_options *options)
 {
 	DIR				*dir;
 	struct dirent	*entry;
+	struct stat		stats;
 
 	if (!(dir = opendir(info->path)))
-		return (dirinfo_single_file(info));
+	{
+		lstat(info->path, &stats);
+		return (S_ISDIR(stats.st_mode) ? 0 : dirinfo_single_file(info));
+	}
 	while ((entry = readdir(dir)))
 	{
 		if (entry->d_name[0] == '.' && !options->hidden)

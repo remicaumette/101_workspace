@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 19:37:34 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/02 22:51:46 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,11 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 		!(info->group = ft_strdup(getgrgid(info->stats->st_gid)->gr_name)) ||
 		!(info->size = ft_lltoa(info->stats->st_size)) ||
 		!(info->nlink = ft_itoa(info->stats->st_nlink)))
+	{
+		if (info)
+			fileinfo_destroy(&info);
 		return (NULL);
+	}
 	info->link = NULL;
 	if (S_ISLNK(info->stats->st_mode))
 	{
@@ -44,14 +48,22 @@ t_fileinfo	*fileinfo_create(char *path, char *filename)
 
 void		fileinfo_destroy(t_fileinfo **info)
 {
-	ft_strdel(&((*info)->filename));
-	ft_strdel(&((*info)->path));
-	ft_strdel(&((*info)->size));
-	ft_strdel(&((*info)->nlink));
-	ft_strdel(&((*info)->link));
-	ft_strdel(&((*info)->owner));
-	ft_strdel(&((*info)->group));
-	ft_memdel((void **)&((*info)->stats));
+	if ((*info)->filename)
+		ft_strdel(&((*info)->filename));
+	if ((*info)->path)
+		ft_strdel(&((*info)->path));
+	if ((*info)->size)
+		ft_strdel(&((*info)->size));
+	if ((*info)->nlink)
+		ft_strdel(&((*info)->nlink));
+	if ((*info)->link)
+		ft_strdel(&((*info)->link));
+	if ((*info)->owner)
+		ft_strdel(&((*info)->owner));
+	if ((*info)->group)
+		ft_strdel(&((*info)->group));
+	if ((*info)->stats)
+		ft_memdel((void **)&((*info)->stats));
 	ft_memdel((void **)info);
 }
 

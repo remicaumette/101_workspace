@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 17:16:24 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 11:28:53 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 00:50:07 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,17 +43,47 @@ static void	display_directory(t_options *options, t_dirinfo *dir)
 		ft_putchar('\n');
 }
 
+static int	error_directory(t_options *options, t_dirinfo *dir)
+{
+	char	*tmp;
+
+	if (options->args_count > 1 || options->paths_curr >= 0)
+	{
+		ft_putstr(dir->path);
+		ft_putstr(":\n");
+	}
+	if (!(tmp = ft_strrchr(dir->path, '/')))
+		tmp = dir->path;
+	else
+		tmp++;
+	ft_putstr_fd("ls: ", 2);
+	ft_putstr_fd(tmp, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	ft_strdel(&dir->path);
+	if (dir->files)
+		fileinfo_recursive_destroy(&dir->files);
+	if (options->args_curr + 1 < options->args_count ||
+		options->paths_curr + 1 < options->paths_count)
+		ft_putchar('\n');
+	return (1);
+}
+
 static int	list_directory(t_options *options, t_dirinfo *dir, char *path)
 {
 	dirinfo_init(dir, path);
-	if (!dirinfo_aggregate(dir, options))
-	{
-		ft_putstr_fd("ls: ", 2);
-		ft_putstr_fd(dir->path, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+	if (dir->path == NULL)
 		return (1);
+	if (options->paths_curr - 1 >= 0 &&
+		ft_strequ(options->paths[options->paths_curr - 1],
+		options->paths[options->paths_curr]))
+	{
+		ft_putstr_fd("ls: directory causes a cycle", 2);
+		ft_strdel(&dir->path);
+		exit(1);
 	}
+	if (!dirinfo_aggregate(dir, options))
+		return (error_directory(options, dir));
 	ft_strarr_sort(options->paths, options->reverse);
 	display_directory(options, dir);
 	if (dir->files)

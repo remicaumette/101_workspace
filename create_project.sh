@@ -20,7 +20,7 @@ cat <<EOF >$1/Makefile
 NAME=$1
 LIBFT=libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I\$(LIBFT)/include -Iinclude -g
+CFLAGS=-Wall -Werror -Wextra -I\$(LIBFT)/include -Iinclude
 SOURCES=\\
 	src/main.c
 OBJECTS=\$(SOURCES:.c=.o)

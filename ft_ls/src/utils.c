@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 14:39:05 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 00:50:25 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,16 +53,6 @@ void	ft_strarr_sort(char **arr, int reverse)
 				arr[i] = arr[j];
 				arr[j] = buf;
 			}
-}
-
-void	append_file_color(t_fileinfo *file, char *s)
-{
-	if (S_ISDIR(file->stats->st_mode))
-		ft_strcat(s, "\033[01;34");
-	else if (S_ISLNK(file->stats->st_mode))
-		ft_strcat(s, "\033[01;36");
-	else if (S_ISBLK(file->stats->st_mode))
-		ft_strcat(s, "\033[01;33");
 }
 
 char	get_file_type(struct stat *stats)

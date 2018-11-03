@@ -1,17 +1,11 @@
-NAME=ft_ls
+NAME=minishell
 LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
-	src/display/long_format.c	\
-	src/display/one_per_line.c	\
-	src/display/with_commas.c	\
-	src/dirinfo.c				\
-	src/fileinfo.c				\
-	src/main.c					\
-	src/options.c				\
-	src/sort.c					\
-	src/utils.c
+	src/main.c		\
+	src/minishell.c	\
+	src/parser.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(NAME)

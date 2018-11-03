@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:35:01 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/24 19:54:05 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/03 00:21:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ static void	options_error(char c)
 {
 	ft_putstr_fd("ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
-	ft_putstr_fd("\nusage: ft_ls [-tSXrRal1CmGp] [file ...]\n", 2);
+	ft_putstr_fd("\nusage: ft_ls [-tSXrRal1mGp] [file ...]\n", 2);
 	exit(1);
 }
 
