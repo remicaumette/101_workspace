@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:35:01 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 02:31:01 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/04 17:59:17 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ static void	options_error(char c)
 {
 	ft_putstr_fd("ls: illegal option -- ", 2);
 	ft_putchar_fd(c, 2);
-	ft_putstr_fd("\nusage: ft_ls [-tSXrRal1mp] [file ...]\n", 2);
+	ft_putstr_fd("\nusage: ls [-tSXrRal1mp] [file ...]\n", 2);
 	exit(1);
 }
 
@@ -89,9 +89,8 @@ int			options_init(t_options *options, char **argv)
 	options->recursive = 0;
 	options->reverse = 0;
 	options->sort = sort_by_name;
-	options->paths = NULL;
-	options->paths_curr = 0;
 	options->paths_count = 0;
+	options->paths_curr = 0;
 	options->args = NULL;
 	options->args_curr = 0;
 	options->args_count = 0;

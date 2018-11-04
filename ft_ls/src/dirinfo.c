@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:03 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 08:41:18 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/04 17:23:10 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ void		dirinfo_init(t_dirinfo *dir, char *path)
 }
 
 static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
-	struct dirent *entry)
+	struct dirent *entry, char ***paths)
 {
 	t_fileinfo		*file;
 	int				i;
@@ -38,9 +38,8 @@ static int	dirinfo_aggregate_file(t_dirinfo *dir, t_options *options,
 	if (options->recursive && S_ISDIR(file->stats->st_mode) &&
 		!ft_strequ(file->filename, ".") && !ft_strequ(file->filename, ".."))
 	{
-		options->paths = ft_strarr_add(options->paths, file->path);
+		*paths = ft_strarr_add(*paths, file->path);
 		options->paths_count++;
-		ft_strarr_sort(options->paths, options->reverse);
 	}
 	if ((i = ft_strlen(file->filename)) > dir->filename_width)
 		dir->filename_width = i;
@@ -71,7 +70,8 @@ static int	dirinfo_single_file(t_dirinfo *dir)
 	return (1);
 }
 
-int			dirinfo_aggregate(t_dirinfo *info, t_options *options)
+int			dirinfo_aggregate(t_dirinfo *info, t_options *options,
+	char ***paths)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -86,7 +86,7 @@ int			dirinfo_aggregate(t_dirinfo *info, t_options *options)
 	{
 		if (entry->d_name[0] == '.' && !options->hidden)
 			continue ;
-		if (!dirinfo_aggregate_file(info, options, entry))
+		if (!dirinfo_aggregate_file(info, options, entry, paths))
 			return (0);
 	}
 	return (!closedir(dir));

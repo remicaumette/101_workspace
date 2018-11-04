@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:27:16 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 02:31:08 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/04 17:26:56 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,9 +62,8 @@ typedef struct	s_options
 	int				hidden;
 	int				width;
 	int				width_curr;
-	char			**paths;
-	int				paths_curr;
 	int				paths_count;
+	int				paths_curr;
 	char			**args;
 	int				args_curr;
 	int				args_count;
@@ -87,7 +86,8 @@ void			fileinfo_insert(t_options *options, t_fileinfo **node,
 t_fileinfo		*fileinfo_last(t_fileinfo *node);
 
 void			dirinfo_init(t_dirinfo *dir, char *path);
-int				dirinfo_aggregate(t_dirinfo *dir, t_options *options);
+int				dirinfo_aggregate(t_dirinfo *dir, t_options *options,
+					char ***paths);
 
 int				sort_by_name(t_fileinfo *f1, t_fileinfo *f2);
 int				sort_by_size(t_fileinfo *f1, t_fileinfo *f2);
