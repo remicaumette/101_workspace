@@ -6,28 +6,25 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/24 15:34:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 19:27:03 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/04 20:07:14 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	stradd_formatted(char *str, char *content, int *cursor, int width, int left)
+static void	stradd_formatted(char *str, char *content, int *cursor, int width)
 {
 	int	i;
 	int	len;
 
 	len = ft_strlen(content);
 	i = -1;
-	if (width != -1 && left)
+	if (width != -1)
 		while (++i < (width - len))
 			str[(*cursor)++] = ' ';
 	while (*content)
 		str[(*cursor)++] = *content++;
-	if (width != -1 && !left)
-		while (++i < (width - len))
-			str[(*cursor)++] = ' ';
 }
 
 static void	parse_permissions(t_fileinfo *file, char *str, int *cursor)
@@ -66,8 +63,8 @@ static void	parse_date(t_fileinfo *file, char *str, int *cursor)
 
 	if (!(tmp = ft_strsplit(ctime(&file->stats->st_mtime), ' ')))
 		exit(1);
-	stradd_formatted(str, tmp[1], cursor, 4, 1);
-	stradd_formatted(str, tmp[2], cursor, 3, 1);
+	stradd_formatted(str, tmp[1], cursor, 4);
+	stradd_formatted(str, tmp[2], cursor, 3);
 	str[(*cursor)++] = ' ';
 	i = -1;
 	if (time(NULL) - file->stats->st_mtime > 15768000)
@@ -102,20 +99,20 @@ void		long_format_display(t_options *options, t_dirinfo *dir,
 	(void)last;
 	cursor = 0;
 	parse_permissions(file, str, &cursor);
-	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2, 1);
+	stradd_formatted(str, file->nlink, &cursor, dir->link_width + 2);
 	str[cursor++] = ' ';
-	stradd_formatted(str, file->owner, &cursor, dir->user_width + 2, 0);
-	stradd_formatted(str, file->group, &cursor, dir->group_width + 2, 0);
-	stradd_formatted(str, file->size, &cursor, dir->size_width, 1);
+	stradd_formatted_right(str, file->owner, &cursor, dir->user_width + 2);
+	stradd_formatted_right(str, file->group, &cursor, dir->group_width + 2);
+	stradd_formatted(str, file->size, &cursor, dir->size_width);
 	parse_date(file, str, &cursor);
 	str[cursor++] = ' ';
-	stradd_formatted(str, file->filename, &cursor, -1, 1);
+	stradd_formatted(str, file->filename, &cursor, -1);
 	if (options->slash && S_ISDIR(file->stats->st_mode))
 		str[cursor++] = '/';
 	if (file->link)
 	{
-		stradd_formatted(str, " -> ", &cursor, -1, 1);
-		stradd_formatted(str, file->link, &cursor, -1, 1);
+		stradd_formatted(str, " -> ", &cursor, -1);
+		stradd_formatted(str, file->link, &cursor, -1);
 	}
 	str[cursor++] = '\n';
 	str[cursor] = 0;

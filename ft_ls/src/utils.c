@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 02:45:14 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/04 20:08:27 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,4 +79,19 @@ t_fileinfo	*fileinfo_last(t_fileinfo *node)
 	if (!node->left)
 		return (node);
 	return (fileinfo_last(node->left));
+}
+
+void		stradd_formatted_right(char *str,
+	char *content, int *cursor, int width)
+{
+	int	i;
+	int	len;
+
+	len = ft_strlen(content);
+	i = -1;
+	while (*content)
+		str[(*cursor)++] = *content++;
+	if (width != -1)
+		while (++i < (width - len))
+			str[(*cursor)++] = ' ';
 }
