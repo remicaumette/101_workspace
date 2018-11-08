@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 12:07:53 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 14:05:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/07 11:15:56 by jarcher     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,14 +60,14 @@ static int	validate_tetriminos(t_tet *tet)
 	return (validate_shape(tet) == 4);
 }
 
-int			parse_line(t_tet *tet, char *line, int nb)
+static int	parse_line(t_tet *tet, char *line, int nb)
 {
 	int	i;
 
 	i = -1;
-	while (line[++i])
+	while (line[++i] && (line[i] == '.' || line[i] == '#'))
 		tet->content[nb > 1] += (line[i] == '#') << (i + ((nb % 2) * 4));
-	return (nb == 3 ? validate_tetriminos(tet) : i == 4);
+	return (nb == 3 ? validate_tetriminos(tet) : i == 4 && !line[i]);
 }
 
 t_tet		*parse_file(char *filename)
@@ -94,6 +94,6 @@ t_tet		*parse_file(char *filename)
 			lines = 0;
 		ft_strdel(&line);
 	}
-	return ((status == -1 || (lines + 1) % 5) ?
-		NULL : reverse_tetriminos_list(&begin));
+	return (status == -1 || lines != 4 ?
+			NULL : reverse_tetriminos_list(&begin));
 }

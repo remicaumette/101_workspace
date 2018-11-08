@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 16:01:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 11:41:17 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/08 11:58:47 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,5 +103,6 @@ int				get_next_line(const int fd, char **line)
 		if ((delimiter = ft_strchr(curr->content, '\n')) != NULL)
 			return (has_next_line(curr, delimiter, line, readed));
 	}
-	return (has_next_line(curr, ft_strchr(curr->content, '\n'), line, readed));
+	return (has_next_line(curr, curr->content ?
+		ft_strchr(curr->content, '\n') : NULL, line, readed));
 }

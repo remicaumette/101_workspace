@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/15 13:57:57 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 13:57:57 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:45 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/31 11:40:29 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,4 +41,7 @@ char			*ft_strrchr(const char *s, int c);
 char			*ft_strstr(const char *s1, const char *s2);
 char			*ft_strnstr(const char *s1, const char *s2, size_t len);
 char			**ft_strsplit(char const *s, char c);
+void			ft_strarr_del(char **arr);
+int				ft_strarr_len(char **arr);
+char			**ft_strarr_add(char **arr, char *elem);
 #endif

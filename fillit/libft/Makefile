@@ -2,17 +2,6 @@ NAME=libft.a
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -Iinclude
 SOURCES=\
-	src/container/ft_lstadd.c			\
-	src/container/ft_lstdel.c			\
-	src/container/ft_lstdelone.c		\
-	src/container/ft_lstiter.c			\
-	src/container/ft_lstmap.c			\
-	src/container/ft_lstnew.c			\
-	src/container/ft_stack_destroy.c	\
-	src/container/ft_stack_peek.c		\
-	src/container/ft_stack_pop.c		\
-	src/container/ft_stack_push.c		\
-	src/container/ft_stack_size.c		\
 	src/io/ft_print_memory.c			\
 	src/io/ft_print_memory_fd.c			\
 	src/io/ft_putchar_fd.c				\
@@ -39,6 +28,9 @@ SOURCES=\
 	src/strconv/ft_itoa.c				\
 	src/strconv/ft_lltoa.c				\
 	src/strconv/ft_ltoa.c				\
+	src/string/ft_strarr_add.c			\
+	src/string/ft_strarr_del.c			\
+	src/string/ft_strarr_len.c			\
 	src/string/ft_strcat.c				\
 	src/string/ft_strchr.c				\
 	src/string/ft_strclr.c				\
@@ -77,7 +69,7 @@ OBJECTS=$(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar rcvs $(NAME) $(OBJECTS)
+	ar rcs $(NAME) $(OBJECTS)
 
 clean:
 	rm -f $(OBJECTS)

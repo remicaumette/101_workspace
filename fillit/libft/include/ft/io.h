@@ -5,23 +5,23 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/15 13:57:47 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 13:58:14 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:37 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:07:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef IO_H
 # define IO_H
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 4096
 # include <unistd.h>
 
-typedef struct	s_file
+typedef struct	s_gnl
 {
 	int				fd;
 	char			*content;
-	struct s_file	*next;
-}				t_file;
+	struct s_gnl	*next;
+}				t_gnl;
 
 int				get_next_line(const int fd, char **line);
 void			ft_putchar_fd(char c, int fd);

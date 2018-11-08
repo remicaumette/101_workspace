@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_stack_pop.c                                   .::    .:/ .      .::   */
+/*   ft_strarr_del.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/03 17:45:54 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 17:55:21 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/31 11:41:35 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/31 11:41:35 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_stack_pop(t_stack **begin)
+void	ft_strarr_del(char **arr)
 {
-	t_stack	*stack;
-	void	*content;
+	int	i;
 
-	if (!begin || !*begin)
-		return (NULL);
-	stack = *begin;
-	*begin = (*begin)->next;
-	content = stack->content;
-	ft_memdel((void **)&stack);
-	return (content);
+	i = -1;
+	while (arr && arr[++i])
+		ft_strdel(&arr[i]);
+	ft_memdel((void **)&arr);
 }

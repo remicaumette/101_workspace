@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_stack_destroy.c                               .::    .:/ .      .::   */
+/*   ft_strarr_len.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/03 17:45:34 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 17:48:05 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/31 11:41:38 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/31 11:41:38 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_stack_destroy(t_stack **begin, void (*del)(void *))
+int	ft_strarr_len(char **arr)
 {
-	while (*begin)
-		del(ft_stack_pop(begin));
+	int	len;
+
+	len = 0;
+	while (arr && arr[len])
+		len++;
+	return (len);
 }

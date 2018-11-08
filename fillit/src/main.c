@@ -6,14 +6,27 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/09 13:04:46 by jarcher      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 13:54:47 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/07 11:36:14 by jarcher     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	display_map(t_fillit *fillit, int map_size)
+static void	free_fillit(t_fillit *fillit)
+{
+	t_tet	*tmp;
+
+	free(fillit->map);
+	while (fillit->tetriminos)
+	{
+		tmp = fillit->tetriminos;
+		fillit->tetriminos = fillit->tetriminos->next;
+		free(tmp);
+	}
+}
+
+static void	display_map(t_fillit *fillit)
 {
 	int	height;
 	int	width;
@@ -22,37 +35,53 @@ void	display_map(t_fillit *fillit, int map_size)
 	while (++height < fillit->size && (width = -1))
 	{
 		while (++width < fillit->size)
-			ft_putchar(fillit->map[height * (map_size) + width] ?
-						fillit->map[height * (map_size) + width] : '.');
+			ft_putchar(fillit->map[height * fillit->size + width] == 0 ?
+						'.' : fillit->map[height * fillit->size + width]);
 		ft_putchar('\n');
 	}
 }
 
-int		main(int argc, char **argv)
+static void	init_map(t_fillit *fillit)
+{
+	t_tet	*list;
+	int		nb;
+	int		size;
+
+	list = fillit->tetriminos;
+	nb = 0;
+	while (list != NULL)
+	{
+		++nb;
+		list = list->next;
+	}
+	size = 2;
+	while (size * size < nb)
+		++size;
+	fillit->size = size;
+}
+
+int			main(int argc, char **argv)
 {
 	t_fillit	fillit;
-	t_tet		*tet;
 
 	if (argc != 2)
 	{
-		ft_putstr(USAGE);
+		ft_putstr_fd(USAGE, 1);
 		return (1);
 	}
 	fillit.filename = argv[1];
-	fillit.size = 0;
-	ft_bzero(fillit.map, MAP_SIZE);
 	if (!(fillit.tetriminos = parse_file(fillit.filename)))
 	{
-		ft_putstr(ERROR);
+		ft_putstr_fd(ERROR, 1);
 		return (1);
 	}
-	tet = fillit.tetriminos;
-	while (tet && (fillit.size += 4))
-		tet = tet->next;
+	init_map(&fillit);
 	if (!solve(&fillit))
 	{
-		ft_putstr(ERROR);
+		ft_putstr_fd(ERROR, 2);
 		return (1);
 	}
+	display_map(&fillit);
+	free_fillit(&fillit);
 	return (0);
 }

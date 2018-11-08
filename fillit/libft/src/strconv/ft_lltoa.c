@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/15 13:57:09 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 13:57:13 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:06:57 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:06:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ char	*ft_lltoa(long long n)
 	if ((s = ft_strnew(size)) == NULL)
 		return (NULL);
 	curr = n;
-	while (size-- >= (curr < 0))
+	while (--size >= (curr < 0))
 	{
 		s[size] = (curr < 0 ? -(curr % 10) : (curr % 10)) + '0';
 		curr /= 10;
