@@ -1,0 +1,1 @@
+docker run -it -v ~/abathur:/root -p 3000:3000 --name=Abathur --entrypoint=bash -e FLASK_APP=/root/hello.py python:2-slim -c 'pip install Flask && flask run --port=3000 --host=0.0.0.0'
