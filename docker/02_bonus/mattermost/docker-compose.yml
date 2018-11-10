@@ -1,0 +1,6 @@
+version: '3'
+services:
+  mattermost:
+    image: mattermost/mattermost-preview
+    ports:
+      - 8080:8065

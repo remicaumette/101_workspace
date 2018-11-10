@@ -1,0 +1,29 @@
+enum Runtime {
+    STATIC,
+    PHP,
+    NODEJS
+}
+
+type Project {
+    id: ID!
+    name: String!
+    description: String
+    runtime: Runtime!
+    url: String
+    owner: User!
+    updatedAt: DateTime!
+    createdAt: DateTime!
+}
+
+extend type Query {
+    projects: [Project]! @auth
+    projectById(id: ID!): Project @auth
+    projectByName(name: String!): Project @auth
+}
+
+extend type Mutation {
+    createProject(name: String!, runtime: Runtime!, description: String): Project! @auth
+    updateProject(id: ID!, description: String): Project! @auth
+    deleteProject(id: ID!): Boolean! @auth
+    uploadProject(id: ID!, file: Upload!): Project! @auth
+}

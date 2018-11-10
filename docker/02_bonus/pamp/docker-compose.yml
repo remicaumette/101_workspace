@@ -1,0 +1,19 @@
+version: '3'
+services:
+  database:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=hello
+      - MYSQL_PASSWORD=hello
+      - MYSQL_DATABASE=hello
+    ports:
+      - 3306:3306
+  apache:
+    image: php:apache
+    links:
+      - database
+    ports:
+      - 8080:80
+    volumes:
+      - ./site:/var/www/html

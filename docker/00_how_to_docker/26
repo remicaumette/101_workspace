@@ -1,1 +1,1 @@
-docker service create --network=overmind --name=engineering-bay --replicas=2 -e OC_USERNAME=guest -e OC_PASSWD=guest 42school/engineering-bay
+docker service create --network overmind --name engineering-bay --replicas 2 --env OC_USERNAME=guest --env OC_PASSWD=guest 42school/engineering-bay

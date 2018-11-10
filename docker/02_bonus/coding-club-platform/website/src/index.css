@@ -1,0 +1,37 @@
+.form {
+    padding: 5px 20px 10px;
+}
+
+.v-btn--active:before, .v-btn:focus:before, .v-btn:hover:before {
+    background: transparent;
+}
+
+.application {
+    padding-bottom: 70px;
+}
+
+.project .description {
+    padding: 0 20px 5px;
+}
+
+.project .owner {
+    padding: 5px 0px;
+}
+
+.project .owner .admin {
+    background-color: #D32F2F;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+
+.v-list h1 {
+    margin-left: 15px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+}

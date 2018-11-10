@@ -1,0 +1,18 @@
+version: '3'
+services:
+  graphql-api:
+    build:
+      context: ./graphql-api
+    ports:
+      - 3000:3000
+    links:
+      - database
+    environment:
+      - BASE_URL=192.168.99.100
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  website:
+    build:
+      context: ./website
+    ports:
+      - 8080:80

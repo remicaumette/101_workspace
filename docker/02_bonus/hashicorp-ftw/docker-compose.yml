@@ -1,0 +1,16 @@
+version: '3'
+services:
+  consul:
+    image: consul
+    network_mode: host
+    volumes:
+      - /opt/consul:/consul/data
+      - /tmp:/tmp
+  nomad:
+    image: djenriquez/nomad
+    network_mode: host
+    command: agent -server -client -bootstrap-expect=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/nomad:/opt/nomad
+      - /tmp:/tmp

@@ -1,0 +1,35 @@
+{
+    "private": true,
+    "name": "spring-camp-platform-website",
+    "scripts": {
+        "start": "parcel --open -p 8080 src/index.html",
+        "build": "parcel build src/index.html",
+        "lint": "eslint src"
+    },
+    "devDependencies": {
+        "@vue/component-compiler-utils": "^2.1.0",
+        "babel-preset-env": "^1.7.0",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb-base": "^13.0.0",
+        "eslint-plugin-import": "^2.13.0",
+        "eslint-plugin-vue": "^4.5.0",
+        "parcel-bundler": "^1.9.4",
+        "vue-template-compiler": "^2.5.16"
+    },
+    "dependencies": {
+        "apollo-cache-inmemory": "^1.2.5",
+        "apollo-client": "^2.3.5",
+        "apollo-link": "^1.2.2",
+        "apollo-upload-client": "^8.1.0",
+        "babel-polyfill": "^6.26.0",
+        "graphql": "^0.13.2",
+        "graphql-tag": "^2.9.2",
+        "vue": "^2.5.16",
+        "vue-apollo": "^3.0.0-beta.19",
+        "vue-hot-reload-api": "^2.3.0",
+        "vue-moment": "^4.0.0",
+        "vue-router": "^3.0.1",
+        "vuetify": "^1.1.1",
+        "vuex": "^3.0.1"
+    }
+}

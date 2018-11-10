@@ -1,0 +1,36 @@
+{
+    "private": true,
+    "name": "spring-camp-platform-graphql-api",
+    "scripts": {
+        "start": "babel-node src",
+        "lint": "eslint src",
+        "lint:fix": "eslint src --fix"
+    },
+    "dependencies": {
+        "apollo-server": "^2.0.0-rc.5",
+        "bcrypt-nodejs": "0.0.3",
+        "decompress": "^4.2.0",
+        "dockerode": "^2.5.5",
+        "graphql": "^0.13.2",
+        "graphql-iso-date": "^3.5.0",
+        "graphql-tools": "^3.0.4",
+        "joi": "^13.4.0",
+        "jsonwebtoken": "^8.3.0",
+        "pg": "^7.4.3",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^4.38.0",
+        "signale": "^1.2.1",
+        "sqlite3": "^4.0.1",
+        "uuid": "^3.3.2"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "chai": "^4.1.2",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb-base": "^12.1.0",
+        "eslint-plugin-import": "^2.13.0",
+        "mocha": "^5.2.0",
+        "supertest": "^3.1.0"
+    }
+}
