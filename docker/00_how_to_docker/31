@@ -1,1 +1,1 @@
-docker service rm marines orbital-command engineering-bay
+docker service rm $(docker service ls -q)
