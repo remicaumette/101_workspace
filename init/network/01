@@ -1,0 +1,1 @@
+ifconfig -a | sed -E 's/[[:space:]:].*//;/^$/d'
