@@ -1,0 +1,15 @@
+HASH_FILE=/var/run/cron_hash
+CURRENT_HASH=$(md5sum /etc/crontab | awk '{ print $1 }')
+
+if [ ! -f $HASH_FILE ]; then
+		echo $CURRENT_HASH > $HASH_FILE
+		exit 0
+fi
+
+PREVIOUS_HASH=$(cat /var/run/cron_hash)
+if [ "$PREVIOUS_HASH" != "$CURRENT_HASH" ]; then
+		echo "Hello world." | mail -s "crontab has changed" root
+		echo $CURRENT_HASH > $HASH_FILE
+fi
+# creer le fichier dans /opt/check.sh
+# echo "0 0 * * * /bin/sh /opt/check.sh" | crontab

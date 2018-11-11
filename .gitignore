@@ -2,4 +2,4 @@
 *.out
 *.o
 *.a
-/.vagrant
+**/.vagrant
