@@ -1,1 +1,1 @@
-ping -c 1 slash16.org | grep "from" | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+IP serveur dns
