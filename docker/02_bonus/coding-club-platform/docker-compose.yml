@@ -5,8 +5,6 @@ services:
       context: ./graphql-api
     ports:
       - 3000:3000
-    links:
-      - database
     environment:
       - BASE_URL=192.168.99.100
     volumes:
@@ -15,4 +13,4 @@ services:
     build:
       context: ./website
     ports:
-      - 8080:80
+      - 8080:5000
