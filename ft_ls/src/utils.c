@@ -5,20 +5,20 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/16 15:26:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 20:08:27 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/15 01:56:51 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/15 03:09:12 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char		*path_join(char *path, char *filename)
+char	*path_join(char *path, char *filename)
 {
 	char	*str;
 	char	*tmp;
 
-	if (!path)
+	if (!path || !*path)
 		return (ft_strdup(filename));
 	if (*(path + ft_strlen(path) - 1) == '/')
 		return (ft_strjoin(path, filename));
@@ -33,29 +33,54 @@ char		*path_join(char *path, char *filename)
 	return (str);
 }
 
-void		ft_strarr_sort(char **arr, int reverse)
+char	*file_readlink(char *path, struct stat *stats)
 {
-	int		i;
-	int		j;
-	char	*buf;
+	char	buf[1024];
+	int		size;
+	char	*tmp;
 
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-		i++;
-	while (--i > 0 && (j = -1))
-		while (++j < i)
-			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
-				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
-			{
-				buf = arr[i];
-				arr[i] = arr[j];
-				arr[j] = buf;
-			}
+	if (S_ISLNK(stats->st_mode))
+	{
+		size = readlink(path, buf, 1024);
+		if (!(tmp = ft_strnew(size)))
+			return (NULL);
+		ft_strncpy(tmp, buf, size);
+		return (tmp);
+	}
+	return (NULL);
 }
 
-char		get_file_type(struct stat *stats)
+void	stradd_formatted_left(char *str, char *content, int *cursor,
+	int width)
+{
+	int	i;
+	int	len;
+
+	len = ft_strlen(content);
+	i = -1;
+	if (width != -1)
+		while (++i < (width - len))
+			str[(*cursor)++] = ' ';
+	while (*content)
+		str[(*cursor)++] = *content++;
+}
+
+void	stradd_formatted_right(char *str, char *content, int *cursor,
+	int width)
+{
+	int	i;
+	int	len;
+
+	len = ft_strlen(content);
+	i = -1;
+	while (*content)
+		str[(*cursor)++] = *content++;
+	if (width != -1)
+		while (++i < (width - len))
+			str[(*cursor)++] = ' ';
+}
+
+char	file_type(struct stat *stats)
 {
 	if (S_ISREG(stats->st_mode))
 		return ('-');
@@ -72,26 +97,4 @@ char		get_file_type(struct stat *stats)
 	if (S_ISSOCK(stats->st_mode))
 		return ('s');
 	return ('?');
-}
-
-t_fileinfo	*fileinfo_last(t_fileinfo *node)
-{
-	if (!node->left)
-		return (node);
-	return (fileinfo_last(node->left));
-}
-
-void		stradd_formatted_right(char *str,
-	char *content, int *cursor, int width)
-{
-	int	i;
-	int	len;
-
-	len = ft_strlen(content);
-	i = -1;
-	while (*content)
-		str[(*cursor)++] = *content++;
-	if (width != -1)
-		while (++i < (width - len))
-			str[(*cursor)++] = ' ';
 }

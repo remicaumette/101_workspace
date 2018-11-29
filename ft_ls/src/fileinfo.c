@@ -5,98 +5,91 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/16 15:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 02:46:57 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/15 01:48:02 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/27 15:39:28 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_fileinfo	*fileinfo_init(t_fileinfo *info)
+static int	get_size(t_fileinfo *file)
 {
-	char	buf[1024];
-	int		size;
-
-	info->link = NULL;
-	if (S_ISLNK(info->stats->st_mode))
-	{
-		size = readlink(info->path, buf, 1024);
-		if (!(info->link = ft_strnew(size)))
-		{
-			fileinfo_destroy(&info);
-			return (NULL);
-		}
-		ft_strncpy(info->link, buf, size);
-	}
-	info->left = NULL;
-	info->right = NULL;
-	return (info);
+	if (S_ISBLK(file->stats->st_mode) || S_ISCHR(file->stats->st_mode))
+		return ((file->minor = ft_itoa(minor(file->stats->st_rdev))) &&
+				(file->size = ft_itoa(major(file->stats->st_rdev))));
+	return (!(file->minor = NULL) &&
+			(file->size = ft_lltoa(file->stats->st_size)));
 }
 
-t_fileinfo			*fileinfo_create(char *path, char *filename)
+t_fileinfo	*fileinfo_create(char *path, char *filename)
 {
-	t_fileinfo	*info;
+	t_fileinfo	*file;
 
-	if (!(info = ft_memalloc(sizeof(t_fileinfo))) ||
-		!(info->filename = ft_strdup(filename)) ||
-		!(info->path = path_join(path, filename)) ||
-		!(info->stats = ft_memalloc(sizeof(struct stat))) ||
-		lstat(info->path, info->stats) ||
-		!(info->owner = ft_strdup(getpwuid(info->stats->st_uid)->pw_name)) ||
-		!(info->group = ft_strdup(getgrgid(info->stats->st_gid)->gr_name)) ||
-		!(info->size = ft_lltoa(info->stats->st_size)) ||
-		!(info->nlink = ft_itoa(info->stats->st_nlink)))
+	if (!(file = ft_memalloc(sizeof(t_fileinfo))) ||
+		!(file->filename = ft_strdup(filename)) ||
+		!(file->path = path_join(path, filename)) ||
+		!(file->stats = ft_memalloc(sizeof(struct stat))) ||
+		lstat(file->path, file->stats) ||
+		!(file->owner = ft_strdup(getpwuid(file->stats->st_uid)->pw_name)) ||
+		!(file->group = ft_strdup(getgrgid(file->stats->st_gid)->gr_name)) ||
+		!get_size(file) ||
+		!(file->nlink = ft_itoa(file->stats->st_nlink)))
 	{
-		if (info)
-			fileinfo_destroy(&info);
+		fileinfo_destroy(&file);
 		return (NULL);
 	}
-	return (fileinfo_init(info));
+	file->link = file_readlink(file->path, file->stats);
+	file->next = NULL;
+	return (file);
 }
 
-void				fileinfo_destroy(t_fileinfo **info)
+void		fileinfo_destroy(t_fileinfo **file)
 {
-	if ((*info)->filename)
-		ft_strdel(&((*info)->filename));
-	if ((*info)->path)
-		ft_strdel(&((*info)->path));
-	if ((*info)->size)
-		ft_strdel(&((*info)->size));
-	if ((*info)->nlink)
-		ft_strdel(&((*info)->nlink));
-	if ((*info)->link)
-		ft_strdel(&((*info)->link));
-	if ((*info)->owner)
-		ft_strdel(&((*info)->owner));
-	if ((*info)->group)
-		ft_strdel(&((*info)->group));
-	if ((*info)->stats)
-		ft_memdel((void **)&((*info)->stats));
-	ft_memdel((void **)info);
+	if ((*file)->filename)
+		ft_strdel(&((*file)->filename));
+	if ((*file)->path)
+		ft_strdel(&((*file)->path));
+	if ((*file)->size)
+		ft_strdel(&((*file)->size));
+	if ((*file)->minor)
+		ft_strdel(&((*file)->minor));
+	if ((*file)->nlink)
+		ft_strdel(&((*file)->nlink));
+	if ((*file)->link)
+		ft_strdel(&((*file)->link));
+	if ((*file)->owner)
+		ft_strdel(&((*file)->owner));
+	if ((*file)->group)
+		ft_strdel(&((*file)->group));
+	if ((*file)->stats)
+		ft_memdel((void **)&((*file)->stats));
+	ft_memdel((void **)file);
 }
 
-void				fileinfo_recursive_destroy(t_fileinfo **info)
+void		fileinfo_insert(t_ls *ls, t_fileinfo *file)
 {
-	if ((*info)->right)
-		fileinfo_recursive_destroy(&(*info)->right);
-	if ((*info)->left)
-		fileinfo_recursive_destroy(&(*info)->left);
-	fileinfo_destroy(info);
-}
+	t_fileinfo	*prev;
+	t_fileinfo	*curr;
 
-void				fileinfo_insert(t_options *options, t_fileinfo **node,
-	t_fileinfo *info)
-{
-	if (!*node)
-		*node = info;
+	if (!ls->dir.files || (ls->reverse ?
+		!ls->sort(ls->dir.files, file) : ls->sort(ls->dir.files, file)))
+	{
+		file->next = ls->dir.files;
+		ls->dir.files = file;
+	}
 	else
 	{
-		if (options->sort(info, *node) > 0)
-			fileinfo_insert(options, options->reverse ?
-				&(*node)->right : &(*node)->left, info);
-		else
-			fileinfo_insert(options, options->reverse ?
-				&(*node)->left : &(*node)->right, info);
+		prev = ls->dir.files;
+		curr = ls->dir.files->next;
+		while (curr && (ls->reverse ?
+			ls->sort(curr, file) : !ls->sort(curr, file)))
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+		file->next = curr;
+		prev->next = file;
 	}
+	ls->dir.files_count++;
 }

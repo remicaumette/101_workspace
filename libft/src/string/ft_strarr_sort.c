@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   one_per_line.c                                   .::    .:/ .      .::   */
+/*   ft_strarr_sort.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/11/15 02:19:42 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/21 14:03:26 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/29 15:45:41 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/29 15:45:41 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-static void	display_file(t_ls *ls, t_fileinfo *file)
+void	ft_strarr_sort(char **arr, int reverse)
 {
-	char	str[ft_strlen(file->filename) + 3];
 	int		i;
+	int		j;
+	char	*buf;
 
-	i = -1;
-	while (file->filename[++i])
-		str[i] = file->filename[i];
-	if (ls->slash && S_ISDIR(file->stats->st_mode))
-		str[i++] = '/';
-	str[i++] = '\n';
-	str[i++] = 0;
-	ft_putstr(str);
-}
-
-void		one_per_line_display(t_ls *ls)
-{
-	t_fileinfo	*file;
-
-	file = ls->dir.files;
-	while (file)
-	{
-		display_file(ls, file);
-		file = file->next;
-	}
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+		i++;
+	while (--i > 0 && (j = -1))
+		while (++j < i)
+			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
+				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
+			{
+				buf = arr[i];
+				arr[i] = arr[j];
+				arr[j] = buf;
+			}
 }

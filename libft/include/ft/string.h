@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 15:07:45 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 11:40:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/29 15:45:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,4 +44,5 @@ char			**ft_strsplit(char const *s, char c);
 void			ft_strarr_del(char **arr);
 int				ft_strarr_len(char **arr);
 char			**ft_strarr_add(char **arr, char *elem);
+void			ft_strarr_sort(char **arr, int reverse);
 #endif

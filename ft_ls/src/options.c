@@ -5,97 +5,98 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/24 15:35:01 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 17:59:17 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/26 14:23:37 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/27 14:53:21 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	options_error(char c)
-{
-	ft_putstr_fd("ls: illegal option -- ", 2);
-	ft_putchar_fd(c, 2);
-	ft_putstr_fd("\nusage: ls [-tSXrRal1mp] [file ...]\n", 2);
-	exit(1);
-}
-
-static void	options_parse_flag(t_options *options, char c)
+int		options_parse_flag(t_ls *ls, char c)
 {
 	if (c == 't')
-		options->sort = sort_by_time;
+		ls->sort = sort_by_time;
 	else if (c == 'S')
-		options->sort = sort_by_size;
+		ls->sort = sort_by_size;
 	else if (c == 'X')
-		options->sort = sort_by_extension;
+		ls->sort = sort_by_extension;
 	else if (c == 'r')
-		options->reverse = 1;
+		ls->reverse = 1;
 	else if (c == 'R')
-		options->recursive = 1;
+		ls->recursive = 1;
 	else if (c == 'a')
-		options->hidden = 1;
+		ls->hidden = 1;
 	else if (c == 'l')
-		options->display = long_format_display;
+		ls->display = long_format_display;
 	else if (c == '1')
-		options->display = one_per_line_display;
+		ls->display = one_per_line_display;
 	else if (c == 'm')
-		options->display = with_commas_display;
+		ls->display = with_commas_display;
+	else if (c == 'x')
+		ls->display = horizontal_display;
 	else if (c == 'p')
-		options->slash = 1;
+		ls->slash = 1;
 	else
-		options_error(c);
-}
-
-static int	options_process_arg(t_options *options, char *arg, int *started)
-{
-	int	i;
-
-	i = 0;
-	*started |= arg[i] != '-';
-	if (*started)
-	{
-		options->args = ft_strarr_add(options->args, arg);
-		options->args_count++;
-	}
-	else
-		while (arg[++i])
-			options_parse_flag(options, arg[i]);
+		return (1);
 	return (0);
 }
 
-static int	options_process(t_options *options, char **argv)
+char	**options_printerr(char c)
 {
-	int	started;
-	int	status;
-	int	i;
-
-	started = 0;
-	status = 0;
-	i = 0;
-	while (argv[++i])
-		status |= options_process_arg(options, argv[i], &started);
-	ft_strarr_sort(options->args, options->reverse);
-	return (status);
+	ft_putstr_fd("ls: illegal option -- ", 2);
+	ft_putchar_fd(c, 2);
+	ft_putstr_fd("\nusage: ls [-tSXrRal1mxp] [file ...]\n", 2);
+	return (NULL);
 }
 
-int			options_init(t_options *options, char **argv)
+char	**options_parse(t_ls *ls, char **argv)
 {
-	struct winsize	size;
+	char	**args;
+	int		i;
+	int		is_option;
 
-	options->display = one_per_line_display;
-	options->hidden = 0;
-	options->slash = 0;
-	options->recursive = 0;
-	options->reverse = 0;
-	options->sort = sort_by_name;
-	options->paths_count = 0;
-	options->paths_curr = 0;
-	options->args = NULL;
-	options->args_curr = 0;
-	options->args_count = 0;
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-	options->width = size.ws_col;
-	options->width_curr = 0;
-	return (options_process(options, argv));
+	args = NULL;
+	i = 0;
+	is_option = 1;
+	while (argv[++i])
+		if (!*argv[i])
+		{
+			ft_putstr_fd("ls: fts_open: No such file or directory\n", 2);
+			return (NULL);
+		}
+		else if ((is_option =
+			(is_option ? (*argv[i] == '-' && argv[i][1]) : 0)))
+		{
+			if (ft_strequ(argv[i], "--") && !(is_option = 0))
+				continue ;
+			while (*++argv[i])
+				if (options_parse_flag(ls, *argv[i]))
+					return (options_printerr(*argv[i]));
+		}
+		else if (!(args = ft_strarr_add(args, argv[i])))
+			return (NULL);
+	return (!args && !(args = ft_strarr_add(args, ".")) ? NULL : args);
+}
+
+int		options_filter(char **args, char ***files, char ***directories)
+{
+	int			i;
+	struct stat	stats;
+
+	ft_strarr_sort(args, 0);
+	i = -1;
+	while (args[++i])
+		if (!stat(args[i], &stats) || !lstat(args[i], &stats))
+		{
+			if (S_ISDIR(stats.st_mode))
+				if (!(*directories = ft_strarr_add(*directories, args[i])))
+					return (1);
+			if (!S_ISDIR(stats.st_mode))
+				if (!(*files = ft_strarr_add(*files, args[i])))
+					return (1);
+		}
+		else
+			ls_printerror(args[i]);
+	return (0);
 }
