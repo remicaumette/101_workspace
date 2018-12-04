@@ -6,24 +6,14 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/04 13:32:28 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/04 15:52:14 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/04 17:05:51 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "coquillette.h"
-
-static char	*fusionner_mot_avec_caractere(char **contenu, char c)
-{
-	char	s[2] = { c, 0 };
-	char	*tmp;
-
-	tmp = ft_strjoin(*contenu, s);
-	ft_strdel(contenu);
-	return (*contenu = tmp);
-}
-
-static char	*obtenir_mot_suivant(char ***mots, char *chaine)
+/*
+static int	obtenir_mot_suivant(char ***mots, char **mot, char **actuel)
 {
 	char	*mot;
 	char	guillemet;
@@ -47,20 +37,56 @@ static char	*obtenir_mot_suivant(char ***mots, char *chaine)
 			return (NULL);
 		chaine++;
 	}
-	printf("ok\n");
 	if (!mot)
 		return ("");
 	return (!(*mots = ft_strarr_add(*mots, mot)) ? NULL : chaine);
 }
+*/
+
+static char	*mot_ajouter_caractere(char **mot, char c)
+{
+	char	*tmp;
+	char	m[2];
+
+	m[0] = c;
+	m[1] = 0;
+	if (!(tmp = ft_strjoin(*mot, m)))
+		return (NULL);
+	ft_strdel(mot);
+	return (*mot = tmp);
+}
 
 char		**sil_te_plait_separe_ca(t_coquille *coquille)
 {
-	char	**mots;
-	char	*actuel;
+	char	**words;
+	char	*word;
+	char	*line;
+	char	quote;
 
-	mots = NULL;
-	actuel = coquille->ligne;
-	while (!!(actuel = obtenir_mot_suivant(&mots, actuel)) && *actuel)
-		;
-	return (!actuel ? NULL : mots);
+	words = NULL;
+	word = NULL;
+	line = coquille->ligne - 1;
+	quote = -1;
+	while (*++line)
+	{
+		if ((*line == ' ' && quote == -1) || *line == '"' || *line == '\'')
+		{
+			if (word)
+			{
+				if (!(words = ft_strarr_add(words, word)))
+					return (NULL);
+				ft_strdel(&word);
+			}
+			continue ;
+		}
+		if (!(mot_ajouter_caractere(&word, *line)))
+			return (NULL);
+	}
+	if (word)
+	{
+		if (!(words = ft_strarr_add(words, word)))
+			return (NULL);
+		ft_strdel(&word);
+	}
+	return (words);
 }
