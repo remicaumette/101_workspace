@@ -13,13 +13,35 @@
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **environ)
+void	print_tokens(t_token *token)
 {
-	t_minishell	shell;
+	char symbols[3][20] = { "WORD", "OPERATOR", "NEWLINE" };
+	char operators[11][20] = { "NONE", "AND_IF", "OR_IF", "DSEMI", "DLESS", "DGREAT", "LESSAND", "GREATAND", "LESSGREAT", "DLESSDASH", "CLOBBER" };
+	printf("=== START TOKENS PRINT\n");
+	while (token)
+	{
+		printf("token->symbol = %s\n", symbols[token->symbol]);
+		printf("token->op = %s\n", operators[token->op]);
+		printf("token->content = \"%s\"\n", token->content);
+		printf("token->prev = %p\n", token->prev);
+		printf("token->next = %p\n", token->next);
+		token = token->next;
+		if (token)
+			printf("->\n");
+	}
+	printf("=== END TOKENS PRINT\n");
+}
 
-	(void) argc;
-	(void) argv;
-	if (minishell_init(&shell, environ) == 0)
-		return (1);
-	return (!minishell_start(&shell));
+int		main(int argc, char **argv, char **environ)
+{
+	(void)environ;
+
+	if (argc > 1)
+	{
+		t_token	*tokens;
+		tokens = lexer_tokenize(argv[1]);
+		print_tokens(tokens);
+		token_destroy(tokens);
+	}
+	return (0);
 }

@@ -14,22 +14,44 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "libft.h"
-
 # include <stdio.h>
-typedef struct	s_minishell
+
+typedef enum e_symbol	t_symbol;
+typedef enum e_operator	t_operator;
+typedef struct s_token	t_token;
+
+enum e_symbol
 {
-	char	**environ;
-}				t_minishell;
+	WORD,
+	OPERATOR,
+	NEWLINE,
+};
 
-typedef struct	s_command
+enum e_operator
 {
-	char	*cmd;
-	char	**arguments;
-}				t_command;
+	NONE,
+	AND_IF, // &&
+	OR_IF, // ||
+	DSEMI, // ;;
+	DLESS, // <<
+	DGREAT, // >>
+	LESSAND, // <&
+	GREATAND, // >&
+	LESSGREAT, // <>
+	DLESSDASH, // <<-
+	CLOBBER, // >|
+};
 
-int				command_parse(t_minishell *minishell,
-					t_command *command, char *line);
+struct	s_token
+{
+	t_symbol	symbol;
+	t_operator	op;
+	char		*content;
+	t_token		*prev;
+	t_token		*next;
+};
 
-int				minishell_init(t_minishell *minishell, char **environ);
-int				minishell_start(t_minishell *minishell);
+t_token		*token_create(t_symbol symbol, t_operator op, char *content);
+void		token_destroy(t_token *token);
+t_token		*lexer_tokenize(char *line);
 #endif
