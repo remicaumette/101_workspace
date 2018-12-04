@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:07:50 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 05:00:55 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/04 13:46:06 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,42 +16,33 @@
 # include "libft.h"
 # include <stdio.h>
 
-typedef enum e_symbol	t_symbol;
-typedef enum e_operator	t_operator;
-typedef struct s_token	t_token;
+typedef struct s_cmd	t_cmd;
+typedef struct s_shell	t_shell;
 
-enum e_symbol
+struct					s_cmd
 {
-	WORD,
-	OPERATOR,
-	NEWLINE,
+	char	*cmd;
+	char	**args;
+	int		status;
+	t_cmd	*next;
 };
 
-enum e_operator
+struct					s_shell
 {
-	NONE,
-	AND_IF, // &&
-	OR_IF, // ||
-	DSEMI, // ;;
-	DLESS, // <<
-	DGREAT, // >>
-	LESSAND, // <&
-	GREATAND, // >&
-	LESSGREAT, // <>
-	DLESSDASH, // <<-
-	CLOBBER, // >|
+	char	**environ;
+	char	*home;
+	char	*cwd;
+	char	*line;
+	t_cmd	*current;
 };
 
-struct	s_token
-{
-	t_symbol	symbol;
-	t_operator	op;
-	char		*content;
-	t_token		*prev;
-	t_token		*next;
-};
+int						shell_init(t_shell *shell, char **environ);
+void					shell_destroy(t_shell *shell);
+int						shell_eval(t_shell *shell);
+char					*shell_getenv(t_shell *shell, char *var);
 
-t_token		*token_create(t_symbol symbol, t_operator op, char *content);
-void		token_destroy(t_token *token);
-t_token		*lexer_tokenize(char *line);
+int						cmd_from_line(t_shell *shell);
+void					cmd_destroy(t_cmd *cmd);
+
+char					**plz_split_this(t_shell *shell);
 #endif

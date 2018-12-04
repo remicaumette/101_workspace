@@ -6,42 +6,27 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:04 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 05:06:23 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/04 13:16:11 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens(t_token *token)
+int	fail(t_shell *shell)
 {
-	char symbols[3][20] = { "WORD", "OPERATOR", "NEWLINE" };
-	char operators[11][20] = { "NONE", "AND_IF", "OR_IF", "DSEMI", "DLESS", "DGREAT", "LESSAND", "GREATAND", "LESSGREAT", "DLESSDASH", "CLOBBER" };
-	printf("=== START TOKENS PRINT\n");
-	while (token)
-	{
-		printf("token->symbol = %s\n", symbols[token->symbol]);
-		printf("token->op = %s\n", operators[token->op]);
-		printf("token->content = \"%s\"\n", token->content);
-		printf("token->prev = %p\n", token->prev);
-		printf("token->next = %p\n", token->next);
-		token = token->next;
-		if (token)
-			printf("->\n");
-	}
-	printf("=== END TOKENS PRINT\n");
+	shell_destroy(shell);
+	return (1);
 }
 
-int		main(int argc, char **argv, char **environ)
+int	main(int argc, char **argv, char **environ)
 {
-	(void)environ;
+	t_shell	shell;
 
-	if (argc > 1)
-	{
-		t_token	*tokens;
-		tokens = lexer_tokenize(argv[1]);
-		print_tokens(tokens);
-		token_destroy(tokens);
-	}
+	(void)argc;
+	(void)argv;
+	if (shell_init(&shell, environ) || shell_eval(&shell))
+		return (fail(&shell));
+	shell_destroy(&shell);	
 	return (0);
 }

@@ -3,11 +3,10 @@ LIBFT=../libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
-	src/lexer/token.c		\
-	src/lexer/tokenize.c	\
-	src/command.c	\
-	src/main.c		\
-	src/minishell.c
+	src/cmd.c					\
+	src/main.c					\
+	src/shell.c					\
+	src/sspppplllliiiitttttt.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(NAME)
