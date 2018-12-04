@@ -6,34 +6,34 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 05:14:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/04 13:43:09 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/04 14:11:20 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "coquillette.h"
 
-int		cmd_from_line(t_shell *shell)
+int		cmd_depuis_ligne(t_coquille *coquille)
 {
 	char	**split;
 
-	if (!(split = plz_split_this(shell)))
+	if (!(split = sil_te_plait_separe_ca(coquille)))
 		return (1);
 	for (int i = 0; split[i]; i++)
 		printf("%s\n", split[i]);
 	return (0);
 }
 
-void	cmd_destroy(t_cmd *cmd)
+void	cmd_detruire(t_cmd *cmd)
 {
 	t_cmd	*curr;
-	t_cmd	*next;
+	t_cmd	*suivant;
 
-	next = cmd;
-	while (next)
+	suivant = cmd;
+	while (suivant)
 	{
-		curr = next;
-		next = curr->next;
+		curr = suivant;
+		suivant = curr->suivant;
 
 		if (curr->cmd)
 			ft_strdel(&curr->cmd);
