@@ -43,17 +43,8 @@ void	shell_destroy(t_shell *shell)
 		if (shell->line)
 			ft_strdel(&shell->line);
 		if (shell->current)
-			cmd_destroy(shell->current);
+			cmd_destroy(&shell->current);
 	}
-}
-
-void	debug_cmd(t_cmd *cmd)
-{
-	printf("cmd: %s args: %p\n", cmd->cmd, cmd->args);
-	for (int i = 0; cmd->args && cmd->args[i]; i++)
-		printf("\t- %s\n", cmd->args[i]);
-	if (cmd->next)
-		debug_cmd(cmd->next);
 }
 
 int		shell_eval(t_shell *shell)
@@ -72,9 +63,14 @@ int		shell_eval(t_shell *shell)
 			return (1);
 		if (shell->current)
 		{
-			debug_cmd(shell->current);
+			// debug
+			printf("cmd: %s args: %p\n", shell->current->cmd, shell->current->args);
+			for (int i = 0; shell->current->args && shell->current->args[i]; i++)
+				printf("\t- %s\n", shell->current->args[i]);
+			// debug
+			printf("exit code: %d\n", process_run(shell, shell->current));
 		}
-		cmd_destroy(shell->current);
+		cmd_destroy(&shell->current);
 		ft_strdel(&shell->line);
 	}
 	return (0);

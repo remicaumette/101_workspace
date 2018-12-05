@@ -15,16 +15,17 @@
 # define MINISHELL_H
 # include "libft.h"
 # include <stdio.h>
+# include <sys/stat.h>
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_shell		t_shell;
+typedef int		(*t_builtin)(t_shell *, t_cmd *);
 
 struct					s_cmd
 {
+	char	*exec;
 	char	*cmd;
 	char	**args;
-	int		status;
-	t_cmd	*next;
 };
 
 struct					s_shell
@@ -43,7 +44,20 @@ int							shell_setenv(t_shell *shell, char *value);
 
 int							cmd_from_line(t_shell *shell);
 t_cmd						*cmd_from_words(char **words);
-void						cmd_destroy(t_cmd *cmd);
+void						cmd_destroy(t_cmd **cmd);
+int							cmd_resolve_exec(t_cmd *cmd);
 
 int							words_from_line(t_shell *shell, char ***words);
+
+char						*process_getexec(t_shell *shell, char *file);
+int							process_run(t_shell *shell, t_cmd *cmd);
+
+int							builtin_env(t_shell *shell, t_cmd *cmd);
+int							builtin_cd(t_shell *shell, t_cmd *cmd);
+int							builtin_exit(t_shell *shell, t_cmd *cmd);
+
+t_builtin					builtin_from_name(char *cmd);
+int							minishell_printerr(char *file, char *msg);
+char						*ft_strjoinc(char **mot, char c);
+char						*path_join(char *path, char *filename);
 #endif

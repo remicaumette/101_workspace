@@ -37,7 +37,8 @@ t_cmd	*cmd_from_words(char **words)
 
 	if (!(cmd = ft_memalloc(sizeof(t_cmd))))
 		return (NULL);
-	if (!(cmd->cmd = ft_strdup(words[0])))
+	cmd->exec = NULL;
+	if (!(cmd->cmd = ft_strdup(*words)))
 		return (NULL);
 	i = 0;
 	while (words[++i])
@@ -46,20 +47,22 @@ t_cmd	*cmd_from_words(char **words)
 	return (cmd);
 }
 
-void	cmd_destroy(t_cmd *cmd)
+int		cmd_resolve_exec(t_cmd *cmd)
 {
-	t_cmd	*curr;
-	t_cmd	*next;
 
-	next = cmd;
-	while (next)
+	return (0);
+}
+
+void	cmd_destroy(t_cmd **cmd)
+{
+	if (cmd && *cmd)
 	{
-		curr = next;
-		next = curr->next;
-		if (curr->cmd)
-			ft_strdel(&curr->cmd);
-		if (curr->args)
-			ft_strarr_del(curr->args);
-		ft_memdel((void **)&curr);
+		if ((*cmd)->exec)
+			ft_strdel(&(*cmd)->exec);
+		if ((*cmd)->cmd)
+			ft_strdel(&(*cmd)->cmd);
+		if ((*cmd)->args)
+			ft_strarr_del((*cmd)->args);
+		ft_memdel((void **)cmd);
 	}
 }

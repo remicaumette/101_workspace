@@ -13,20 +13,7 @@
 
 #include "minishell.h"
 
-static char	*ft_strjoinc(char **mot, char c)
-{
-	char	*tmp;
-	char	m[2];
-
-	m[0] = c;
-	m[1] = 0;
-	if (!(tmp = ft_strjoin(*mot, m)))
-		return (NULL);
-	ft_strdel(mot);
-	return (*mot = tmp);
-}
-
-int			words_from_line(t_shell *shell, char ***words)
+int		words_from_line(t_shell *shell, char ***words)
 {
 	char	*word;
 	char	*line;
