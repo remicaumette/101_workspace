@@ -3,10 +3,10 @@ LIBFT=../libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
-	src/cmd.c					\
-	src/main.c					\
-	src/shell.c					\
-	src/sspppplllliiiitttttt.c
+	src/cmd.c		\
+	src/main.c		\
+	src/shell.c		\
+	src/words.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(NAME)

@@ -11,73 +11,94 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "coquillette.h"
+#include "minishell.h"
 
-int		coquille_init(t_coquille *coquille, char **environ)
+int		shell_init(t_shell *shell, char **environ)
 {
 	int		i;
-	char	*tmp;
+	char	*home;
+	char	cwd[1024];
 
 	i = -1;
 	while (environ[++i])
-		if (!(coquille->environ = ft_strarr_add(coquille->environ, environ[i])))
+		if (!(shell->env = ft_strarr_add(shell->env, environ[i])))
 			return (1);
-	tmp = coquille_obtenirenv(coquille, "HOME");
-	if (!(coquille->maison = ft_strdup(tmp ? tmp : "/")))
+	home = shell_getenv(shell, "HOME");
+	if (!(shell->home = ft_strdup(home ? home : "/")))
 		return (1);
-	tmp = coquille_obtenirenv(coquille, "PWD");
-	if (!(coquille->dossier_actuel = ft_strdup(tmp ? tmp : coquille->maison)))
+	if (chdir(getcwd(cwd, 1024)))
 		return (1);
-	coquille->actuel = NULL;
+	shell->current = NULL;
 	return (0);
 }
 
-void	coquille_detruire(t_coquille *coquille)
+void	shell_destroy(t_shell *shell)
 {
-	if (coquille)
+	if (shell)
 	{
-		if (coquille->environ)
-			ft_strarr_del(coquille->environ);
-		if (coquille->maison)
-			ft_strdel(&coquille->maison);
-		if (coquille->dossier_actuel)
-			ft_strdel(&coquille->dossier_actuel);
-		if (coquille->ligne)
-			ft_strdel(&coquille->ligne);
-		if (coquille->actuel)
-			cmd_detruire(coquille->actuel);
+		if (shell->env)
+			ft_strarr_del(shell->env);
+		if (shell->home)
+			ft_strdel(&shell->home);
+		if (shell->line)
+			ft_strdel(&shell->line);
+		if (shell->current)
+			cmd_destroy(shell->current);
 	}
 }
 
-int		coquille_evaluer(t_coquille *coquille)
+void	debug_cmd(t_cmd *cmd)
 {
-	ft_putstr("$> ");
-	while (get_next_line(0, &coquille->ligne))
+	printf("cmd: %s args: %p\n", cmd->cmd, cmd->args);
+	for (int i = 0; cmd->args && cmd->args[i]; i++)
+		printf("\t- %s\n", cmd->args[i]);
+	if (cmd->next)
+		debug_cmd(cmd->next);
+}
+
+int		shell_eval(t_shell *shell)
+{
+	char	cwd[1024];
+
+	while (1)
 	{
-		if (cmd_depuis_ligne(coquille))
+		if (!(getcwd(cwd, 1024)))
 			return (1);
-		
-		// if (shell->current && cmd_run(shell, ))
-		cmd_detruire(coquille->actuel);
-		ft_strdel(&coquille->ligne);
-		ft_putstr("$> ");
+		ft_putstr(cwd);
+		ft_putstr(" ~> ");
+		if (get_next_line(0, &shell->line) <= 0)
+			break ;
+		if (cmd_from_line(shell))
+			return (1);
+		if (shell->current)
+		{
+			debug_cmd(shell->current);
+		}
+		cmd_destroy(shell->current);
+		ft_strdel(&shell->line);
 	}
 	return (0);
 }
 
-char	*coquille_obtenirenv(t_coquille *coquille, char *var)
+char	*shell_getenv(t_shell *shell, char *name)
 {
 	int		i;
 	char	*delimiter;
 
-	(void)var;
 	i = -1;
-	while (coquille->environ[++i])
+	while (shell->env[++i])
 	{
-		if (!(delimiter = ft_strchr(coquille->environ[i], '=')))
+		if (!(delimiter = ft_strchr(shell->env[i], '=')))
 			continue ;
-		if (ft_strnequ(coquille->environ[i], var, delimiter - coquille->environ[i]))
+		if (ft_strnequ(shell->env[i], name, delimiter - shell->env[i]))
 			return (delimiter + 1);
 	}
 	return (NULL);
+}
+
+int		shell_setenv(t_shell *shell, char *value)
+{
+	(void)shell;
+	(void)value;
+	return (0);
 }

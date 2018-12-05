@@ -11,39 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "coquillette.h"
-/*
-static int	obtenir_mot_suivant(char ***mots, char **mot, char **actuel)
-{
-	char	*mot;
-	char	guillemet;
+#include "minishell.h"
 
-	mot = NULL;
-	guillemet = -1;
-	while (*chaine)
-	{
-		if (*chaine == ' ' && guillemet == -1)
-		{
-			if (mot)
-				return (!(*mots = ft_strarr_add(*mots, mot)) ? NULL : chaine + 1);
-			chaine++;
-			continue ;
-		}
-		if (*chaine == guillemet)
-			guillemet = -1;
-		else if (*chaine == '"' || *chaine == '\'')
-			guillemet = *chaine;
-		else if (!(fusionner_mot_avec_caractere(&mot, *chaine)))
-			return (NULL);
-		chaine++;
-	}
-	if (!mot)
-		return ("");
-	return (!(*mots = ft_strarr_add(*mots, mot)) ? NULL : chaine);
-}
-*/
-
-static char	*mot_ajouter_caractere(char **mot, char c)
+static char	*ft_strjoinc(char **mot, char c)
 {
 	char	*tmp;
 	char	m[2];
@@ -56,37 +26,35 @@ static char	*mot_ajouter_caractere(char **mot, char c)
 	return (*mot = tmp);
 }
 
-char		**sil_te_plait_separe_ca(t_coquille *coquille)
+int			words_from_line(t_shell *shell, char ***words)
 {
-	char	**words;
 	char	*word;
 	char	*line;
 	char	quote;
 
-	words = NULL;
 	word = NULL;
-	line = coquille->ligne - 1;
+	line = shell->line - 1;
 	quote = -1;
 	while (*++line)
 	{
-		if ((*line == ' ' && quote == -1) || *line == '"' || *line == '\'')
+		if (((*line == ' ' || *line == '\t') && quote == -1) || *line == '"' || *line == '\'')
 		{
 			if (word)
 			{
-				if (!(words = ft_strarr_add(words, word)))
-					return (NULL);
+				if (!(*words = ft_strarr_add(*words, word)))
+					return (1);
 				ft_strdel(&word);
 			}
 			continue ;
 		}
-		if (!(mot_ajouter_caractere(&word, *line)))
-			return (NULL);
+		if (!(ft_strjoinc(&word, *line)))
+			return (1);
 	}
 	if (word)
 	{
-		if (!(words = ft_strarr_add(words, word)))
-			return (NULL);
+		if (!(*words = ft_strarr_add(*words, word)))
+			return (1);
 		ft_strdel(&word);
 	}
-	return (words);
+	return (0);
 }

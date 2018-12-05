@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   coquillette.h                                    .::    .:/ .      .::   */
+/*   shelltte.h                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
@@ -11,38 +11,39 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef COQUILLETTE_H
-# define COQUILLETTE_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 # include "libft.h"
 # include <stdio.h>
 
 typedef struct s_cmd		t_cmd;
-typedef struct s_coquille	t_coquille;
+typedef struct s_shell		t_shell;
 
 struct					s_cmd
 {
 	char	*cmd;
 	char	**args;
 	int		status;
-	t_cmd	*suivant;
+	t_cmd	*next;
 };
 
-struct					s_coquille
+struct					s_shell
 {
-	char	**environ;
-	char	*maison;
-	char	*dossier_actuel;
-	char	*ligne;
-	t_cmd	*actuel;
+	char	**env;
+	char	*home;
+	char	*line;
+	t_cmd	*current;
 };
 
-int							coquille_init(t_coquille *coquille, char **environ);
-void						coquille_detruire(t_coquille *coquille);
-int							coquille_evaluer(t_coquille *coquille);
-char						*coquille_obtenirenv(t_coquille *coquille, char *var);
+int							shell_init(t_shell *shell, char **env);
+void						shell_destroy(t_shell *shell);
+int							shell_eval(t_shell *shell);
+char						*shell_getenv(t_shell *shell, char *name);
+int							shell_setenv(t_shell *shell, char *value);
 
-int							cmd_depuis_ligne(t_coquille *coquille);
-void						cmd_detruire(t_cmd *cmd);
+int							cmd_from_line(t_shell *shell);
+t_cmd						*cmd_from_words(char **words);
+void						cmd_destroy(t_cmd *cmd);
 
-char						**sil_te_plait_separe_ca(t_coquille *coquille);
+int							words_from_line(t_shell *shell, char ***words);
 #endif

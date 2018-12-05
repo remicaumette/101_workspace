@@ -11,22 +11,22 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "coquillette.h"
+#include "minishell.h"
 
-int	erreur(t_coquille *coquille)
+int	fail(t_shell *shell)
 {
-	coquille_detruire(coquille);
+	shell_destroy(shell);
 	return (1);
 }
 
 int	main(int argc, char **argv, char **environ)
 {
-	t_coquille	coquille;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;
-	if (coquille_init(&coquille, environ) || coquille_evaluer(&coquille))
-		return (erreur(&coquille));
-	coquille_detruire(&coquille);	
+	if (shell_init(&shell, environ) || shell_eval(&shell))
+		return (fail(&shell));
+	shell_destroy(&shell);	
 	return (0);
 }
