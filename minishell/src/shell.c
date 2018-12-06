@@ -94,7 +94,16 @@ char	*shell_getenv(t_shell *shell, char *name)
 
 int		shell_setenv(t_shell *shell, char *value)
 {
-	(void)shell;
-	(void)value;
+	int		i;
+	char	*delimiter;
+
+	i = -1;
+	while (shell->env[++i])
+	{
+		if (!(delimiter = ft_strchr(shell->env[i], '=')))
+			continue ;
+		if (ft_strnequ(shell->env[i], name, delimiter - shell->env[i]))
+			return (delimiter + 1);
+	}
 	return (0);
 }
