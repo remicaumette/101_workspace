@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   utils.c                                          .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/12/06 15:33:45 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/06 15:33:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_builtin	builtin_from_name(char *cmd)
@@ -8,8 +21,8 @@ t_builtin	builtin_from_name(char *cmd)
 		return (builtin_cd);
 	if (ft_strequ("exit", cmd))
 		return (builtin_exit);
-	/*return (ft_strequ("echo", cmd) || 
-		ft_strequ("setenv", cmd) || ft_strequ("unsetenv", cmd)*/
+	// return (ft_strequ("echo", cmd) || 
+	//	ft_strequ("setenv", cmd) || ft_strequ("unsetenv", cmd)*/
 	return (NULL);
 }
 

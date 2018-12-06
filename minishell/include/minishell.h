@@ -45,7 +45,7 @@ int							shell_setenv(t_shell *shell, char *value);
 int							cmd_from_line(t_shell *shell);
 t_cmd						*cmd_from_words(char **words);
 void						cmd_destroy(t_cmd **cmd);
-int							cmd_resolve_exec(t_cmd *cmd);
+int							cmd_resolve_exec(t_shell *shell, t_cmd *cmd);
 
 int							words_from_line(t_shell *shell, char ***words);
 

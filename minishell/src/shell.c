@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/04 14:06:20 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/06 15:38:13 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,6 +61,8 @@ int		shell_eval(t_shell *shell)
 			break ;
 		if (cmd_from_line(shell))
 			return (1);
+		if (cmd_resolve_exec(shell, shell->current))
+			continue ;
 		if (shell->current)
 		{
 			// debug
@@ -94,16 +96,7 @@ char	*shell_getenv(t_shell *shell, char *name)
 
 int		shell_setenv(t_shell *shell, char *value)
 {
-	int		i;
-	char	*delimiter;
-
-	i = -1;
-	while (shell->env[++i])
-	{
-		if (!(delimiter = ft_strchr(shell->env[i], '=')))
-			continue ;
-		if (ft_strnequ(shell->env[i], name, delimiter - shell->env[i]))
-			return (delimiter + 1);
-	}
+	(void)shell;
+	(void)value;
 	return (0);
 }
