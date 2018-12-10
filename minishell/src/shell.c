@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/06 15:38:13 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/10 16:47:55 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,16 +61,14 @@ int		shell_eval(t_shell *shell)
 			break ;
 		if (cmd_from_line(shell))
 			return (1);
-		if (cmd_resolve_exec(shell, shell->current))
-			continue ;
 		if (shell->current)
 		{
 			// debug
-			printf("cmd: %s args: %p\n", shell->current->cmd, shell->current->args);
+			printf("cmd: %s args: %p\n\n", shell->current->cmd, shell->current->args);
 			for (int i = 0; shell->current->args && shell->current->args[i]; i++)
 				printf("\t- %s\n", shell->current->args[i]);
 			// debug
-			printf("exit code: %d\n", process_run(shell, shell->current));
+			printf("\nexit code: %d\n", process_run(shell, shell->current));
 		}
 		cmd_destroy(&shell->current);
 		ft_strdel(&shell->line);

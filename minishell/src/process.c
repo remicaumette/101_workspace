@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/06 15:33:34 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/06 15:33:37 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/10 16:47:20 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,9 +20,10 @@ int			process_run(t_shell *shell, t_cmd *cmd)
 	int			status;
 	char		**argv;
 
-
 	if ((builtin = builtin_from_name(cmd->cmd)))
 		return (builtin(shell, cmd));
+	if (cmd_resolve_exec(shell, shell->current))
+		return (1);
 	if (!(argv = ft_strarr_add(NULL, cmd->exec)))
 		return (1);
 	status = -1;
@@ -36,8 +37,8 @@ int			process_run(t_shell *shell, t_cmd *cmd)
 	{
 		if ((status = execve(cmd->exec, argv, shell->env)) == -1)
 			return (1);
-		ft_strarr_del(argv);
-		return (status);
+		exit(status);
 	}
-	return (1);
+	ft_strarr_del(argv);
+	return (0);
 }
