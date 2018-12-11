@@ -54,7 +54,7 @@ static int	can_execute(char *filename)
 	if (stat(filename, &stats))
 		return (!(minishell_printerr(filename, "No such file or directory")));
 	if (S_ISDIR(stats.st_mode))
-		return (!(minishell_printerr(filename, "is a directory")));
+		return (!(minishell_printerr(filename, "Is a directory")));
 	if (access(filename, X_OK))
 		return (!(minishell_printerr(filename, "Permission denied")));
 	return (1);
@@ -70,9 +70,9 @@ int			cmd_resolve_exec(t_shell *shell, t_cmd *cmd)
 	if (!ft_strncmp("./", cmd->cmd, 2) || !ft_strncmp("../", cmd->cmd, 3) || *cmd->cmd == '/')
 		return (!(can_execute(cmd->cmd) && (cmd->exec = ft_strdup(cmd->cmd))));
 	if (!(path = shell_getenv(shell, "PATH")))
-		return (1);
+		return (minishell_printerr(cmd->cmd, "command not found"));
 	if (!(paths = ft_strsplit(path, ':')))
-		return (1);
+		return (minishell_printerr(cmd->cmd, "command not found"));
 	i = -1;
 	while (paths[++i])
 	{

@@ -21,8 +21,12 @@ t_builtin	builtin_from_name(char *cmd)
 		return (builtin_cd);
 	if (ft_strequ("exit", cmd))
 		return (builtin_exit);
-	// return (ft_strequ("echo", cmd) || 
-	//	ft_strequ("setenv", cmd) || ft_strequ("unsetenv", cmd)*/
+	if (ft_strequ("setenv", cmd))
+		return (builtin_setenv);
+	if (ft_strequ("unsetenv", cmd))
+		return (builtin_unsetenv);
+	if (ft_strequ("echo", cmd))
+		return (builtin_echo);
 	return (NULL);
 }
 

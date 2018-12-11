@@ -91,10 +91,3 @@ char	*shell_getenv(t_shell *shell, char *name)
 	}
 	return (NULL);
 }
-
-int		shell_setenv(t_shell *shell, char *value)
-{
-	(void)shell;
-	(void)value;
-	return (0);
-}

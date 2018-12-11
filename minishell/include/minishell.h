@@ -40,7 +40,6 @@ int							shell_init(t_shell *shell, char **env);
 void						shell_destroy(t_shell *shell);
 int							shell_eval(t_shell *shell);
 char						*shell_getenv(t_shell *shell, char *name);
-int							shell_setenv(t_shell *shell, char *value);
 
 int							cmd_from_line(t_shell *shell);
 t_cmd						*cmd_from_words(char **words);
@@ -52,9 +51,12 @@ int							words_from_line(t_shell *shell, char ***words);
 char						*process_getexec(t_shell *shell, char *file);
 int							process_run(t_shell *shell, t_cmd *cmd);
 
-int							builtin_env(t_shell *shell, t_cmd *cmd);
 int							builtin_cd(t_shell *shell, t_cmd *cmd);
+int							builtin_echo(t_shell *shell, t_cmd *cmd);
+int							builtin_env(t_shell *shell, t_cmd *cmd);
 int							builtin_exit(t_shell *shell, t_cmd *cmd);
+int							builtin_setenv(t_shell *shell, t_cmd *cmd);
+int							builtin_unsetenv(t_shell *shell, t_cmd *cmd);
 
 t_builtin					builtin_from_name(char *cmd);
 int							minishell_printerr(char *file, char *msg);
