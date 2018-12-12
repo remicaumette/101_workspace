@@ -6,76 +6,101 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/06 15:33:59 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 16:05:44 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/12 18:05:20 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			words_from_line(t_shell *shell, char ***words)
+static int	words_env(t_word *word)
 {
-	char	*word;
-	char	*line;
-	char	quote;
-	char	*tmp;
-
-	word = NULL;
-	line = shell->line - 1;
-	quote = -1;
-	while (*++line)
-	{
-		if ((*line == '"' || *line == '\'') && quote == -1)
-			quote = *line;
-		else if (*line == quote)
-			quote = -1;
-		else if ((*line == ' ' || *line == '\t') && quote == -1)
-		{
-			if (word)
-			{
-				if (!(*words = ft_strarr_add(*words, word)))
-					return (1);
-				ft_strdel(&word);
-			}
-		}
-		else if (*line == '~' && quote == -1)
-		{
-			if (!(tmp = ft_strjoin(word, shell->home)))
-				return (1);
-			ft_strdel(&word);
-			word = tmp;
-		}
-		else if (*line == '$' && (quote == '"' || quote == -1))
-		{
-			char	*name = NULL;
-
-			while (*++line && (ft_isalnum(*line) || *line == '_'))
-				if (!ft_strjoinc(&name, *line))
-					return (1);
-			line--;
-			if (!name)
-			{
-				if (!(ft_strjoinc(&word, *line)))
-					return (1);
-				continue ;
-			}
-			char *env = shell_getenv(shell, name);
-			if (env == NULL)
-				env = "";
-			if (!(tmp = ft_strjoin(word, env)))
-				return (1);
-			ft_strdel(&name);
-			ft_strdel(&word);
-			word = tmp;
-		}
-		else if (!(ft_strjoinc(&word, *line)))
+	while (*++word->line && (ft_isalnum(*word->line) || *word->line == '_'))
+		if (!ft_strjoinc(&word->name, *word->line))
 			return (1);
+	word->line--;
+	if (!word->name)
+	{
+		if (!(ft_strjoinc(&word->word, *word->line)))
+			return (1);
+		return (0);
 	}
-	if (word)
+	word->env = shell_getenv(word->shell, word->name);
+	if (word->env == NULL)
+		word->env = "";
+	if (!(word->tmp = ft_strjoin(word->word, word->env)))
+		return (1);
+	ft_strdel(&word->name);
+	ft_strdel(&word->word);
+	word->word = word->tmp;
+	return (0);
+}
+
+static int	words_checks(t_word *word)
+{
+	if ((*word->line == '"' || *word->line == '\'') && word->quote == -1)
+		word->quote = *word->line;
+	else if (*word->line == word->quote)
+		word->quote = -1;
+	else if ((*word->line == ' ' || *word->line == '\t') && word->quote == -1)
 	{
-		if (!(*words = ft_strarr_add(*words, word)))
+		if (word->word)
+		{
+			if (!(*word->words = ft_strarr_add(*word->words, word->word)))
+				return (1);
+			ft_strdel(&word->word);
+		}
+	}
+	else if (*word->line == '~' && word->quote == -1)
+	{
+		if (!(word->tmp = ft_strjoin(word->word, word->shell->home)))
 			return (1);
-		ft_strdel(&word);
+		ft_strdel(&word->word);
+		word->word = word->tmp;
+	}
+	else
+		return (0);
+	return (2);
+}
+
+static int	words_run(t_word *word)
+{
+	int	i;
+
+	while (*++word->line)
+		if ((i = words_checks(word)))
+		{
+			if (i == 1)
+				return (1);
+		}
+		else if (*word->line == '$' &&
+			(word->quote == '"' || word->quote == -1))
+		{
+			if (words_env(word))
+				return (1);
+		}
+		else if (!(ft_strjoinc(&word->word, *word->line)))
+			return (1);
+	if (word->word)
+	{
+		if (!(*word->words = ft_strarr_add(*word->words, word->word)))
+			return (1);
+		ft_strdel(&word->word);
 	}
 	return (0);
+}
+
+int			words_from_line(t_shell *shell, char ***words)
+{
+	t_word	word;
+
+	word.shell = shell;
+	word.words = words;
+	word.word = NULL;
+	word.tmp = NULL;
+	word.env = NULL;
+	word.name = NULL;
+	word.line = shell->line - 1;
+	word.quote = -1;
+	return (words_run(&word));
 }

@@ -16,9 +16,11 @@
 # include "libft.h"
 # include <stdio.h>
 # include <sys/stat.h>
+# include <dirent.h>
 
 typedef struct s_cmd		t_cmd;
 typedef struct s_shell		t_shell;
+typedef struct s_word		t_word;
 typedef int		(*t_builtin)(t_shell *, t_cmd *);
 
 struct					s_cmd
@@ -34,6 +36,18 @@ struct					s_shell
 	char	*home;
 	char	*line;
 	t_cmd	*current;
+};
+
+struct					s_word
+{
+	t_shell	*shell;
+	char	***words;
+	char	*word;
+	char	*line;
+	char	*name;
+	char	*env;
+	char	quote;
+	char	*tmp;
 };
 
 int							shell_init(t_shell *shell, char **env);

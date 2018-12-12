@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/03 05:14:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/06 15:06:35 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/12 17:04:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,8 @@ int			cmd_resolve_exec(t_shell *shell, t_cmd *cmd)
 	char	*tmp;
 	int		i;
 
-	if (!ft_strncmp("./", cmd->cmd, 2) || !ft_strncmp("../", cmd->cmd, 3) || *cmd->cmd == '/')
+	if (!ft_strncmp("./", cmd->cmd, 2) || !ft_strncmp("../", cmd->cmd, 3) ||
+		*cmd->cmd == '/')
 		return (!(can_execute(cmd->cmd) && (cmd->exec = ft_strdup(cmd->cmd))));
 	if (!(path = shell_getenv(shell, "PATH")))
 		return (minishell_printerr(cmd->cmd, "command not found"));
@@ -75,21 +76,15 @@ int			cmd_resolve_exec(t_shell *shell, t_cmd *cmd)
 		return (minishell_printerr(cmd->cmd, "command not found"));
 	i = -1;
 	while (paths[++i])
-	{
 		if (!(tmp = path_join(paths[i], cmd->cmd)))
+			return (1);
+		else if (access(tmp, F_OK) || !(can_execute(tmp)))
+			ft_strdel(&tmp);
+		else
 		{
 			ft_strarr_del(paths);
-			return (1);
+			return (!(cmd->exec = tmp));
 		}
-		if (access(tmp, F_OK) || !(can_execute(tmp)))
-		{
-			ft_strdel(&tmp);
-			continue ;
-		}
-		ft_strarr_del(paths);
-		cmd->exec = tmp;
-		return (0);
-	}
 	ft_strarr_del(paths);
 	return (minishell_printerr(cmd->cmd, "command not found"));
 }

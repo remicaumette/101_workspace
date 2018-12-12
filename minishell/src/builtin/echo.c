@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/12 14:09:09 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 14:09:23 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/12 16:53:02 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ int	builtin_echo(t_shell *shell, t_cmd *cmd)
 
 	(void)shell;
 	i = -1;
-	while (cmd->args[++i])
+	while (cmd->args && cmd->args[++i])
 	{
 		ft_putstr(cmd->args[i]);
 		if (cmd->args[i + 1])

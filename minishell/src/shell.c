@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 15:05:25 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/12 17:23:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,7 @@ int		shell_init(t_shell *shell, char **environ)
 	char	cwd[1024];
 
 	i = -1;
+	shell->env = NULL;
 	while (environ[++i])
 		if (!(shell->env = ft_strarr_add(shell->env, environ[i])))
 			return (1);
@@ -62,12 +63,7 @@ int		shell_eval(t_shell *shell)
 		if (cmd_from_line(shell))
 			return (1);
 		if (shell->current)
-		{
-			printf("cmd: %s args: %p\n\n", shell->current->cmd, shell->current->args);
-			for (int i = 0; shell->current->args && shell->current->args[i]; i++)
-				printf("\t- %s\n", shell->current->args[i]);
 			process_run(shell, shell->current);
-		}
 		cmd_destroy(&shell->current);
 		ft_strdel(&shell->line);
 	}

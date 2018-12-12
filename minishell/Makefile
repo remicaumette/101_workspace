@@ -1,7 +1,7 @@
 NAME=minishell
 LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g
 SOURCES=\
 	src/builtin/cd.c		\
 	src/builtin/echo.c		\
