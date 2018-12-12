@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   setenv.c                                         .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/12/12 14:09:17 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/12 14:13:36 by rcaumett    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	builtin_setenv(t_shell *shell, t_cmd *cmd)
@@ -16,7 +29,8 @@ int	builtin_setenv(t_shell *shell, t_cmd *cmd)
 	i = -1;
 	pos = -1;
 	while (shell->env[++i])
-		if (ft_strncmp(*cmd->args, shell->env[i], delimiter - *cmd->args) == 0 && (pos = i) != -1)
+		if (ft_strncmp(*cmd->args, shell->env[i],
+			delimiter - *cmd->args) == 0 && (pos = i) != -1)
 			break ;
 	if (pos != -1)
 	{
