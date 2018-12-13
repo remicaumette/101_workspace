@@ -69,6 +69,7 @@ EOF
 echo "Generating $1/.gitignore..."
 cat <<EOF >$1/.gitignore
 $1
+/$1.dSYM
 EOF
 
 echo "Generating $1/auteur..."
