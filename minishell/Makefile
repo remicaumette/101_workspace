@@ -17,10 +17,12 @@ SOURCES=\
 	src/words.c
 OBJECTS=$(SOURCES:.c=.o)
 
-all: $(NAME)
+all: libft $(NAME)
 
-$(NAME): $(OBJECTS)
+libft:
 	@make -s -C $(LIBFT)
+
+$(NAME): $(OBJECTS) include/minishell.h
 	$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJECTS)
 
 clean:
@@ -33,4 +35,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft
