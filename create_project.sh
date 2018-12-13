@@ -24,11 +24,15 @@ CFLAGS=-Wall -Werror -Wextra -I\$(LIBFT)/include -Iinclude
 SOURCES=\\
 	src/main.c
 OBJECTS=\$(SOURCES:.c=.o)
+INCLUDES=\\
+	include/$1.h
 
-all: \$(NAME)
+all: libft \$(NAME)
 
-\$(NAME): \$(OBJECTS)
+libft:
 	@make -s -C \$(LIBFT)
+
+\$(NAME): \$(OBJECTS) \$(INCLUDES)
 	\$(CC) \$(CFLAGS) -L\$(LIBFT) -lft -o \$(NAME) \$(OBJECTS)
 
 clean:
@@ -41,7 +45,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft
 EOF
 
 echo "Generating $1/include/$1.h..."
