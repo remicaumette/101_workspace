@@ -66,10 +66,17 @@ SOURCES=\
 	src/type/ft_tolower.c				\
 	src/type/ft_toupper.c
 OBJECTS=$(SOURCES:.c=.o)
+INCLUDES=\
+	include/ft/io.h						\
+	include/ft/std.h					\
+	include/ft/strconv.h				\
+	include/ft/string.h					\
+	include/ft/type.h					\
+	include/libft.h						\
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS) $(INCLUDES)
 	ar rcs $(NAME) $(OBJECTS)
 
 clean:

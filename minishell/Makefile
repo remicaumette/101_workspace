@@ -16,13 +16,15 @@ SOURCES=\
 	src/utils.c				\
 	src/words.c
 OBJECTS=$(SOURCES:.c=.o)
+INCLUDES=\
+	include/minishell.h
 
 all: libft $(NAME)
 
 libft:
 	@make -s -C $(LIBFT)
 
-$(NAME): $(OBJECTS) include/minishell.h
+$(NAME): $(OBJECTS) $(INCLUDES)
 	$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJECTS)
 
 clean:
