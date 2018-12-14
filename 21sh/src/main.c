@@ -16,7 +16,7 @@
 void		print_token(t_token *token)
 {
 	static const char type[4][20] = { "WORD", "OPERATOR", "NEWLINE", "IO_NUMBER" };
-	static const char op[11][20] = { "NONE", "AND_IF", "OR_IF", "DSEMI", "DLESS", "DGREAT", "LESSAND", "GREATAND", "LESSGREAT", "DLESSDASH", "CLOBBER" };
+	static const char op[12][20] = { "NONE", "PIPE" "AND_IF", "OR_IF", "DSEMI", "DLESS", "DGREAT", "LESSAND", "GREATAND", "LESSGREAT", "DLESSDASH", "CLOBBER" };
 	printf("=== TOKEN\n");
 	printf("token->type: %s\n", type[token->type]);
 	printf("token->op: %s\n", op[token->op]);

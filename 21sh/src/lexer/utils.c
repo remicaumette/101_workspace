@@ -44,6 +44,8 @@ t_operatortype	lexer_getop(char *str)
 		return (DLESSDASH);
 	if (ft_strnequ(str, ">|", 2))
 		return (CLOBBER);
+	if (ft_strnequ(str, "|", 1))
+		return (PIPE);
 	return (NONE);
 }
 

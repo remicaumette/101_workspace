@@ -25,7 +25,7 @@ static char		*lexer_addsimpletoken(t_lexer *lexer, t_tokentype type,
 		op = lexer_getop(str);
 		if (!(lexer_addtoken(lexer, OPERATOR, op, NULL)))
 			return (NULL);
-		return (str + (op == DLESSDASH ? 2 : 1));
+		return (str + 1 - (op == PIPE) + (op == DLESSDASH));
 	}
 	return (str);
 }
