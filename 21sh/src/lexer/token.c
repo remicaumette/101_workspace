@@ -6,47 +6,71 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:30:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 15:23:52 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/14 16:23:05 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int			lexer_tokenlen(t_token *token)
+static char		*lexer_addsimpletoken(t_lexer *lexer, t_tokentype type,
+	char *str)
 {
-	if (token->content && token->type == WORD)
-		return (ft_strlen(token->content) - 1);
-	if (token->type == OPERATOR)
-		return (token->op == DLESSDASH ? 2 : 1);
-	return (0);
+	t_operatortype	op;
+
+	if (type == NEWLINE && !(lexer_addtoken(lexer, NEWLINE, NONE, NULL)))
+		return (NULL);
+	else if (type == OPERATOR)
+	{
+		op = lexer_getop(str);
+		if (!(lexer_addtoken(lexer, OPERATOR, op, NULL)))
+			return (NULL);
+		return (str + (op == DLESSDASH ? 2 : 1));
+	}
+	return (str);
 }
 
-int			lexer_tokenize(t_lexer *lexer, char *str)
+static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
 {
-	t_token			*curr;
-	t_tokentype		type;
-	t_operatortype	op;
-	char			*tmp;
-	char			*word;
+	char	*tmp;
+	char	*word;
+	char	quote;
 
+	tmp = str - 1;
 	word = NULL;
+	quote = -1;
+	while (*++tmp)
+	{
+		if ((*tmp == '\t' || *tmp == ' ') && quote == -1)
+			break ;
+		else if ((*tmp == '\'' || *tmp == '"') && quote == -1)
+			quote = *tmp;
+		else if (quote != -1 && *tmp == quote)
+			quote = -1;
+		else if (!(ft_strjoinc(&word, *tmp)))
+			return (0);
+	}
+	if (!(lexer_addtoken(lexer, WORD, NONE, word)))
+		return (NULL);
+	return (tmp - 1);
+}
+
+int				lexer_tokenize(t_lexer *lexer, char *str)
+{
+	t_tokentype	type;
+	char		*tmp;
+
 	tmp = str - 1;
 	while (*++tmp)
 	{
 		if (*tmp == ' ' || *tmp == '\t')
 			continue ;
-		if ((op = lexer_getop(tmp)))
-			type = OPERATOR;
-		else
-			type = (*tmp == '\n' || *tmp == ';') ? NEWLINE : WORD;
-		if (type == WORD)
-			tmp += lexer_getword(tmp, &word) - 1;
-		else if (type == OPERATOR)
-			tmp += 1 + op == DLESSDASH;
-		if (!(curr = lexer_addtoken(lexer, type, op, word)))
+		type = lexer_gettype(tmp);
+		if ((type == OPERATOR || type == NEWLINE) &&
+			!(tmp = lexer_addsimpletoken(lexer, type, tmp)))
 			return (1);
-		ft_strdel(&word);
+		if (type == WORD && !(tmp = lexer_addwordtoken(lexer, tmp)))
+			return (1);
 	}
 	return (0);
 }

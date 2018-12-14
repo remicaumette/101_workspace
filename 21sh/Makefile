@@ -6,7 +6,10 @@ SOURCES=\
 	src/lexer/lexer.c		\
 	src/lexer/token.c		\
 	src/lexer/utils.c		\
-	src/main.c
+	src/environment.c		\
+	src/history.c			\
+	src/main.c				\
+	src/shell.c
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=\
 	include/lexer.h			\

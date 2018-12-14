@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   main.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/14 16:37:49 by rcaumett    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 void		print_token(t_token *token)
@@ -13,16 +26,23 @@ void		print_token(t_token *token)
 		print_token(token->next);
 }
 
-int	main(int argc, char **argv)
+int			main(void)
 {
 	t_lexer	*lexer;
+	char	*line;
 
-	if (argc == 2)
+	if (!(lexer = lexer_create()))
+		return (1);
+	while (1)
 	{
-		if (!(lexer = lexer_create()))
-			return (1);
-		printf("lexer_tokenize = %d\n", lexer_tokenize(lexer, argv[1]));
-		print_token(lexer->begin);
+		if (get_next_line(0, &line) <= 0)
+			break ;
+		printf("lexer_tokenize = %d\n", lexer_tokenize(lexer, line));
+		if (lexer->begin)
+			print_token(lexer->begin);
+		ft_strdel(&line);
+		lexer_cleanup(lexer);
 	}
+	lexer_destroy(lexer);
 	return (0);
 }
