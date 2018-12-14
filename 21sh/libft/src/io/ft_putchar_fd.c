@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_putchar_fd.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:34:04 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 16:22:46 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+void	ft_putchar_fd(char c, int fd)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	write(fd, &c, 1);
+}

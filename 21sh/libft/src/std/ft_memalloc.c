@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_memalloc.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:13 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:04:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+void	*ft_memalloc(size_t size)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	void	*mem;
+
+	if ((mem = malloc(size)) == NULL)
+		return (NULL);
+	ft_bzero(mem, size);
+	return (mem);
+}

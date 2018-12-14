@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:41:24 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:06:59 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	int	i;
+	int length;
+
+	length = ft_strlen(s2);
+	if (!length)
+		return ((char *)s1);
+	s1--;
+	while (*++s1)
+	{
+		i = -1;
+		while (s2[++i])
+			if (s2[i] != *(s1 + i))
+				break ;
+		if (i == length)
+			return ((char *)s1);
+	}
+	return (NULL);
+}

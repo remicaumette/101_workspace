@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_memcpy.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:37:13 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:20 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	char	*s1;
+	char	*s2;
+	size_t	i;
+
+	s1 = (char *)dst;
+	s2 = (char *)src;
+	i = -1;
+	while (++i < n)
+		s1[i] = s2[i];
+	return (dst);
+}

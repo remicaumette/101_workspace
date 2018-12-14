@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strncpy.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:40:49 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 16:35:43 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	size_t i;
+
+	i = 0;
+	while (*src && i < len)
+		dst[i++] = *src++;
+	while (i < len)
+		dst[i++] = 0;
+	return (dst);
+}

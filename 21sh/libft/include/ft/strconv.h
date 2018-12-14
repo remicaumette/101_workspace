@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   strconv.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:42 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:07:42 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#ifndef STRCONV_H
+# define STRCONV_H
+# include "std.h"
 
-struct						s_shell
-{
-	char	**env;
-	char	**hist;
-};
+int			ft_atoi(const char *s);
+char		*ft_itoa(int n);
+long		ft_atol(const char *s);
+char		*ft_ltoa(long n);
+long long	ft_atoll(const char *s);
+char		*ft_lltoa(long long n);
 #endif

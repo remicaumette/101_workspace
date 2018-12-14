@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_memchr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:22 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:16 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	unsigned char	*str;
+	size_t			curr;
+
+	str = (unsigned char *)s;
+	curr = 0;
+	while (curr < n)
+		if (str[curr] == (unsigned char)c)
+			return (str + curr);
+		else
+			curr++;
+	return (NULL);
+}

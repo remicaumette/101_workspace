@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strarr_add.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/31 11:41:28 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/31 11:41:32 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	**ft_strarr_add(char **arr, char *elem)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	char	**tmp;
+	int		len;
+	int		i;
+
+	len = 0;
+	while (arr && arr[len])
+		len++;
+	if (!(tmp = ft_memalloc(sizeof(*tmp) * (len + 2))))
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		tmp[i] = arr[i];
+	tmp[i++] = ft_strdup(elem);
+	tmp[i] = NULL;
+	ft_memdel((void **)&arr);
+	return (tmp);
+}

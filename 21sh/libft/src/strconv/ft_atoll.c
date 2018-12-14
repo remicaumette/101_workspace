@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_atoll.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:06:53 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:06:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+long long	ft_atoll(const char *s)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	long long	r;
+	int			n;
+
+	r = 0;
+	while ((*s >= 9 && *s <= 13) || *s == 32)
+		s++;
+	n = *s == '-';
+	if (*s == '+' || *s == '-')
+		s++;
+	while (*s >= '0' && *s <= '9')
+		r = r * 10 + (*s++ - '0');
+	return (n ? -r : r);
+}

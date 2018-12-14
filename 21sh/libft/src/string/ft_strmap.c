@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strmap.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:40:33 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 14:48:31 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	char	*tmp;
+	int		i;
+
+	if (!s || !f || (tmp = ft_strnew(ft_strlen(s))) == NULL)
+		return (NULL);
+	i = 0;
+	while (*s)
+		tmp[i++] = f(*s++);
+	return (tmp);
+}

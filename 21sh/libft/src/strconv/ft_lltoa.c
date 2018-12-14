@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_lltoa.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:06:57 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:06:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	*ft_lltoa(long long n)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	long long	curr;
+	int			size;
+	char		*s;
+
+	curr = n;
+	size = n < 0 ? 2 : 1;
+	while ((curr >= 10 || curr <= -10) && ++size)
+		curr /= 10;
+	if ((s = ft_strnew(size)) == NULL)
+		return (NULL);
+	curr = n;
+	while (--size >= (curr < 0))
+	{
+		s[size] = (curr < 0 ? -(curr % 10) : (curr % 10)) + '0';
+		curr /= 10;
+	}
+	if (n < 0)
+		s[0] = '-';
+	return (s);
+}

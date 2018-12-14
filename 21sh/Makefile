@@ -1,11 +1,15 @@
 NAME=21sh
-LIBFT=../libft
+LIBFT=./libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
+	src/lexer/lexer.c		\
+	src/lexer/operator.c	\
+	src/lexer/token.c		\
 	src/main.c
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=\
+	include/lexer.h			\
 	include/shell.h
 
 all: libft $(NAME)

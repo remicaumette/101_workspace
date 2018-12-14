@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strncat.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:40:41 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 16:40:44 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	char	*ptr;
+	size_t	i;
+
+	ptr = s1;
+	i = 0;
+	while (*s1)
+		s1++;
+	while (s2[i] && i < n)
+		*s1++ = s2[i++];
+	*s1 = 0;
+	return (ptr);
+}

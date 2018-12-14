@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_strarr_sort.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/29 15:45:41 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/29 15:45:41 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+void	ft_strarr_sort(char **arr, int reverse)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	int		i;
+	int		j;
+	char	*buf;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+		i++;
+	while (--i > 0 && (j = -1))
+		while (++j < i)
+			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
+				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
+			{
+				buf = arr[i];
+				arr[i] = arr[j];
+				arr[j] = buf;
+			}
+}

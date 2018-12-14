@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_atoi.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:00 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 16:55:49 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+int	ft_atoi(const char *s)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	int	r;
+	int	n;
+
+	r = 0;
+	while ((*s >= 9 && *s <= 13) || *s == 32)
+		s++;
+	n = *s == '-';
+	if (*s == '+' || *s == '-')
+		s++;
+	while (*s >= '0' && *s <= '9')
+		r = r * 10 + (*s++ - '0');
+	return (n ? -r : r);
+}

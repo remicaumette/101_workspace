@@ -1,5 +1,5 @@
 NAME=ft_ls
-LIBFT=libft
+LIBFT=../libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude
 SOURCES=\

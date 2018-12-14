@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   ft_memcmp.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 09:56:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:31 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:18 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include <stdio.h>
-typedef struct s_shell		t_shell;
+#include "libft.h"
 
-struct						s_shell
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	**env;
-	char	**hist;
-};
-#endif
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			curr;
+
+	if (!n)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	curr = 0;
+	while (*str1 == *str2 && curr <= n)
+	{
+		++str1;
+		++str2;
+		if (++curr == n)
+			return (0);
+	}
+	return (*str1 - *str2);
+}
