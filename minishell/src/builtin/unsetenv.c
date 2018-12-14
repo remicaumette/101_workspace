@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/12 14:09:20 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 14:09:21 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/13 15:23:49 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,8 @@ int	builtin_unsetenv(t_shell *shell, t_cmd *cmd)
 	i = -1;
 	while (shell->env[++i])
 	{
-		if (ft_strcmp(*cmd->args, shell->env[i]) <= 0)
+		if (ft_strncmp(*cmd->args, shell->env[i],
+			ft_strlen(*cmd->args) + 1) == -61)
 			continue ;
 		if (!(env = ft_strarr_add(env, shell->env[i])))
 			return (1);

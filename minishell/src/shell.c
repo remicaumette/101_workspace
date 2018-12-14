@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 17:23:45 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/13 15:58:37 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,9 +27,13 @@ int		shell_init(t_shell *shell, char **environ)
 	home = shell_getenv(shell, "HOME");
 	if (!(shell->home = ft_strdup(home ? home : "/")))
 		return (1);
+	if (!(shell->oldcwd = ft_strdup(shell->home)))
+		return (1);
 	if (chdir(getcwd(cwd, 1024)))
 		return (1);
 	shell->current = NULL;
+	shell->read = 1;
+	shell->exit = 0;
 	return (0);
 }
 
@@ -41,6 +45,8 @@ void	shell_destroy(t_shell *shell)
 			ft_strarr_del(shell->env);
 		if (shell->home)
 			ft_strdel(&shell->home);
+		if (shell->oldcwd)
+			ft_strdel(&shell->oldcwd);
 		if (shell->line)
 			ft_strdel(&shell->line);
 		if (shell->current)
@@ -52,7 +58,7 @@ int		shell_eval(t_shell *shell)
 {
 	char	cwd[1024];
 
-	while (1)
+	while (shell->read)
 	{
 		if (!(getcwd(cwd, 1024)))
 			return (1);

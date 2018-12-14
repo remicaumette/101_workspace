@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/15 01:48:02 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/27 15:39:28 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/27 16:11:37 by sifouche    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,10 @@
 static int	get_size(t_fileinfo *file)
 {
 	if (S_ISBLK(file->stats->st_mode) || S_ISCHR(file->stats->st_mode))
-		return ((file->minor = ft_itoa(minor(file->stats->st_rdev))) &&
-				(file->size = ft_itoa(major(file->stats->st_rdev))));
+	{
+		file->minor = ft_itoa(minor(file->stats->st_rdev));
+		return (!!(file->size = ft_itoa(major(file->stats->st_rdev))));
+	}
 	return (!(file->minor = NULL) &&
 			(file->size = ft_lltoa(file->stats->st_size)));
 }

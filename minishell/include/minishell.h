@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/13 14:38:08 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/13 14:43:11 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/13 15:26:17 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,8 +33,11 @@ struct					s_cmd
 struct					s_shell
 {
 	char	**env;
+	char	*oldcwd;
 	char	*home;
 	char	*line;
+	int		read;
+	int		exit;
 	t_cmd	*current;
 };
 

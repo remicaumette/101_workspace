@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 19:08:04 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/12 18:17:26 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/13 15:12:56 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,5 +28,5 @@ int	main(int argc, char **argv, char **environ)
 	if (shell_init(&shell, environ) || shell_eval(&shell))
 		return (fail(&shell));
 	shell_destroy(&shell);
-	return (0);
+	return (shell.exit);
 }

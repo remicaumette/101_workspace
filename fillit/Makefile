@@ -1,6 +1,6 @@
 NAME=fillit
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -Iinclude -Ilibft/include
+CFLAGS=-Wall -Werror -Wextra -Iinclude -I../libft/include
 SOURCES=\
 	src/main.c			\
 	src/solver.c		\
@@ -12,15 +12,15 @@ OBJECTS=$(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	@make -s -C libft
-	$(CC) -Llibft -lft -o $(NAME) $(OBJECTS)
+	@make -s -C ../libft
+	$(CC) -L../libft -lft -o $(NAME) $(OBJECTS)
 
 clean:
-	make -C libft clean
+	make -C ../libft clean
 	rm -f $(OBJECTS)
 
 fclean: clean
-	make -C libft fclean
+	make -C ../libft fclean
 	rm -f $(NAME)
 
 re: fclean all

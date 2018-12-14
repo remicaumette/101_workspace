@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/23 16:13:56 by sifouche     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/27 15:49:08 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/27 16:09:14 by sifouche    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,13 +68,14 @@ static void	parse_date(t_fileinfo *file, char *str, int *cursor)
 
 static char	get_xattr(t_fileinfo *file)
 {
-	int 		xattr;
+	int			xattr;
 	acl_t		acl;
 	acl_entry_t	entry;
 
 	xattr = listxattr(file->path, NULL, 0, XATTR_NOFOLLOW);
 	acl = acl_get_link_np(file->path, ACL_TYPE_EXTENDED);
-	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &entry) == -1) {
+	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &entry) == -1)
+	{
 		acl_free(acl);
 		acl = NULL;
 	}
@@ -102,26 +103,18 @@ static void	display_file(t_ls *ls, t_fileinfo *file)
 	str[cursor++] = ' ';
 	stradd_formatted_right(str, file->owner, &cursor, ls->dir.user_width + 2);
 	stradd_formatted_right(str, file->group, &cursor, ls->dir.group_width + 2);
-	if (file->minor)
-	{
-		stradd_formatted_left(str, file->size, &cursor, 3);
-		str[cursor++] = ',';
-		str[cursor++] = ' ';
-		stradd_formatted_left(str, file->minor, &cursor, 3);
-	}
-	else
+	file->minor ? stradd_formatted_left(str, file->size, &cursor, 3) : 0;
+	file->minor ? str[cursor++] = ',' : 0;
+	file->minor ? str[cursor++] = ' ' : 0;
+	file->minor ? stradd_formatted_left(str, file->minor, &cursor, 3) :
 		stradd_formatted_left(str, file->size, &cursor, ls->dir.size_width);
 	parse_date(file, str, &cursor);
 	str[cursor++] = ' ';
 	stradd_formatted_left(str, *ls->dir.path ?
 		file->filename : file->path, &cursor, -1);
-	if (ls->slash && S_ISDIR(file->stats->st_mode))
-		str[cursor++] = '/';
-	if (file->link)
-	{
-		stradd_formatted_left(str, " -> ", &cursor, -1);
-		stradd_formatted_left(str, file->link, &cursor, -1);
-	}
+	ls->slash && S_ISDIR(file->stats->st_mode) ? str[cursor++] = '/' : 0;
+	file->link ? stradd_formatted_left(str, " -> ", &cursor, -1) : 0;
+	file->link ? stradd_formatted_left(str, file->link, &cursor, -1) : 0;
 	str[cursor++] = '\n';
 	str[cursor] = 0;
 	ft_putstr(str);
