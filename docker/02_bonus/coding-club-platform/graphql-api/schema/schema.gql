@@ -1,3 +1,0 @@
-scalar DateTime
-
-directive @auth(admin: Boolean = false) on FIELD_DEFINITION
