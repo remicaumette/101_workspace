@@ -4,8 +4,8 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
 SOURCES=\
 	src/lexer/lexer.c		\
-	src/lexer/operator.c	\
 	src/lexer/token.c		\
+	src/lexer/utils.c		\
 	src/main.c
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=\

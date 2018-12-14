@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 10:50:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/14 14:35:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,16 +30,16 @@ enum						e_tokentype
 enum						e_operatortype
 {
 	NONE,
-	AND_IF,		// &&
-	OR_IF,		// ||
-	DSEMI,		// ;;
-	DLESS,		// <<
-	DGREAT,		// >>
-	LESSAND,	// <&
-	GREATAND,	// >&
-	LESSGREAT,	// <>
-	DLESSDASH,	// <<-
-	CLOBBER,	// >|
+	AND_IF,
+	OR_IF,
+	DSEMI,
+	DLESS,
+	DGREAT,
+	LESSAND,
+	GREATAND,
+	LESSGREAT,
+	DLESSDASH,
+	CLOBBER,
 };
 
 struct						s_lexer
@@ -57,7 +57,7 @@ struct						s_token
 	t_token			*next;
 };
 
-t_lexer						*lexer_create();
+t_lexer						*lexer_create(void);
 void						lexer_destroy(t_lexer *lexer);
 t_token						*lexer_addtoken(t_lexer *lexer,
 	t_tokentype type, t_operatortype op, char *content);
@@ -65,4 +65,5 @@ void						lexer_deltoken(t_token *token);
 int							lexer_tokenize(t_lexer *lexer, char *str);
 t_operatortype				lexer_getop(char *str);
 int							lexer_tokenlen(t_token *token);
+unsigned int				lexer_getword(char *str, char **word);
 #endif
