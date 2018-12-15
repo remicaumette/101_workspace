@@ -16,18 +16,19 @@
 static char		*lexer_addsimpletoken(t_lexer *lexer, t_tokentype type,
 	char *str)
 {
-	t_operatortype	op;
+	t_tokeninfo	info;
+	int			i;
 
-	if (type == NEWLINE && !(lexer_addtoken(lexer, NEWLINE, NONE, NULL)))
+	i = -1;
+	while (++i < 15)
+		if (g_tokens[i].type == type)
+		{
+			info = g_tokens[i];
+			break ;
+		}
+	if (!(lexer_addtoken(lexer, type, NULL)))
 		return (NULL);
-	else if (type == OPERATOR)
-	{
-		op = lexer_getop(str);
-		if (!(lexer_addtoken(lexer, OPERATOR, op, NULL)))
-			return (NULL);
-		return (str + 1 - (op == PIPE) + (op == DLESSDASH));
-	}
-	return (str);
+	return (str + info.len - 1);
 }
 
 static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
@@ -38,21 +39,22 @@ static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
 
 	tmp = str - 1;
 	word = NULL;
-	quote = -1;
-	while (*++tmp)
+	if (lexer->end && (lexer->end->type == T_SQUOTE ||
+		lexer->end->type == T_DQUOTE))
+		quote = lexer->end->type == T_SQUOTE ? '\'' : '"';
+	else
+		quote = -1;
+	while (*++tmp )
 	{
-		if ((*tmp == '\t' || *tmp == ' ') && quote == -1)
+		if (((*tmp == '\t' || *tmp == ' ' || lexer_gettype(tmp) != T_WORD) &&
+			quote == -1) || (quote != -1 && quote == *tmp))
 			break ;
-		else if ((*tmp == '\'' || *tmp == '"') && quote == -1)
-			quote = *tmp;
-		else if (quote != -1 && *tmp == quote)
-			quote = -1;
 		else if (!(ft_strjoinc(&word, *tmp)))
 			return (0);
 	}
-	if (!(lexer_addtoken(lexer, WORD, NONE, word)))
+	if (!(lexer_addtoken(lexer, T_WORD, word)))
 		return (NULL);
-	return (tmp - 1);
+	return (tmp - (word != NULL));
 }
 
 int				lexer_tokenize(t_lexer *lexer, char *str)
@@ -66,10 +68,9 @@ int				lexer_tokenize(t_lexer *lexer, char *str)
 		if (*tmp == ' ' || *tmp == '\t')
 			continue ;
 		type = lexer_gettype(tmp);
-		if ((type == OPERATOR || type == NEWLINE) &&
-			!(tmp = lexer_addsimpletoken(lexer, type, tmp)))
+		if (type == T_WORD && !(tmp = lexer_addwordtoken(lexer, tmp)))
 			return (1);
-		if (type == WORD && !(tmp = lexer_addwordtoken(lexer, tmp)))
+		else if (type != T_WORD && !(tmp = lexer_addsimpletoken(lexer, type, tmp)))
 			return (1);
 	}
 	return (0);

@@ -13,43 +13,18 @@
 
 #include "shell.h"
 
-t_tokentype		lexer_gettype(char *str)
+t_tokentype	lexer_gettype(char *str)
 {
-	if (lexer_getop(str))
-		return (OPERATOR);
-	else if (*str == '\n' || *str == ';')
-		return (NEWLINE);
-	return (WORD);
+	int	i;
+
+	i = -1;
+	while (++i < 15)
+		if (ft_strnequ(str, g_tokens[i].format, g_tokens[i].len))
+			return (g_tokens[i].type);
+	return (T_WORD);
 }
 
-t_operatortype	lexer_getop(char *str)
-{
-	if (ft_strnequ(str, "&&", 2))
-		return (AND_IF);
-	if (ft_strnequ(str, "||", 2))
-		return (OR_IF);
-	if (ft_strnequ(str, ";;", 2))
-		return (DSEMI);
-	if (ft_strnequ(str, "<<", 2))
-		return (DLESS);
-	if (ft_strnequ(str, ">>", 2))
-		return (DGREAT);
-	if (ft_strnequ(str, "<&", 2))
-		return (LESSAND);
-	if (ft_strnequ(str, ">&", 2))
-		return (GREATAND);
-	if (ft_strnequ(str, "<>", 2))
-		return (LESSGREAT);
-	if (ft_strnequ(str, "<<-", 3))
-		return (DLESSDASH);
-	if (ft_strnequ(str, ">|", 2))
-		return (CLOBBER);
-	if (ft_strnequ(str, "|", 1))
-		return (PIPE);
-	return (NONE);
-}
-
-char			*ft_strjoinc(char **mot, char c)
+char		*ft_strjoinc(char **mot, char c)
 {
 	char	*tmp;
 	char	m[2];

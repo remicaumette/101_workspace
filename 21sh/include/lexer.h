@@ -17,25 +17,25 @@
 typedef enum e_tokentype	t_tokentype;
 typedef struct s_lexer		t_lexer;
 typedef struct s_token		t_token;
+typedef struct s_tokeninfo	t_tokeninfo;
 
 enum						e_tokentype
 {
-	T_WORD,			// <word>
-	T_NEWLINE,		// \n
-	T_SQUOTE,		// '
-	T_DQUOTE,		// "
-	T_SEMI,			// ;
-	T_PIPE,			// |
-	T_ANDIF,		// &&
-	T_ORIF,			// ||
-	T_DSEMI,		// ;;
-	T_DLESS,		// <<
-	T_DGREAT,		// >>
-	T_LESSAND,		// <&
-	T_GREATAND,		// >&
-	T_LESSGREAT,	// <>
-	T_DLESSDASH,	// <<-
-	T_CLOBBER,		// >|
+	T_WORD,
+	T_NEWLINE,
+	T_SQUOTE,
+	T_DQUOTE,
+	T_PIPE,
+	T_ANDIF,
+	T_ORIF,
+	T_DSEMI,
+	T_DLESS,
+	T_DGREAT,
+	T_LESSAND,
+	T_GREATAND,
+	T_LESSGREAT,
+	T_DLESSDASH,
+	T_CLOBBER,
 };
 
 struct						s_lexer
@@ -52,14 +52,22 @@ struct						s_token
 	t_token			*next;
 };
 
+struct						s_tokeninfo
+{
+	char			*format;
+	t_tokentype		type;
+	unsigned int	len;
+};
+
+extern t_tokeninfo			g_tokens[];
+
 t_lexer						*lexer_create(void);
 void						lexer_cleanup(t_lexer *lexer);
 void						lexer_destroy(t_lexer *lexer);
 t_token						*lexer_addtoken(t_lexer *lexer,
-	t_tokentype type, t_operatortype op, char *content);
+	t_tokentype type, char *content);
 void						lexer_deltoken(t_token *token);
 t_tokentype					lexer_gettype(char *str);
-t_operatortype				lexer_getop(char *str);
 char						*ft_strjoinc(char **mot, char c);
 int							lexer_tokenize(t_lexer *lexer, char *str);
 #endif
