@@ -1,7 +1,7 @@
 NAME=21sh
 LIBFT=./libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g -fsanitize=address
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g #-fsanitize=address
 SOURCES=\
 	src/lexer/lexer.c		\
 	src/lexer/token.c		\
