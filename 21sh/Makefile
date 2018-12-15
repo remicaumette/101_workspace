@@ -6,6 +6,9 @@ SOURCES=\
 	src/lexer/lexer.c		\
 	src/lexer/token.c		\
 	src/lexer/utils.c		\
+	src/parser/expansion.c	\
+	src/parser/parser.c		\
+	src/parser/utils.c		\
 	src/environment.c		\
 	src/history.c			\
 	src/main.c				\
@@ -13,6 +16,7 @@ SOURCES=\
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=\
 	include/lexer.h			\
+	include/parser.h		\
 	include/shell.h
 
 all: libft $(NAME)

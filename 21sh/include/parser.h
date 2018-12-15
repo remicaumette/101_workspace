@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   shell.h                                          .::    .:/ .      .::   */
+/*   parser.h                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 20:30:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/15 20:26:13 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdio.h>
-
+typedef struct s_parser		t_parser;
 typedef struct s_shell		t_shell;
 
-struct						s_shell
+struct						s_parser
 {
-	char		**environment;
-	char		**history;
-	t_lexer		*lexer;
-	t_parser	*parser;
+	t_shell	*shell;
 };
 
-t_shell						*g_shell;
-
-t_shell						*shell_create(char **environment);
-void						shell_destroy(t_shell *shell);
+t_parser					*parser_create(t_shell *shell);
+void						parser_destroy(t_parser *parser);
+int							parser_expand(t_parser *parser);
 #endif

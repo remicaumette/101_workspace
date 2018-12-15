@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 16:37:01 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/15 20:26:11 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,6 +42,7 @@ struct						s_lexer
 {
 	t_token			*begin;
 	t_token			*end;
+	char			quote;
 	unsigned int	count;
 };
 
@@ -70,4 +71,5 @@ void						lexer_deltoken(t_token *token);
 t_tokentype					lexer_gettype(char *str);
 char						*ft_strjoinc(char **mot, char c);
 int							lexer_tokenize(t_lexer *lexer, char *str);
+int							lexer_isok(t_lexer *lexer);
 #endif

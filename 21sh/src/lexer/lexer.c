@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:17:45 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/14 16:32:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/15 16:44:46 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,7 @@ t_lexer		*lexer_create(void)
 	lexer->begin = NULL;
 	lexer->end = NULL;
 	lexer->count = 0;
+	lexer->quote = -1;
 	return (lexer);
 }
 
@@ -60,6 +61,7 @@ void		lexer_cleanup(t_lexer *lexer)
 		lexer->begin = NULL;
 		lexer->end = NULL;
 		lexer->count = 0;
+		lexer->quote = -1;
 	}
 }
 
