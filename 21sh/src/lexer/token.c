@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:30:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 20:34:31 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/15 21:42:18 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,19 @@ static char		*lexer_addsimpletoken(t_lexer *lexer, t_tokentype type,
 	if (!(lexer_addtoken(lexer, type, NULL)))
 		return (NULL);
 	return (str + info.len - 1);
+}
+
+static char		*ft_strjoinc(char **mot, char c)
+{
+	char	*tmp;
+	char	m[2];
+
+	m[0] = c;
+	m[1] = 0;
+	if (!(tmp = ft_strjoin(*mot, m)))
+		return (NULL);
+	ft_strdel(mot);
+	return (*mot = tmp);
 }
 
 static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
