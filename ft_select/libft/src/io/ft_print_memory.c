@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_print_memory.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/03 18:36:57 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/03 18:37:02 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	ft_print_memory(void *mem, size_t len)
 {
-	char	*word;
-	char	*tmp;
-
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	ft_print_memory_fd(mem, len, 1);
 }

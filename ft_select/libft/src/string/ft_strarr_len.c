@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strarr_len.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/31 11:41:38 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/31 11:41:38 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+int	ft_strarr_len(char **arr)
 {
-	char	*word;
-	char	*tmp;
+	int	len;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	len = 0;
+	while (arr && arr[len])
+		len++;
+	return (len);
 }

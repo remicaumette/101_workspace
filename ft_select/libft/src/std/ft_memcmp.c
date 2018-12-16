@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_memcmp.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:31 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:18 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*word;
-	char	*tmp;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			curr;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	if (!n)
+		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	curr = 0;
+	while (*str1 == *str2 && curr <= n)
 	{
+		++str1;
+		++str2;
+		if (++curr == n)
+			return (0);
 	}
-	return (tmp);
+	return (*str1 - *str2);
 }

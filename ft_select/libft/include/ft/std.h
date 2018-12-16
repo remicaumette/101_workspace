@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   std.h                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:39 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:07:40 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef STD_H
+# define STD_H
+# include <stdlib.h>
 
-char	*parser_expandword(t_parser *parser, t_token *token)
-{
-	char	*word;
-	char	*tmp;
-
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
-}
+void	ft_bzero(void *mem, size_t size);
+void	*ft_memalloc(size_t size);
+void	ft_memdel(void **ap);
+void	*ft_memset(void *b, int c, size_t len);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n);
+void	*ft_memmove(void *dst, const void *src, size_t len);
+void	*ft_memchr(const void *s, int c, size_t n);
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+#endif

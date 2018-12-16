@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 22:32:24 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 03:53:41 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,4 +63,6 @@ t_redirection					*redirection_create(t_tokentype type,
 	char *file, unsigned int in, unsigned int out);
 void							redirection_destroy(t_redirection
 	*redirection);
+char							*parser_expandword(t_parser *parser,
+	t_token *token);
 #endif

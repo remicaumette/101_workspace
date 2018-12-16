@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strmapi.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:40:38 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 14:48:24 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*word;
-	char	*tmp;
+	char			*tmp;
+	unsigned int	i;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
+	if (!s || !f || (tmp = ft_strnew(ft_strlen(s))) == NULL)
+		return (NULL);
+	i = 0;
+	while (*s && ++i)
+		tmp[i - 1] = f(i - 1, *s++);
 	return (tmp);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strsub.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:41:30 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 14:48:02 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char	*word;
-	char	*tmp;
+	unsigned int	i;
+	char			*tmp;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
+	i = -1;
+	if (!s || (tmp = ft_strnew(len)) == NULL)
+		return (NULL);
+	while (++i < len)
+		tmp[i] = s[start + i];
 	return (tmp);
 }

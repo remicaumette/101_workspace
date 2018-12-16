@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strchr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:38:49 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*word;
-	char	*tmp;
-
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	s--;
+	while (*++s)
+		if (*s == c)
+			return ((char *)s);
+	return (*s == c ? (char *)s : NULL);
 }

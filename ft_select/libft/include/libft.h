@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   libft.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:29:03 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/03 18:11:59 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
-
-char	*parser_expandword(t_parser *parser, t_token *token)
-{
-	char	*word;
-	char	*tmp;
-
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
-}
+#ifndef LIBFT_H
+# define LIBFT_H
+# include "ft/io.h"
+# include "ft/std.h"
+# include "ft/strconv.h"
+# include "ft/string.h"
+# include "ft/type.h"
+#endif

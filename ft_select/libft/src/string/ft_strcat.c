@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strcat.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:38:42 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 14:38:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
-
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	char	*word;
-	char	*tmp;
+	char *ptr;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	ptr = s1;
+	while (*s1)
+		s1++;
+	while (*s2)
+		*s1++ = *s2++;
+	*s1 = 0;
+	return (ptr);
 }

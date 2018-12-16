@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strnstr.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:41:04 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 16:32:00 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 {
-	char	*word;
-	char	*tmp;
+	size_t	i;
+	size_t	j;
+	size_t	length;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	length = ft_strlen(s2);
+	j = -1;
+	while (++j < len)
 	{
+		i = 0;
+		if (!s1[j])
+			return (NULL);
+		while (s2[i] && j + i < len)
+		{
+			if (s2[i] != s1[j + i])
+				break ;
+			i++;
+		}
+		if (i == length)
+			return ((char *)s1 + j);
 	}
-	return (tmp);
+	return (NULL);
 }

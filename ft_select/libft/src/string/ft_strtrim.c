@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strtrim.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:41:33 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 15:06:13 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+static int	is_whitespace(char c)
 {
-	char	*word;
-	char	*tmp;
+	return (c == ' ' || c == '\t' || c == '\n');
+}
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+char		*ft_strtrim(char const *s)
+{
+	int	offset;
+	int	limit;
+
+	if (!s)
+		return (NULL);
+	offset = 0;
+	limit = ft_strlen(s) - 1;
+	while (s[offset] && is_whitespace(s[offset]))
+		offset++;
+	while (limit > offset && is_whitespace(s[limit]))
+		limit--;
+	return (ft_strsub(s, offset, limit - offset + 1));
 }

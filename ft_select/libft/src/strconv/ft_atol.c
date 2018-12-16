@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_atol.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:06:50 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:06:51 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+long	ft_atol(const char *s)
 {
-	char	*word;
-	char	*tmp;
+	long	r;
+	int		n;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	r = 0;
+	while ((*s >= 9 && *s <= 13) || *s == 32)
+		s++;
+	n = *s == '-';
+	if (*s == '+' || *s == '-')
+		s++;
+	while (*s >= '0' && *s <= '9')
+		r = r * 10 + (*s++ - '0');
+	return (n ? -r : r);
 }

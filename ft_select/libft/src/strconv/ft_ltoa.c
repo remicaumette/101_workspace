@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_ltoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:00 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:07:01 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_ltoa(long n)
 {
-	char	*word;
-	char	*tmp;
+	long	curr;
+	int		size;
+	char	*s;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	curr = n;
+	size = n < 0 ? 2 : 1;
+	while ((curr >= 10 || curr <= -10) && ++size)
+		curr /= 10;
+	if ((s = ft_strnew(size)) == NULL)
+		return (NULL);
+	curr = n;
+	while (--size >= (curr < 0))
 	{
+		s[size] = (curr < 0 ? -(curr % 10) : (curr % 10)) + '0';
+		curr /= 10;
 	}
-	return (tmp);
+	if (n < 0)
+		s[0] = '-';
+	return (s);
 }

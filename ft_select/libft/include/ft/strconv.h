@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   strconv.h                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 15:07:42 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:07:42 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef STRCONV_H
+# define STRCONV_H
+# include "std.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
-{
-	char	*word;
-	char	*tmp;
-
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
-}
+int			ft_atoi(const char *s);
+char		*ft_itoa(int n);
+long		ft_atol(const char *s);
+char		*ft_ltoa(long n);
+long long	ft_atoll(const char *s);
+char		*ft_lltoa(long long n);
+#endif

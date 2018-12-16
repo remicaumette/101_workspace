@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_memchr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:22 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:16 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*word;
-	char	*tmp;
+	unsigned char	*str;
+	size_t			curr;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	str = (unsigned char *)s;
+	curr = 0;
+	while (curr < n)
+		if (str[curr] == (unsigned char)c)
+			return (str + curr);
+		else
+			curr++;
+	return (NULL);
 }

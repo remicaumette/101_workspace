@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strncmp.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:40:46 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 15:03:43 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*word;
-	char	*tmp;
+	size_t size;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	size = 0;
+	while (size < n && *s1 == *s2 && *s1 != 0)
 	{
+		s1++;
+		s2++;
+		size++;
 	}
-	return (tmp);
+	return (n == size ? 0 : ((unsigned char)*s1 - (unsigned char)*s2));
 }

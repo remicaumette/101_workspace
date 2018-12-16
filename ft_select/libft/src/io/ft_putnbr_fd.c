@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_putnbr_fd.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:34:36 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 15:05:39 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+static int	get_size(int n)
 {
-	char	*word;
-	char	*tmp;
+	int	size;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	size = n < 0 ? 2 : 1;
+	while ((n >= 10 || n <= -10) && ++size)
+		n /= 10;
+	return (size);
+}
+
+void		ft_putnbr_fd(int n, int fd)
+{
+	int		curr;
+	int		size;
+	char	s[get_size(n) + 1];
+
+	curr = n;
+	size = get_size(n);
+	s[size] = 0;
+	while (size-- >= (curr < 0))
 	{
+		s[size] = (curr < 0 ? -(curr % 10) : (curr % 10)) + '0';
+		curr /= 10;
 	}
-	return (tmp);
+	if (n < 0)
+		s[0] = '-';
+	ft_putstr_fd(s, fd);
 }

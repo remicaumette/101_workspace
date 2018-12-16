@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:30:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 02:24:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 02:36:32 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,23 +47,24 @@ static char		*ft_strjoinc(char **word, char c)
 static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
 {
 	char	*tmp;
-	char	*word;
+	t_token	*token;
 
 	tmp = str - 1;
-	word = NULL;
-	while (*++tmp && !((*tmp == '\t' || *tmp == ' ' || lexer_gettype(tmp) != T_WORD) && lexer->quote == -1))
+	if (lexer->quote && lexer->end && lexer->end->type == T_WORD)
+		token = lexer->end;
+	else if (!(token = lexer_addtoken(lexer, T_WORD, NULL)))
+		return (NULL);
+	while (*++tmp && !((*tmp == '\t' || *tmp == ' ' ||
+		lexer_gettype(tmp) != T_WORD) && lexer->quote == -1))
 	{
 		if ((*tmp == '\'' || *tmp == '"') && lexer->quote == -1)
 			lexer->quote = *tmp;
 		else if (*tmp == lexer->quote)
 			lexer->quote = -1;
-		if (!(ft_strjoinc(&word, *tmp)))
+		if (!(ft_strjoinc(&token->content, *tmp)))
 			return (NULL);
 	}
-	if (!(lexer_addtoken(lexer, T_WORD, word)))
-		return (NULL);
-	tmp -= (word != NULL);
-	ft_strdel(&word);
+	tmp -= (token->content != NULL);
 	return (tmp);
 }
 

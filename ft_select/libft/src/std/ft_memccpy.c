@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_memccpy.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 14:35:17 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/01 16:24:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*word;
-	char	*tmp;
+	unsigned char	*s1;
+	unsigned char	*s2;
+	size_t			i;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	s1 = (unsigned char *)dst;
+	s2 = (unsigned char *)src;
+	i = 0;
+	while (i < n)
 	{
+		s1[i] = s2[i];
+		if (s2[i++] == (unsigned char)c)
+			return (dst + i);
 	}
-	return (tmp);
+	return (NULL);
 }

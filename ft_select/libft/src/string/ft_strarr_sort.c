@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_strarr_sort.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 04:09:40 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/29 15:45:41 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/29 15:45:41 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	ft_strarr_sort(char **arr, int reverse)
 {
-	char	*word;
-	char	*tmp;
+	int		i;
+	int		j;
+	char	*buf;
 
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-	}
-	return (tmp);
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+		i++;
+	while (--i > 0 && (j = -1))
+		while (++j < i)
+			if ((ft_strcmp(arr[i], arr[j]) < 0 && !reverse) ||
+				(ft_strcmp(arr[i], arr[j]) > 0 && reverse))
+			{
+				buf = arr[i];
+				arr[i] = arr[j];
+				arr[j] = buf;
+			}
 }
