@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:30:12 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 21:42:18 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 02:24:29 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,24 +26,22 @@ static char		*lexer_addsimpletoken(t_lexer *lexer, t_tokentype type,
 			info = g_tokens[i];
 			break ;
 		}
-	if (type == T_SQUOTE || type == T_DQUOTE)
-		lexer->quote = lexer->quote == -1 ? *str : -1;
 	if (!(lexer_addtoken(lexer, type, NULL)))
 		return (NULL);
 	return (str + info.len - 1);
 }
 
-static char		*ft_strjoinc(char **mot, char c)
+static char		*ft_strjoinc(char **word, char c)
 {
 	char	*tmp;
 	char	m[2];
 
 	m[0] = c;
 	m[1] = 0;
-	if (!(tmp = ft_strjoin(*mot, m)))
+	if (!(tmp = ft_strjoin(*word, m)))
 		return (NULL);
-	ft_strdel(mot);
-	return (*mot = tmp);
+	ft_strdel(word);
+	return (*word = tmp);
 }
 
 static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
@@ -53,10 +51,15 @@ static char		*lexer_addwordtoken(t_lexer *lexer, char *str)
 
 	tmp = str - 1;
 	word = NULL;
-	while (*++tmp && !(((*tmp == '\t' || *tmp == ' ' || lexer_gettype(tmp) != T_WORD) &&
-		lexer->quote == -1) || (lexer->quote != -1 && lexer->quote == *tmp)))
+	while (*++tmp && !((*tmp == '\t' || *tmp == ' ' || lexer_gettype(tmp) != T_WORD) && lexer->quote == -1))
+	{
+		if ((*tmp == '\'' || *tmp == '"') && lexer->quote == -1)
+			lexer->quote = *tmp;
+		else if (*tmp == lexer->quote)
+			lexer->quote = -1;
 		if (!(ft_strjoinc(&word, *tmp)))
 			return (NULL);
+	}
 	if (!(lexer_addtoken(lexer, T_WORD, word)))
 		return (NULL);
 	tmp -= (word != NULL);
@@ -77,7 +80,8 @@ int				lexer_tokenize(t_lexer *lexer, char *str)
 		type = lexer_gettype(tmp);
 		if (type == T_WORD && !(tmp = lexer_addwordtoken(lexer, tmp)))
 			return (1);
-		else if (type != T_WORD && !(tmp = lexer_addsimpletoken(lexer, type, tmp)))
+		else if (type != T_WORD &&
+			!(tmp = lexer_addsimpletoken(lexer, type, tmp)))
 			return (1);
 	}
 	return (0);

@@ -1,1 +1,12 @@
 "hello world"'xd'mdr;||
+
+
+si multiligne genre
+"
+||
+&&
+lol
+"
+
+il va les considerer comme des tokens
+"hello"'world'&&

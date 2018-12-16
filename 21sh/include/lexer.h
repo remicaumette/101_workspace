@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 21:38:22 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 02:05:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,6 @@ enum						e_tokentype
 {
 	T_WORD,
 	T_NEWLINE,
-	T_SQUOTE,
-	T_DQUOTE,
 	T_PIPE,
 	T_ANDIF,
 	T_ORIF,
@@ -70,5 +68,5 @@ t_token						*lexer_addtoken(t_lexer *lexer,
 void						lexer_deltoken(t_token *token);
 t_tokentype					lexer_gettype(char *str);
 int							lexer_tokenize(t_lexer *lexer, char *str);
-int							lexer_isok(t_lexer *lexer);
+char						lexer_getmissingtoken(t_lexer *lexer);
 #endif

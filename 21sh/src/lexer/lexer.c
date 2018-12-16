@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:17:45 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 16:44:46 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 01:51:46 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,8 +24,6 @@ t_tokeninfo	g_tokens[] = {
 	{">&", T_GREATAND, 2},
 	{"<>", T_LESSGREAT, 2},
 	{">|", T_CLOBBER, 2},
-	{"'", T_SQUOTE, 1},
-	{"\"", T_DQUOTE, 1},
 	{"|", T_PIPE, 1},
 	{";", T_NEWLINE, 1},
 	{"\n", T_NEWLINE, 1},

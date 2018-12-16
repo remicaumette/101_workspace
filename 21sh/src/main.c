@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 21:36:18 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 02:17:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,6 @@
 static const char *type[] = {
 	"T_WORD",
 	"T_NEWLINE",
-	"T_SQUOTE",
-	"T_DQUOTE",
 	"T_PIPE",
 	"T_ANDIF",
 	"T_ORIF",
@@ -44,7 +42,7 @@ void		print_token(t_token *token)
 int			main(int argc, char **argv, char **environment)
 {
 	char	*line;
-	int		open;
+	char	open;
 
 	(void)argc;
 	(void)argv;
@@ -56,9 +54,9 @@ int			main(int argc, char **argv, char **environment)
 			break ;
 		if (lexer_tokenize(g_shell->lexer, line))
 			return (1);
-		if ((open = lexer_isok(g_shell->lexer)) != -1)
+		if ((open = lexer_getmissingtoken(g_shell->lexer)) != -1)
 		{
-			printf("required: %s\n", type[open]);
+			printf("required: %c\n", open);
 			continue ;
 		}
 		if (g_shell->lexer->begin)

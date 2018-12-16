@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 10:03:28 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 21:38:02 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 02:21:31 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,13 +24,13 @@ t_tokentype	lexer_gettype(char *str)
 	return (T_WORD);
 }
 
-int			lexer_isok(t_lexer *lexer)
+char		lexer_getmissingtoken(t_lexer *lexer)
 {
 	t_token	*curr;
 	t_token	*last;
 
 	if (lexer->quote != -1)
-		return (lexer->quote == '"' ? T_DQUOTE : T_SQUOTE);
+		return (lexer->quote);
 	curr = lexer->begin;
 	last = NULL;
 	while (curr)
@@ -40,6 +40,6 @@ int			lexer_isok(t_lexer *lexer)
 		curr = curr->next;
 	}
 	if (last && last->type == T_PIPE)
-		return (T_PIPE);
+		return ('|');
 	return (-1);
 }
