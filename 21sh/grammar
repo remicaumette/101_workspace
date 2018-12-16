@@ -1,0 +1,13 @@
+command:
+	<command>
+	<command> <newline>
+
+pipe:
+	<command> | <command>
+	<command> | <newline> <command>
+
+and_if:
+	<command> && <command>
+
+or_if:
+	<command> || <command>

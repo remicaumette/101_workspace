@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 03:53:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/16 05:27:56 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,7 +52,9 @@ struct							s_redirection
 };
 
 t_parser						*parser_create(t_shell *shell);
+void							parser_cleanup(t_parser *parser);
 void							parser_destroy(t_parser *parser);
+int								parser_parse(t_parser *parser);
 int								parser_expand(t_parser *parser);
 t_node							*node_create(t_tokentype type,
 	t_command *command);
