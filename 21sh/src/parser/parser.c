@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/15 16:57:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/17 14:30:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/17 15:06:58 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,7 @@ t_parser	*parser_create(t_shell *shell)
 		return (NULL);
 	parser->shell = shell;
 	parser->root = NULL;
+	parser->curr = NULL;
 	return (parser);
 }
 
@@ -31,6 +32,7 @@ void		parser_cleanup(t_parser *parser)
 		if (parser->root)
 			node_destroy(parser->root);
 		parser->root = NULL;
+		parser->curr = NULL;
 	}
 }
 
@@ -45,22 +47,21 @@ void		parser_destroy(t_parser *parser)
 
 int			parser_parse(t_parser *parser)
 {
-	parser->curr = parser->shell->lexer->begin;
+	t_command	*cmd;
+	t_token		*curr;
+	t_node		*node;
 
+	parser->curr = parser->shell->lexer->begin;
 	while (parser->curr)
 	{
-		if (parser->curr->type == T_WORD)
-		{
-			t_command *cmd = command_parse(parser);
-			if (cmd)
-			{
-				printf("command: %s args: %p\n", cmd->name, cmd->arguments);
-				for (int i = 0; cmd->arguments && cmd->arguments[i]; i++)
-					printf("\t- %s\n", cmd->arguments[i]);
-			}
-		}
-		else
-			parser->curr = parser->curr->next;
+		cmd = NULL;
+		curr = parser->curr;
+		if (curr->type == T_WORD && !(cmd = command_parse(parser)))
+			return (1);
+		if (!(node = node_create(curr->type, cmd)))
+			return (1);
+		printf("%u\n", node->type);
+		parser->curr = curr->type == T_WORD ? parser->curr : curr->next;
 	}
 	return (0);
 }

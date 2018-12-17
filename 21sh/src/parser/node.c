@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/15 21:59:45 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 22:17:35 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/17 16:07:48 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,12 @@ void	node_destroy(t_node *node)
 		if (node->right)
 			node_destroy(node->right);
 		if (node->command)
-			printf("delete cmd\n");
+			command_destroy(node->command);
 		ft_memdel((void **)&node);
 	}
+}
+
+void	node_insert(t_node **root, t_node *node)
+{
+
 }
