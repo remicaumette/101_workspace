@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:35:27 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 05:27:56 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/17 13:39:05 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ struct							s_parser
 {
 	t_shell		*shell;
 	t_node		*root;
+	t_token		*curr;
 };
 
 struct							s_node
@@ -67,4 +68,5 @@ void							redirection_destroy(t_redirection
 	*redirection);
 char							*parser_expandword(t_parser *parser,
 	t_token *token);
+t_command						*command_parse(t_parser *parser);
 #endif

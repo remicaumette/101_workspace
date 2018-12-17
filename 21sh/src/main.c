@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 02:17:09 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/17 14:24:23 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,9 +60,14 @@ int			main(int argc, char **argv, char **environment)
 			continue ;
 		}
 		if (g_shell->lexer->begin)
-			print_token(g_shell->lexer->begin);
+		{
+			//print_token(g_shell->lexer->begin);
+			printf("=== PARSER\n");
+			printf("parser_parse = %d\n", parser_parse(g_shell->parser));
+		}
 		ft_strdel(&line);
 		lexer_cleanup(g_shell->lexer);
+		parser_cleanup(g_shell->parser);
 	}
 	shell_destroy(g_shell);
 	return (0);
