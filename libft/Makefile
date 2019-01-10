@@ -22,6 +22,7 @@ SOURCES=\
 	src/std/ft_memdel.c					\
 	src/std/ft_memmove.c				\
 	src/std/ft_memset.c					\
+	src/std/ft_realloc.c				\
 	src/strconv/ft_atoi.c				\
 	src/strconv/ft_atol.c				\
 	src/strconv/ft_atoll.c				\

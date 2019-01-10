@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   shell_processline.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 12:54:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 13:06:27 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/10 13:09:01 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+int	shell_processline(t_shell *shell)
 {
-	char	*word;
-	char	*tmp;
-
-	(void)parser;
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-		(void)ft_strjoinc;
-	}
-	return (tmp);
+	(void)shell;
+	return (0);
 }

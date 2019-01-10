@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 12:54:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 13:22:32 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/10 13:43:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	char	*word;
-	char	*tmp;
+	void	*tmp;
 
-	(void)parser;
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	if (size <= 0)
+		return (NULL);
+	if (!(tmp = ft_memalloc(size)))
+		return (NULL);
+	if (ptr)
 	{
-		(void)ft_strjoinc;
+		ft_memcpy(tmp, ptr, size);
+		ft_memdel(&ptr);
 	}
 	return (tmp);
 }

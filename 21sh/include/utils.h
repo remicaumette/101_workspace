@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   utils.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 12:54:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/10 12:55:41 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-char	*parser_expandword(t_parser *parser, t_token *token)
-{
-	char	*word;
-	char	*tmp;
-
-	(void)parser;
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-		(void)ft_strjoinc;
-	}
-	return (tmp);
-}
+char	*ft_strjoinc(char **word, char c);
+#endif

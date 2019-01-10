@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 16:27:49 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 20:24:57 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/10 14:56:30 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,7 @@ t_shell		*shell_create(char **environment)
 			environment[i])))
 			return (NULL);
 	shell->history = NULL;
+	shell->line = NULL;
 	if (!(shell->lexer = lexer_create()))
 		return (NULL);
 	if (!(shell->parser = parser_create(shell)))
@@ -39,6 +40,8 @@ void		shell_destroy(t_shell *shell)
 	{
 		if (shell->environment)
 			ft_strarr_del(shell->environment);
+		if (shell->line)
+			ft_strdel(&shell->line);
 		if (shell->history)
 			ft_strarr_del(shell->history);
 		if (shell->lexer)

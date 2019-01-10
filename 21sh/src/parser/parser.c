@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/15 16:57:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/17 15:06:58 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/08 16:34:45 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,7 @@ int			parser_parse(t_parser *parser)
 			return (1);
 		if (!(node = node_create(curr->type, cmd)))
 			return (1);
-		printf("%u\n", node->type);
+		node_insert(&parser->root, node);
 		parser->curr = curr->type == T_WORD ? parser->curr : curr->next;
 	}
 	return (0);

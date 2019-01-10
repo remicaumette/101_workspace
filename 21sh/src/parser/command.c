@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/15 22:18:25 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/17 15:08:21 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/08 16:40:29 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ t_command	*command_create(char *name)
 	t_command	*command;
 
 	if (!(command = ft_memalloc(sizeof(t_command))) ||
-		!(command->name = name))
+		!(command->name = ft_strdup(name)))
 		return (NULL);
 	command->arguments = NULL;
 	command->redirection = NULL;
@@ -58,7 +58,7 @@ t_command	*command_parse(t_parser *parser)
 	if (!(curr = parser->curr) || curr->type != T_WORD ||
 		!(cmd = command_create(curr->content)))
 		return (NULL);
-	curr = curr->next && curr->next->type == T_WORD ? curr->next : NULL;
+	curr = curr->next;
 	while (curr && curr->type == T_WORD)
 	{
 		if (!(cmd->arguments = ft_strarr_add(cmd->arguments, curr->content)))

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   utils.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 12:54:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 12:54:55 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/10 12:55:03 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+char	*ft_strjoinc(char **word, char c)
 {
-	char	*word;
 	char	*tmp;
+	char	m[2];
 
-	(void)parser;
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
-	{
-		(void)ft_strjoinc;
-	}
-	return (tmp);
+	m[0] = c;
+	m[1] = 0;
+	if (!(tmp = ft_strjoin(*word, m)))
+		return (NULL);
+	ft_strdel(word);
+	return (*word = tmp);
 }
