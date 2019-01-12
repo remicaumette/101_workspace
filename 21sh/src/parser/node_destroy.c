@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_realloc.c                                     .::    .:/ .      .::   */
+/*   node_destroy.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 13:22:32 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 13:43:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:11:30 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:11:36 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "shell.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	node_destroy(t_node *node)
 {
-	void	*tmp;
-
-	if (size <= 0)
-		return (NULL);
-	if (!(tmp = ft_memalloc(size)))
-		return (NULL);
-	if (ptr)
+	if (node)
 	{
-		ft_memcpy(tmp, ptr, size);
-		ft_memdel(&ptr);
+		if (node->command)
+			command_destroy(node->command);
+		if (node->next)
+			node_destroy(node->next);
+		ft_memdel((void **)&node);
 	}
-	return (tmp);
 }

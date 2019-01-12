@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.h                                          .::    .:/ .      .::   */
+/*   shell_create.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 15:14:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 17:18:37 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 17:19:13 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# define SUCCESS 0
-# define FAIL 1
+#include "shell.h"
 
-char	*ft_strjoinc(char **word, char c);
-#endif
+t_shell	*shell_create(char **environment)
+{
+	t_shell	*shell;
+
+	if (!(shell = ft_memalloc(sizeof(t_shell))))
+		return (NULL);
+	shell->environment = NULL;
+	shell->history = NULL;
+	shell->line = NULL;
+	shell->lexer = NULL;
+	shell->parser = NULL;
+	if (shell_envinit(shell, environment) ||
+		!(shell->lexer = lexer_create()) ||
+		!(shell->parser = parser_create(shell)))
+		return (NULL);
+	return (shell);
+}

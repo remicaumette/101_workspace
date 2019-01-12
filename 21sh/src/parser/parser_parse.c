@@ -1,51 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   parser.c                                         .::    .:/ .      .::   */
+/*   parser_parse.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 16:57:40 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/08 16:34:45 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:12:30 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:12:38 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_parser	*parser_create(t_shell *shell)
-{
-	t_parser	*parser;
-
-	if (!(parser = ft_memalloc(sizeof(t_parser))))
-		return (NULL);
-	parser->shell = shell;
-	parser->root = NULL;
-	parser->curr = NULL;
-	return (parser);
-}
-
-void		parser_cleanup(t_parser *parser)
-{
-	if (parser)
-	{
-		if (parser->root)
-			node_destroy(parser->root);
-		parser->root = NULL;
-		parser->curr = NULL;
-	}
-}
-
-void		parser_destroy(t_parser *parser)
-{
-	if (parser)
-	{
-		parser_cleanup(parser);
-		ft_memdel((void **)&parser);
-	}
-}
-
-int			parser_parse(t_parser *parser)
+int	parser_parse(t_parser *parser)
 {
 	t_command	*cmd;
 	t_token		*curr;

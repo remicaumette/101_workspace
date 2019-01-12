@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   redirection.c                                    .::    .:/ .      .::   */
+/*   redirection_create.c                             .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 22:28:34 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/15 22:32:01 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:13:34 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:13:35 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,14 +26,4 @@ t_redirection	*redirection_create(t_tokentype type, char *file,
 	redirection->out = out;
 	redirection->next = NULL;
 	return (redirection);
-}
-
-void			redirection_destroy(t_redirection *redirection)
-{
-	if (redirection)
-	{
-		if (redirection->file)
-			ft_strdel(&redirection->file);
-		ft_memdel((void **)&redirection);
-	}
 }

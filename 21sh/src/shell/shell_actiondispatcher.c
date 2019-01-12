@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.h                                          .::    .:/ .      .::   */
+/*   shell_actiondispatcher.c                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 15:14:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 14:13:40 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 15:05:09 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# define SUCCESS 0
-# define FAIL 1
+#include "shell.h"
 
-char	*ft_strjoinc(char **word, char c);
-#endif
+t_action	g_actions[] = {
+	{{27, 91, 65}, action_arrowup},
+	{{10, 0, 0}, action_return},
+};
+
+int			shell_actiondispatcher(t_shell *shell, char *buf, int readed)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 2)
+		if (ft_memcmp(g_actions[i].code, buf, 3) == 0)
+			return (g_actions[i].handler(shell, buf, readed));
+	return (action_basic(shell, buf, readed));
+}

@@ -1,89 +1,241 @@
-NAME=libft.a
-CC=gcc
-CFLAGS=-Wall -Werror -Wextra -Iinclude
-SOURCES=\
-	src/io/ft_print_memory.c			\
-	src/io/ft_print_memory_fd.c			\
-	src/io/ft_putchar_fd.c				\
-	src/io/ft_putchar.c					\
-	src/io/ft_putendl_fd.c				\
-	src/io/ft_putendl.c					\
-	src/io/ft_putnbr_fd.c				\
-	src/io/ft_putnbr.c					\
-	src/io/ft_putstr_fd.c				\
-	src/io/ft_putstr.c					\
-	src/io/get_next_line.c				\
-	src/std/ft_bzero.c					\
-	src/std/ft_memalloc.c				\
-	src/std/ft_memccpy.c				\
-	src/std/ft_memchr.c					\
-	src/std/ft_memcmp.c					\
-	src/std/ft_memcpy.c					\
-	src/std/ft_memdel.c					\
-	src/std/ft_memmove.c				\
-	src/std/ft_memset.c					\
-	src/std/ft_realloc.c				\
-	src/strconv/ft_atoi.c				\
-	src/strconv/ft_atol.c				\
-	src/strconv/ft_atoll.c				\
-	src/strconv/ft_itoa.c				\
-	src/strconv/ft_lltoa.c				\
-	src/strconv/ft_ltoa.c				\
-	src/string/ft_strarr_add.c			\
-	src/string/ft_strarr_del.c			\
-	src/string/ft_strarr_len.c			\
-	src/string/ft_strarr_sort.c			\
-	src/string/ft_strcat.c				\
-	src/string/ft_strchr.c				\
-	src/string/ft_strclr.c				\
-	src/string/ft_strcmp.c				\
-	src/string/ft_strcpy.c				\
-	src/string/ft_strdel.c				\
-	src/string/ft_strdup.c				\
-	src/string/ft_strequ.c				\
-	src/string/ft_striter.c				\
-	src/string/ft_striteri.c			\
-	src/string/ft_strjoin.c				\
-	src/string/ft_strlcat.c				\
-	src/string/ft_strlen.c				\
-	src/string/ft_strmap.c				\
-	src/string/ft_strmapi.c				\
-	src/string/ft_strncat.c				\
-	src/string/ft_strncmp.c				\
-	src/string/ft_strncpy.c				\
-	src/string/ft_strnequ.c				\
-	src/string/ft_strnew.c				\
-	src/string/ft_strnstr.c				\
-	src/string/ft_strrchr.c				\
-	src/string/ft_strsplit.c			\
-	src/string/ft_strstr.c				\
-	src/string/ft_strsub.c				\
-	src/string/ft_strtrim.c				\
-	src/type/ft_isalnum.c				\
-	src/type/ft_isalpha.c				\
-	src/type/ft_isascii.c				\
-	src/type/ft_isdigit.c				\
-	src/type/ft_isprint.c				\
-	src/type/ft_tolower.c				\
-	src/type/ft_toupper.c
-OBJECTS=$(SOURCES:.c=.o)
-INCLUDES=\
-	include/ft/io.h						\
-	include/ft/std.h					\
-	include/ft/strconv.h				\
-	include/ft/string.h					\
-	include/ft/type.h					\
-	include/libft.h						\
+NAME		:= libft.a
+DEBUG		:="yes"
+
+# **************************************************************************** #
+#									PATH                                       #
+# **************************************************************************** #
+
+#		IN
+
+PWD			:= $(shell pwd)
+NO_ERROR	:= 2> /dev/null
+
+#		PATH
+
+INC_PATH	:= $(PWD)/include
+SRC_PATH	:= $(PWD)/src
+OBJ_PATH	:= $(PWD)/obj
+
+# **************************************************************************** #
+#									NAME LST                                   #
+# **************************************************************************** #
+
+#			Header
+
+SUB_INC_LST	:= io.h std.h strconv.h string.h type.h
+TMP_INC_LST	:= libft.h $(addprefix ft/, $(SUB_INC_LST))
+
+INC_LST		:= $(addprefix $(INC_PATH)/, $(TMP_INC_LST))
+
+
+# to add othe block just copy past
+##			
+#
+#TMP_NAME	:=
+#
+#TMP_LST		:=
+#
+#TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+#SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+#SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+#			IO
+
+TMP_NAME	:= io
+
+TMP_LST		:= ft_print_memory.c ft_print_memory_fd.c ft_putchar.c \
+				ft_putchar_fd.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c \
+				ft_putnbr_fd.c ft_putstr.c ft_putstr_fd.c get_next_line.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+#			std
+
+TMP_NAME	:= std
+
+TMP_LST		:= ft_bzero.c ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c \
+				ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+
+#			strconv
+
+TMP_NAME	:= strconv
+
+TMP_LST		:= ft_atoi.c ft_atol.c ft_atoll.c ft_itoa.c ft_lltoa.c ft_ltoa.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+
+#			string
+
+TMP_NAME	:= string
+
+TMP_LST		:= ft_strarr_add.c ft_strarr_del.c ft_strarr_join.c ft_strarr_len.c \
+				ft_strarr_sort.c ft_strcat.c ft_strchr.c ft_strclr.c \
+				ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c \
+				ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
+				ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c \
+				ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
+				ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
+				ft_strtrim.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+
+#			type
+
+TMP_NAME	:= type
+
+TMP_LST		:= ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
+				ft_isprint.c ft_tolower.c ft_toupper.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+
+# **************************************************************************** #
+#									VAR                                        #
+# **************************************************************************** #
+
+OBJ_LST			:= $(SRC_LST:.c=.o)
+
+INC				:= -I $(INC_PATH)
+SRC				:= $(addprefix $(SRC_PATH)/, $(SRC_LST))
+OBJ				:= $(addprefix $(OBJ_PATH)/, $(OBJ_LST))
+
+
+# **************************************************************************** #
+#									SHELL                                      #
+# **************************************************************************** #
+
+#			Compilator
+
+ifndef CC
+	CC		:= /usr/bin/clang
+endif
+
+#			Link
+
+ifndef LN
+	LN		:= /bin/ln
+endif
+
+#			Remove
+
+ifndef RM
+	RM		:= /bin/rm
+endif
+
+#			
+
+ifndef AR
+	AR		:= /bin/ar
+endif
+
+# **************************************************************************** #
+#									FLAG                                       #
+# **************************************************************************** #
+
+#				DEFAULTS VALUE
+
+ifndef CC_FLAGS
+	CC_FLAGS			= -Wall -Werror -Wextra
+	ifeq ($(DEBUG), "yes")
+		CC_FLAGS		+= -g -fsanitize=address# -ferror-limit=-1
+	else
+		CC_FLAGS		+= -Ofast
+	endif
+endif
+
+ifndef LN_FLAGS
+	LN_FLAGS	= -sf
+endif
+
+ifndef RM_FLAG
+	RM_FLAG		= -rf
+endif
+
+ifndef AR_FLAG
+	AR_FLAG		= rcs
+endif
+
+# **************************************************************************** #
+#									STR IN COLOR                               #
+# **************************************************************************** #
+
+START			:="\033[0;32mStart\033[0m\n"
+END				:="\033[0;32mEnd\033[0;0m\n\n"
+OK				:="\033[0;33mOK\033[0;0m\n"
+
+# **************************************************************************** #
+#									REGLES                                     #
+# **************************************************************************** #
+
+.PHONY: all
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS) $(INCLUDES)
-	ar rcs $(NAME) $(OBJECTS)
+#				Rule lib
+
+$(NAME): $(OBJ_PATH) $(OBJ)
+	@printf "$(NAME) => "
+	@$(AR) $(AR_FLAG) $(NAME) $(OBJ)
+	@printf $(OK)
+
+#				Rule obj
+
+$(OBJ_PATH):
+	@printf "mkdir obj/:"
+	@mkdir -p $(addprefix $(OBJ_PATH)/,$(SUB_LST)) $(NO_ERROR)
+	@printf $(OK)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC_LST)
+	@printf "$(basename $(NAME)) => $(notdir $@):"
+	@$(CC) $(CC_FLAGS) -I $(INC_PATH) -o $@ -c $<
+	@printf " done\n"
+
+#				Rule clean
 
 clean:
-	rm -f $(OBJECTS)
+	@printf "Delete obj:"
+	@$(RM) -f $(OBJ)
+	@$(RM) -rf $(OBJ_PATH)
+	@printf " done\n"
 
 fclean: clean
-	rm -f $(NAME)
+	@printf "Delete $(NAME):"
+	@$(RM) -f $(NAME)
+	@printf " done\n"
 
 re: fclean all
+
+#			Rules for debuging Makefile
+
+source_list:
+	@printf "<SUB_LST>\n$(SUB_LST)\n</SUB_LST>\n"
+	@printf "<INC_LST>\n$(TMP_INC_LST)\n</INC_LST>\n"
+	@printf "<SRC_LST>\n$(SRC_LST)\n</SRC_LST>\n"
+
+full_list:
+	@printf "<SUB_LST>\n$(SUB_LST)\n</SUB_LST>\n"
+	@printf "<INC>\n$(INC)\n</INC>\n"
+	@printf "<SRC>\n$(SRC)\n</SRC>\n"
+
+#				Rule norme
+
+norme:
+	@printf "\tNorme de $(SRC_LST)\n"
+	@norminette $(SRC)
+	@printf "\tNorme de $(INC_LST)\n"
+	@norminette $(INC)

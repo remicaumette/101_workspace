@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.h                                          .::    .:/ .      .::   */
+/*   command_create.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 15:14:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:10:30 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:10:30 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# define SUCCESS 0
-# define FAIL 1
+#include "shell.h"
 
-char	*ft_strjoinc(char **word, char c);
-#endif
+t_command	*command_create(char *name)
+{
+	t_command	*command;
+
+	if (!(command = ft_memalloc(sizeof(t_command))) ||
+		!(command->name = ft_strdup(name)))
+		return (NULL);
+	command->arguments = NULL;
+	command->redirection = NULL;
+	return (command);
+}

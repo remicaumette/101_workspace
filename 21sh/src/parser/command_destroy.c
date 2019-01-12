@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   expansion.c                                      .::    .:/ .      .::   */
+/*   command_destroy.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 18:27:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/10 12:54:41 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:10:15 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:10:15 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char	*parser_expandword(t_parser *parser, t_token *token)
+void	command_destroy(t_command *command)
 {
-	char	*word;
-	char	*tmp;
+	t_redirection	*tmp;
+	t_redirection	*curr;
 
-	(void)parser;
-	word = NULL;
-	tmp = token->content - 1;
-	while (*++tmp)
+	if (command)
 	{
-		(void)ft_strjoinc;
+		if (command->name)
+			ft_strdel(&command->name);
+		if (command->arguments)
+			ft_strarr_del(command->arguments);
+		if (command->redirection)
+		{
+			curr = command->redirection;
+			while (curr)
+			{
+				tmp = curr;
+				curr = curr->next;
+				redirection_destroy(tmp);
+			}
+		}
+		ft_memdel((void **)&command);
 	}
-	return (tmp);
 }

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.h                                          .::    .:/ .      .::   */
+/*   parser_create.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 15:14:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:13:10 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:13:12 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# define SUCCESS 0
-# define FAIL 1
+#include "shell.h"
 
-char	*ft_strjoinc(char **word, char c);
-#endif
+t_parser	*parser_create(t_shell *shell)
+{
+	t_parser	*parser;
+
+	if (!(parser = ft_memalloc(sizeof(t_parser))))
+		return (NULL);
+	parser->shell = shell;
+	parser->root = NULL;
+	parser->curr = NULL;
+	return (parser);
+}

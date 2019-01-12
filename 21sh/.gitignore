@@ -1,4 +1,5 @@
 21sh
 /21sh.dSYM
+/obj
 *.o
 *.a

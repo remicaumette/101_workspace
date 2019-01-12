@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.h                                          .::    .:/ .      .::   */
+/*   lexer_create.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/10 12:55:39 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 15:14:38 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 17:49:59 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 17:50:00 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# define SUCCESS 0
-# define FAIL 1
+#include "shell.h"
 
-char	*ft_strjoinc(char **word, char c);
-#endif
+t_lexer	*lexer_create(void)
+{
+	t_lexer	*lexer;
+
+	if (!(lexer = ft_memalloc(sizeof(t_lexer))))
+		return (NULL);
+	lexer->begin = NULL;
+	lexer->end = NULL;
+	lexer->count = 0;
+	lexer->quote = -1;
+	return (lexer);
+}

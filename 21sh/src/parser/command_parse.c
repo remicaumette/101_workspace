@@ -1,54 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   command.c                                        .::    .:/ .      .::   */
+/*   command_parse.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/15 22:18:25 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/08 16:40:29 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/12 18:09:55 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/12 18:09:56 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-t_command	*command_create(char *name)
-{
-	t_command	*command;
-
-	if (!(command = ft_memalloc(sizeof(t_command))) ||
-		!(command->name = ft_strdup(name)))
-		return (NULL);
-	command->arguments = NULL;
-	command->redirection = NULL;
-	return (command);
-}
-
-void		command_destroy(t_command *command)
-{
-	t_redirection	*tmp;
-	t_redirection	*curr;
-
-	if (command)
-	{
-		if (command->name)
-			ft_strdel(&command->name);
-		if (command->arguments)
-			ft_strarr_del(command->arguments);
-		if (command->redirection)
-		{
-			curr = command->redirection;
-			while (curr)
-			{
-				tmp = curr;
-				curr = curr->next;
-				redirection_destroy(tmp);
-			}
-		}
-		ft_memdel((void **)&command);
-	}
-}
 
 t_command	*command_parse(t_parser *parser)
 {

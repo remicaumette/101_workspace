@@ -6,12 +6,28 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 10:03:28 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/16 02:35:06 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/12 18:07:34 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+t_tokeninfo	g_tokens[] = {
+	{"<<-", T_DLESSDASH, 3},
+	{"&&", T_ANDIF, 2},
+	{"||", T_ORIF, 2},
+	{";;", T_DSEMI, 2},
+	{"<<", T_DLESS, 2},
+	{">>", T_DGREAT, 2},
+	{"<&", T_LESSAND, 2},
+	{">&", T_GREATAND, 2},
+	{"<>", T_LESSGREAT, 2},
+	{">|", T_CLOBBER, 2},
+	{"|", T_PIPE, 1},
+	{";", T_NEWLINE, 1},
+	{"\n", T_NEWLINE, 1},
+};
 
 t_tokentype	lexer_gettype(char *str)
 {
