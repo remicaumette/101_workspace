@@ -6,7 +6,7 @@
 #    By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/01/12 17:21:11 by timfuzea     #+#   ##    ##    #+#        #
-#    Updated: 2019/01/19 17:10:51 by rcaumett    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/01/19 19:35:41 by rcaumett    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -148,7 +148,8 @@ TMP_DAD		:= shell
 TMP_NAME	:= action
 
 TMP_LST		:= action_clear.c action_del.c \
-				action_hist.c action_move.c action_multi_move.c \
+				action_arrow_up.c action_arrow_down.c action_arrow_left.c \
+				action_arrow_right.c action_end.c action_home.c \
 				action_stop.c action_return.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))

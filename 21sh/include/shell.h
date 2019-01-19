@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/12/14 08:08:55 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/17 16:00:21 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/19 19:35:02 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@
 # include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"
@@ -106,14 +107,12 @@ int							action_return(t_shell *shell);
 int							action_clear(t_shell *shell);
 int							action_clear_to_end(t_shell *shell);
 int							action_backdel(t_shell *shell);
-int							action_hist_up(t_shell *shell);
-int							action_hist_down(t_shell *shell);
-int							action_move_up(t_shell *shell);
-int							action_move_down(t_shell *shell);
-int							action_move_left(t_shell *shell);
-int							action_move_right(t_shell *shell);
-int							action_move_first(t_shell *shell);
-int							action_move_end(t_shell *shell);
+int							action_arrow_up(t_shell *shell);
+int							action_arrow_down(t_shell *shell);
+int							action_arrow_left(t_shell *shell);
+int							action_arrow_right(t_shell *shell);
+int							action_home(t_shell *shell);
+int							action_end(t_shell *shell);
 int							action_move_next_word(t_shell *shell);
 int							action_move_prev_word(t_shell *shell);
 int							action_stop(t_shell *shell);
