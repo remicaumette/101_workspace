@@ -15,6 +15,11 @@
 # define PROCESS_H
 # include <stdio.h>
 
+# ifdef __linux__
+# include <sys/types.h>
+# include <sys/wait.h>
+# endif
+
 typedef struct s_process	t_process;
 
 struct						s_process
