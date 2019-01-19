@@ -3,3 +3,5 @@
 /obj
 *.o
 *.a
+*.log
+.DS_Store

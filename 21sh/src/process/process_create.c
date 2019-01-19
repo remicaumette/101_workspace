@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   process_create.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/15 12:51:03 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/17 13:50:33 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+t_process	*process_create(char *file, char **args, char **env)
 {
-	shell_destroy(shell);
-	return (1);
-}
+	t_process	*process;
 
-int	main(int argc, char **argv, char **environment)
-{
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	if (!(process = ft_memalloc(sizeof(t_process))) ||
+		!(process->file = ft_strdup(file)) ||
+		pipe(process->stdin) == -1 ||
+		pipe(process->stdout) == -1 ||
+		pipe(process->stderr) == -1)
+		return (NULL);
+	process->args = ft_strarr_clone(args);
+	process->env = ft_strarr_clone(env);
+	process->error = 0;
+	process->status = -1;
+	process->pid = -1;
+	return (process);
 }

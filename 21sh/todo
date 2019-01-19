@@ -1,1 +1,1 @@
-norm error libft
+env -i ./21sh fail

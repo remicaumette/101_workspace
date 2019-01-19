@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   history_destroy.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/17 14:53:07 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/19 14:17:30 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+void	history_destroy(t_history *history)
 {
-	shell_destroy(shell);
-	return (1);
-}
+	t_histentry	*curr;
+	t_histentry	*next;
+	int			i;
 
-int	main(int argc, char **argv, char **environment)
-{
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	if (history)
+	{
+		i = 0;
+		next = history->begin;
+		while (next)
+		{
+			curr = next;
+			next = history->size != ++i ? curr->next : NULL;
+			histentry_destroy(curr);
+		}
+		ft_memdel((void **)&history);
+	}
 }

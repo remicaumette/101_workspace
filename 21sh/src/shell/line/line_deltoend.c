@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   line_deltoend.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: timfuzea <tifuzeau@student.42.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/15 14:17:32 by timfuzea     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/16 15:23:19 by timfuzea    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+int		line_deltoend(t_line *line)
 {
-	shell_destroy(shell);
-	return (1);
-}
-
-int	main(int argc, char **argv, char **environment)
-{
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	if (!(line->content = ft_strndup(line->content, (line->cursor - 1))))
+		return (FAIL);
+	line->size = line->cursor - 1;
+	return (SUCCESS);
 }

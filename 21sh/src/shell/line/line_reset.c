@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   action_arrowup.c                                 .::    .:/ .      .::   */
+/*   line_reset.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: timfuzea <tifuzeau@student.42.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/12 14:50:00 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 14:51:21 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/15 15:02:09 by timfuzea     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/15 15:05:22 by timfuzea    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	action_arrowup(t_shell *shell, char *buf, int readed)
+void		line_reset(t_line *line)
 {
-	// up 27 91 65
-	// down 27 91 66
-	// left 27 91 68
-	// right 27 91 67
-	(void)shell;
-	(void)buf;
-	(void)readed;
-	return (0);
+	ft_strdel(&line->content);
+	line->size = 0;
+	line->cursor = 1;
 }

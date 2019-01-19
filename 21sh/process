@@ -1,0 +1,27 @@
+ls -a eweww Documents 2>&1 1>&-
+ls: cannot access 'eweww': No such file or directory
+ls: write error: Bad file descriptor
+
+ls -a eweww 2>&1 | grep eweww
+ls: cannot access 'eweww': No such file or directory
+
+int	main(void)
+{
+	t_process	*process;
+	char		*env[] = { "LSCOLORS=Gxfxcxdxbxegedabagacad", NULL };
+	char		*args[] = { "/bin/ls", "-a", ".", "ewwewewe", NULL };
+	char		buf[8092];
+
+	printf("process_create: %p\n", process = process_create("/bin/ls", args, env));
+	printf("process_run: %d\n", process_run(process));
+	printf("process_status: %d\n", process->status);
+	printf("=== read stdout\n");
+	bzero(buf, 8092);
+	read(process->stdout[0], buf, 8092);
+	printf("%s", buf);
+	printf("=== read stderr\n");
+	bzero(buf, 8092);
+	read(process->stderr[0], buf, 8092);
+	printf("%s", buf);
+	process_destroy(process);
+}

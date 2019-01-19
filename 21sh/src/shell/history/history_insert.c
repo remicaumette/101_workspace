@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   history_insert.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/17 15:29:10 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/19 13:16:22 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+t_histentry	*history_insert(t_history *history, char *content)
 {
-	shell_destroy(shell);
-	return (1);
-}
+	t_histentry	*entry;
 
-int	main(int argc, char **argv, char **environment)
-{
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	if (!(entry = histentry_create(content)))
+		return (NULL);
+	entry->next = history->begin;
+	entry->prev = history->end;
+	history->size++;
+	history->begin = entry;
+	if (history->end)
+		history->end->next = entry;
+	else
+		history->end = entry;
+	return (entry);
 }

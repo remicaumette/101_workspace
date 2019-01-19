@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   action_del.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*   By: timfuzea <tifuzeau@student.42.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/12 14:27:00 by timfuzea     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/15 14:40:10 by timfuzea    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+int		action_backdel(t_shell *shell)
 {
-	shell_destroy(shell);
-	return (1);
-}
+	char	*tmp;
 
-int	main(int argc, char **argv, char **environment)
-{
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	if (shell->line->cursor > 1)
+	{
+		if ((tmp = tgetstr(TC_MOVE_LEFT, NULL)) == NULL)
+			return (FAIL);
+		ft_putstr(tmp);
+		if ((tmp = tgetstr(TC_DEL, NULL)) == NULL)
+			return (FAIL);
+		ft_putstr(tmp);
+		line_backdel(shell->line);
+	}
+	return (SUCCESS);
 }

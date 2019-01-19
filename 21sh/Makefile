@@ -1,8 +1,22 @@
-NAME		:= 21sh
-DEBUG		:="yes"
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2019/01/12 17:21:11 by timfuzea     #+#   ##    ##    #+#        #
+#    Updated: 2019/01/17 16:09:27 by rcaumett    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
+
+
 # **************************************************************************** #
 #								PATH                                           #
 # **************************************************************************** #
+
+NAME		:= 21sh
 
 #			In
 
@@ -21,8 +35,10 @@ OBJ_PATH	:= $(PWD)/obj
 
 CC			:= /usr/bin/clang
 CMD_NORME	:= norminette
+DEBUG		:="yes"
 
 export CMD_NORME
+export DEBUG
 
 # **************************************************************************** #
 #								NAME LST                                       #
@@ -35,6 +51,7 @@ INC_LST		:=\
 	include/parser.h			\
 	include/shell.h				\
 	include/utils.h				\
+	include/tc_key.h			\
 	libft/include/libft.h		\
 	libft/include/ft/io.h		\
 	libft/include/ft/std.h		\
@@ -82,7 +99,8 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 TMP_NAME	:= lexer
 
-TMP_LST		:=  lexer_addtoken.c lexer_cleanup.c lexer_create.c lexer_deltoken.c lexer_destroy.c lexer_tokenize.c utils.c
+TMP_LST		:= lexer_addtoken.c lexer_cleanup.c lexer_create.c \
+				lexer_deltoken.c lexer_destroy.c lexer_tokenize.c utils.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
@@ -92,7 +110,11 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 TMP_NAME	:= parser
 
-TMP_LST		:= command_create.c command_destroy.c command_parse.c node_create.c node_destroy.c node_insert.c parser_cleanup.c parser_create.c parser_destroy.c parser_expandword.c parser_parse.c redirection_create.c redirection_destroy.c utils.c
+TMP_LST		:= command_create.c command_destroy.c command_parse.c \
+				node_create.c node_destroy.c node_insert.c parser_cleanup.c \
+				parser_create.c parser_destroy.c parser_expandword.c \
+				parser_parse.c redirection_create.c redirection_destroy.c \
+				utils.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/,$(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
@@ -102,7 +124,7 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 TMP_NAME	:= process
 
-TMP_LST		:=
+TMP_LST		:= process_create.c process_destroy.c process_run.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
@@ -112,7 +134,9 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 TMP_NAME	:= shell
 
-TMP_LST		:= shell_envinit.c shell_create.c shell_destroy.c shell_getenv.c shell_gethome.c shell_setenv.c shell_unsetenv.c history.c shell_actiondispatcher.c shell_processline.c shell_start.c utils.c
+TMP_LST		:= shell_create.c shell_destroy.c shell_actiondispatcher.c \
+				shell_processline.c shell_start.c utils.c \
+				shell_prompt.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
@@ -120,14 +144,56 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 #			Action
 
-TMP_NAME	:= shell/action
+TMP_DAD		:= shell
+TMP_NAME	:= action
 
-TMP_LST		:= action_arrowup.c action_basic.c action_return.c
+TMP_LST		:= action_clear.c action_del.c \
+				action_hist.c action_move.c action_multi_move.c \
+				action_stop.c action_return.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
-SUB_LST		:= $(SUB_LST) $(TMP_NAME)
+TMP_SRC		:= $(addprefix $(TMP_DAD)/, $(TMP_SRC))
+SUB_LST		:= $(SUB_LST) $(addprefix $(TMP_DAD)/, $(TMP_NAME))
 SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
+#			Env
+
+TMP_DAD		:= shell
+TMP_NAME	:= env
+
+TMP_LST		:= shell_envinit.c shell_getenv.c shell_gethome.c shell_setenv.c \
+				shell_unsetenv.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+TMP_SRC		:= $(addprefix $(TMP_DAD)/, $(TMP_SRC))
+SUB_LST		:= $(SUB_LST) $(addprefix $(TMP_DAD)/, $(TMP_NAME))
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+
+#			Cursor
+
+TMP_DAD		:= shell
+TMP_NAME	:= line
+
+TMP_LST		:= line_backdel.c line_create.c line_deltoend.c line_destroy.c \
+				line_inser.c line_replace.c line_reset.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+TMP_SRC		:= $(addprefix $(TMP_DAD)/, $(TMP_SRC))
+SUB_LST		:= $(SUB_LST) $(addprefix $(TMP_DAD)/, $(TMP_NAME))
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
+
+#			History
+
+TMP_DAD		:= shell
+TMP_NAME	:= history
+
+TMP_LST		:= history_create.c history_destroy.c history_insert.c histentry_create.c histentry_destroy.c
+
+TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
+TMP_SRC		:= $(addprefix $(TMP_DAD)/, $(TMP_SRC))
+SUB_LST		:= $(SUB_LST) $(addprefix $(TMP_DAD)/, $(TMP_NAME))
+SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 # **************************************************************************** #
 #								VAR                                            #
@@ -178,7 +244,7 @@ export		RM
 ifndef CC_FLAGS
 	CC_FLAGS			= -Wall -Werror -Wextra
 	ifeq ($(DEBUG),"yes")
-		CC_FLAGS		+= -g -fsanitize=address # -ferror-limit=-1
+		CC_FLAGS		+= -g #-fsanitize=address
 	else
 		CC_FLAGS		+= -Ofast
 	endif
@@ -243,7 +309,6 @@ $(OBJ_PATH):
 	@printf "obj directory: "
 	@mkdir -p $(OBJ_PATH) $(NO_ERROR)
 	@mkdir -p $(addprefix $(OBJ_PATH)/, $(SUB_LST)) $(NO_ERROR)
-	@mkdir -p obj/shell/action $(NO_ERROR)
 	@printf "$(OK)"
 
 $(OBJ_PATH)%.o : $(SRC_PATH)%.c $(INC_LST)
@@ -289,7 +354,7 @@ full_list:
 norme: norme_header norme_src
 
 norme_header:
-	@$(NORME_CHECK) $(INC_PATH)
+	@$(CMD_NORME) $(INC_LST)
 
 norme_src:
-	@$(NORME_CHECK) $(SRC)
+	@$(CMD_NORME) $(SRC)

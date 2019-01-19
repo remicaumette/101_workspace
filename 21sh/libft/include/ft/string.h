@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 15:07:45 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 16:51:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/16 15:04:01 by timfuzea    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strtrim(char const *s);
 char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strdup(const char *s1);
+char			*ft_strndup(const char *s1, size_t n);
 char			*ft_strncpy(char *dst, const char *src, size_t len);
 char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strncat(char *s1, const char *s2, size_t n);
@@ -45,5 +46,6 @@ void			ft_strarr_del(char **arr);
 int				ft_strarr_len(char **arr);
 char			**ft_strarr_add(char **arr, char *elem);
 void			ft_strarr_sort(char **arr, int reverse);
+char			**ft_strarr_clone(char **arr);
 char			*ft_strarr_join(char **arr, char *with);
 #endif

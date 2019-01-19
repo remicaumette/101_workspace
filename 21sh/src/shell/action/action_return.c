@@ -5,35 +5,33 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/12 14:50:00 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/12 14:51:16 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/16 15:28:52 by timfuzea     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/17 16:11:12 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	action_return(t_shell *shell, char *buf, int readed)
+int	action_return(t_shell *shell)
 {
-	(void)buf;
-	(void)readed;
 	write(1, "\n", 1);
-	if (!shell->line || lexer_tokenize(shell->lexer, shell->line))
-		return (!!shell->line);
-	shell->missing_token = lexer_getmissingtoken(shell->lexer);
-	if (shell->lexer->begin)
+	if (shell->line->content)
 	{
-		if (shell->missing_token == -1)
+		if (lexer_tokenize(shell->lexer, shell->line->content))
+			return (!!shell->line->content);
+		shell->missing_token = lexer_getmissingtoken(shell->lexer);
+		if (shell->lexer->begin)
 		{
-			printf("=== TOKEN\n");
-			print_token(shell->lexer->begin);
-			printf("=== PARSER\n");
-			printf("parser_parse = %d\n", parser_parse(shell->parser));
-			print_node(shell->parser->root);
+			// if (shell->missing_token == -1)
+			// 	printf("shell_processline: %d\n", shell_processline(shell));
+			lexer_cleanup(shell->lexer);
+			parser_cleanup(shell->parser);
 		}
-		lexer_cleanup(shell->lexer);
-		parser_cleanup(shell->parser);
+		if (!(history_insert(shell->history, shell->line->content)))
+			return (FAIL);
+		line_reset(shell->line);
 	}
-	ft_strdel(&shell->line);
-	return (0);
+	shell_prompt(shell);
+	return (SUCCESS);
 }

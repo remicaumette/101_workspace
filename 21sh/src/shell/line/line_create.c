@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   line_create.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/12/14 16:31:29 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/16 14:53:43 by timfuzea    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/15 13:14:10 by timfuzea     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/17 14:14:07 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	fail(t_shell *shell)
+static int	get_winsize(t_winsize *window)
 {
-	shell_destroy(shell);
-	return (1);
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, window) == -1)
+		return (FAIL);
+	return (SUCCESS);
 }
 
-int	main(int argc, char **argv, char **environment)
+t_line		*line_create(void)
 {
-	(void)argc;
-	(void)argv;
-	if (!(g_shell = shell_create(environment)) || shell_start(g_shell))
-		return (fail(g_shell));
-	shell_destroy(g_shell);
-	return (0);
+	t_line		*line;
+
+	if ((line = malloc(sizeof(t_line))) == NULL)
+		return (NULL);
+	line->content = NULL;
+	line->size = 0;
+	line->cursor = 1;
+	if (get_winsize(&(line->window)) != SUCCESS)
+		return (NULL);
+	return (line);
 }

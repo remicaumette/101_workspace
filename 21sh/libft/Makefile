@@ -1,6 +1,19 @@
-NAME		:= libft.a
-DEBUG		:="yes"
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2019/01/12 18:55:30 by timfuzea     #+#   ##    ##    #+#        #
+#    Updated: 2019/01/17 16:08:58 by rcaumett    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
 
+NAME		:= libft.a
+
+#DEBUG		:="no" uncomtant this line to force status
 # **************************************************************************** #
 #									PATH                                       #
 # **************************************************************************** #
@@ -22,10 +35,18 @@ OBJ_PATH	:= $(PWD)/obj
 
 #			Header
 
-SUB_INC_LST	:= io.h std.h strconv.h string.h type.h
-TMP_INC_LST	:= libft.h $(addprefix ft/, $(SUB_INC_LST))
+INC_LST		:= $(addprefix $(INC_PATH)/, libft.h)
 
-INC_LST		:= $(addprefix $(INC_PATH)/, $(TMP_INC_LST))
+
+#			Ft
+
+TMP_NAME	:= ft
+
+TMP_LST		:= io.h std.h strconv.h string.h type.h
+
+TMP_SRC		:= $(addprefix ft/, $(TMP_LST))
+SUB_INC		:= $(SUB_INC) $(addprefix $(INC_PATH)/, $(TMP_NAME))
+INC_LST		:= $(INC_LST) $(addprefix $(INC_PATH)/, $(TMP_SRC))
 
 
 # to add othe block just copy past
@@ -78,14 +99,15 @@ SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
 TMP_NAME	:= string
 
-TMP_LST		:= ft_strarr_add.c ft_strarr_del.c ft_strarr_join.c ft_strarr_len.c \
+TMP_LST		:= ft_strarr_add.c ft_strarr_clone.c ft_strarr_del.c \
+				ft_strarr_len.c ft_strarr_join.c \
 				ft_strarr_sort.c ft_strcat.c ft_strchr.c ft_strclr.c \
 				ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c \
 				ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
 				ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c \
 				ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
 				ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c \
-				ft_strtrim.c
+				ft_strtrim.c ft_strndup.c
 
 TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
@@ -103,14 +125,13 @@ TMP_SRC		:= $(addprefix $(TMP_NAME)/, $(TMP_LST))
 SUB_LST		:= $(SUB_LST) $(TMP_NAME)
 SRC_LST		:= $(SRC_LST) $(TMP_SRC)
 
-
 # **************************************************************************** #
 #									VAR                                        #
 # **************************************************************************** #
 
 OBJ_LST			:= $(SRC_LST:.c=.o)
 
-INC				:= -I $(INC_PATH)
+INC				:= -I $(INC_PATH) $(addprefix -I , $(SUB_INC))
 SRC				:= $(addprefix $(SRC_PATH)/, $(SRC_LST))
 OBJ				:= $(addprefix $(OBJ_PATH)/, $(OBJ_LST))
 
@@ -118,6 +139,10 @@ OBJ				:= $(addprefix $(OBJ_PATH)/, $(OBJ_LST))
 # **************************************************************************** #
 #									SHELL                                      #
 # **************************************************************************** #
+
+ifndef DEBUG
+	DEBUG	:= "no"
+endif
 
 #			Compilator
 
@@ -202,7 +227,7 @@ $(OBJ_PATH):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(INC_LST)
 	@printf "$(basename $(NAME)) => $(notdir $@):"
-	@$(CC) $(CC_FLAGS) -I $(INC_PATH) -o $@ -c $<
+	@$(CC) $(CC_FLAGS) $(INC) -o $@ -c $<
 	@printf " done\n"
 
 #				Rule clean
@@ -224,7 +249,7 @@ re: fclean all
 
 source_list:
 	@printf "<SUB_LST>\n$(SUB_LST)\n</SUB_LST>\n"
-	@printf "<INC_LST>\n$(TMP_INC_LST)\n</INC_LST>\n"
+	@printf "<INC_LST>\n$(INC_LST)\n</INC_LST>\n"
 	@printf "<SRC_LST>\n$(SRC_LST)\n</SRC_LST>\n"
 
 full_list:
@@ -238,4 +263,4 @@ norme:
 	@printf "\tNorme de $(SRC_LST)\n"
 	@norminette $(SRC)
 	@printf "\tNorme de $(INC_LST)\n"
-	@norminette $(INC)
+	@norminette $(INC_LST)
