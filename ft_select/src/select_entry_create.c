@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   select_entry_create.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/19 20:21:33 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/19 20:21:34 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/19 19:52:36 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/19 19:56:25 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int	fail(t_select *select)
+t_select_entry	*select_entry_create(char *content)
 {
-	select_destroy(select);
-	return (1);
-}
+	t_select_entry	*entry;
 
-int	main(int argc, char **argv)
-{
-	t_select	select;
-
-	(void)argc;
-	if (select_init(&select, argv) || select_start(&select))
-		return (fail(&select));
-	select_destroy(&select);
-	return (0);
+	if (!(entry = ft_memalloc(sizeof(t_select_entry))) ||
+		!(entry->content = ft_strdup(content)))
+		return (NULL);
+	entry->selected = 0;
+	entry->next = NULL;
+	return (entry);
 }

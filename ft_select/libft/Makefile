@@ -30,6 +30,7 @@ SOURCES=\
 	src/strconv/ft_ltoa.c				\
 	src/string/ft_strarr_add.c			\
 	src/string/ft_strarr_del.c			\
+	src/string/ft_strarr_join.c			\
 	src/string/ft_strarr_len.c			\
 	src/string/ft_strarr_sort.c			\
 	src/string/ft_strcat.c				\

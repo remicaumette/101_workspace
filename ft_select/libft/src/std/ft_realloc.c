@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/19 20:21:33 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/19 20:21:34 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/10 13:22:32 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/10 13:43:54 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-int	fail(t_select *select)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	select_destroy(select);
-	return (1);
-}
+	void	*tmp;
 
-int	main(int argc, char **argv)
-{
-	t_select	select;
-
-	(void)argc;
-	if (select_init(&select, argv) || select_start(&select))
-		return (fail(&select));
-	select_destroy(&select);
-	return (0);
+	if (size <= 0)
+		return (NULL);
+	if (!(tmp = ft_memalloc(size)))
+		return (NULL);
+	if (ptr)
+	{
+		ft_memcpy(tmp, ptr, size);
+		ft_memdel(&ptr);
+	}
+	return (tmp);
 }

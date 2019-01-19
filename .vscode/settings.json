@@ -2,7 +2,7 @@
     "workbench.startupEditor": "none",
     "workbench.tips.enabled": false,
     "editor.multiCursorModifier": "ctrlCmd",
-    "editor.formatOnPaste": true,
+    "editor.formatOnPaste": false,
     "editor.minimap.enabled": false,
     "editor.autoIndent": false,
     "editor.tabSize": 4,

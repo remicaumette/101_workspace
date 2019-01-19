@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   select_destroy.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/19 20:21:33 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/19 20:21:34 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/19 19:47:10 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/19 20:08:21 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int	fail(t_select *select)
+void	select_destroy(t_select *select)
 {
-	select_destroy(select);
-	return (1);
-}
+	t_select_entry	*curr;
+	t_select_entry	*next;
 
-int	main(int argc, char **argv)
-{
-	t_select	select;
-
-	(void)argc;
-	if (select_init(&select, argv) || select_start(&select))
-		return (fail(&select));
-	select_destroy(&select);
-	return (0);
+	next = select->entry;
+	while (next)
+	{
+		curr = next;
+		next = curr->next;
+		select_entry_destroy(curr);
+	}
 }
