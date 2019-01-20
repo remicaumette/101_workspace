@@ -13,7 +13,12 @@
 
 #include "ft_select.h"
 
-int	select_init(t_select *select, char **args)
+static int	update_window_size(t_select *select)
+{
+	return (ioctl(STDOUT_FILENO, TIOCGWINSZ, &select->window) == -1);
+}
+
+int			select_init(t_select *select, char **args)
 {
 	int				i;
 	t_select_entry	*prev;
@@ -32,5 +37,6 @@ int	select_init(t_select *select, char **args)
 		prev = curr;
 	}
 	select->count = i - 1;
-	return (0);
+	signal(SIGWINCH, update_window_size);
+	return (update_window_size(select) == -1);
 }

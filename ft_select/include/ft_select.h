@@ -16,6 +16,8 @@
 # include "libft.h"
 # include <curses.h>
 # include <term.h>
+# include <sys/ioctl.h>
+# include <signal.h>
 # define KEY_BACKSPACE	{ 32, 0, 0 }
 # define KEY_DELETE		{ 127, 0, 0 }
 # define KEY_RETURN		{ 10, 0, 0 }
@@ -25,10 +27,12 @@
 
 typedef struct s_select			t_select;
 typedef struct s_select_entry	t_select_entry;
+typedef struct winsize			t_winsize;
 
 struct							s_select
 {
 	int				count;
+	t_winsize		window;
 	t_select_entry	*entry;
 };
 
