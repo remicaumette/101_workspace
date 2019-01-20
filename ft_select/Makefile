@@ -3,9 +3,17 @@ LIBFT=libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude
 SOURCES=\
+	src/action/action_arrow_down.c	\
+	src/action/action_arrow_left.c	\
+	src/action/action_arrow_right.c	\
+	src/action/action_arrow_up.c	\
+	src/action/action_backspace.c	\
+	src/action/action_esc.c			\
+	src/action/action_return.c		\
 	src/main.c						\
 	src/select_action_dispatcher.c	\
 	src/select_destroy.c			\
+	src/select_entry_at.c			\
 	src/select_entry_create.c		\
 	src/select_entry_destroy.c		\
 	src/select_init.c				\

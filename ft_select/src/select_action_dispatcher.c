@@ -6,11 +6,30 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/20 16:15:08 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 16:15:14 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 17:54:25 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
+t_select_action	g_actions[] = {
+	{ TC_KEY_ARROW_DOWN, action_arrow_down },
+	{ TC_KEY_ARROW_LEFT, action_arrow_left },
+	{ TC_KEY_ARROW_RIGHT, action_arrow_right },
+	{ TC_KEY_ARROW_UP, action_arrow_up },
+	{ TC_KEY_BACKSPACE, action_backspace },
+	{ TC_KEY_ESC, action_esc },
+	{ TC_KEY_RETURN, action_return },
+};
 
+int	select_action_dispatcher(t_select *select, char *buf)
+{
+	int i;
+
+	i = -1;
+	while (++i < 5)
+		if (!(ft_memcmp(g_actions[i].key, buf, 3)))
+			return (g_actions[i].handler(select));
+	return (0);
+}

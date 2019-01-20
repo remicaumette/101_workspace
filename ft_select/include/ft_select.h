@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 20:21:07 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 16:13:36 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 17:53:47 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,9 @@
 
 typedef struct s_select			t_select;
 typedef struct s_select_entry	t_select_entry;
+typedef struct s_select_action	t_select_action;
 typedef struct winsize			t_winsize;
+typedef int						(*t_select_action_handler)(t_select *);
 
 struct							s_select
 {
@@ -48,12 +50,28 @@ struct							s_select_entry
 	t_select_entry	*next;
 };
 
+struct							s_select_action
+{
+	char					key[3];
+	t_select_action_handler	handler;
+};
+
 t_select						g_select;
 
 int								select_init(t_select *select, char **args);
 int								select_start(t_select *select);
 int								select_render(t_select *select);
+int								select_action_dispatcher(t_select *select, char *buf);
 void							select_destroy(t_select *select);
 t_select_entry					*select_entry_create(char *content);
+t_select_entry					*select_entry_at(t_select *select, int x, int y);
 void							select_entry_destroy(t_select_entry *entry);
+
+int								action_arrow_down(t_select *select);
+int								action_arrow_left(t_select *select);
+int								action_arrow_right(t_select *select);
+int								action_arrow_up(t_select *select);
+int								action_backspace(t_select *select);
+int								action_esc(t_select *select);
+int								action_return(t_select *select);
 #endif
