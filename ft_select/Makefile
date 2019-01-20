@@ -3,11 +3,13 @@ LIBFT=libft
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude
 SOURCES=\
-	src/main.c					\
-	src/select_destroy.c		\
-	src/select_entry_create.c	\
-	src/select_entry_destroy.c	\
-	src/select_init.c			\
+	src/main.c						\
+	src/select_action_dispatcher.c	\
+	src/select_destroy.c			\
+	src/select_entry_create.c		\
+	src/select_entry_destroy.c		\
+	src/select_init.c				\
+	src/select_render.c				\
 	src/select_start.c
 OBJECTS=$(SOURCES:.c=.o)
 INCLUDES=\

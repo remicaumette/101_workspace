@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 19:47:18 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/19 20:21:26 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 15:36:57 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@ static int	select_readline(t_select *select)
 	int		readed;
 
 	(void)select;
-	printf("hello world\n");
+	select_render(select);
 	while ((readed = read(0, buf, 3)) > 0)
 	{
 		ft_bzero(buf + readed, 3 - readed);

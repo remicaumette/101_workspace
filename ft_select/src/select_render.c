@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   select_render.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/19 20:21:33 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 15:38:07 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/20 15:30:51 by rcaumett     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/20 16:12:22 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static int	fail(t_select *select)
+int	select_render(t_select *select)
 {
-	select_destroy(select);
-	return (1);
-}
+	int				x;
+	int				y;
+	t_select_entry	*entry;
 
-static void	handle_resize(int s)
-{
-	if (s == SIGWINCH)
+	x = -1;
+	y = 0;
+	entry = select->entry;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &select->window);
+	ft_putstr(tgetstr("cl", NULL));
+	while (++x < (select->window.ws_col / (select->max_length + 6)) && entry)
 	{
-		printf("resize\n");
+		ft_putstr(tgoto(tgetstr("cm", NULL), x * (select->max_length + 6), y));
+		ft_putstr(entry->selected ? "[x] " : "[ ] ");
+		ft_putstr(entry->content);
+		entry = entry->next;
 	}
-}
-
-int			main(int argc, char **argv)
-{
-	(void)argc;
-	signal(SIGWINCH, handle_resize);
-	if (select_init(&g_select, argv) || select_start(&g_select))
-		return (fail(&g_select));
-	select_destroy(&g_select);
 	return (0);
 }

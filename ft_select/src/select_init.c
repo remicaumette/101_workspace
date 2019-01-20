@@ -6,26 +6,25 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 19:47:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/19 20:01:45 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 16:13:50 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static int	update_window_size(t_select *select)
-{
-	return (ioctl(STDOUT_FILENO, TIOCGWINSZ, &select->window) == -1);
-}
-
-int			select_init(t_select *select, char **args)
+int	select_init(t_select *select, char **args)
 {
 	int				i;
+	int				len;
 	t_select_entry	*prev;
 	t_select_entry	*curr;
 
 	i = 0;
 	prev = NULL;
+	select->x = 0;
+	select->y = 0;
+	select->max_length = 0;
 	while (args[++i])
 	{
 		if (!(curr = select_entry_create(args[i])))
@@ -34,9 +33,10 @@ int			select_init(t_select *select, char **args)
 			prev->next = curr;
 		else
 			select->entry = curr;
+		if ((len = ft_strlen(args[i])) > select->max_length)
+			select->max_length = len;
 		prev = curr;
 	}
 	select->count = i - 1;
-	signal(SIGWINCH, update_window_size);
-	return (update_window_size(select) == -1);
+	return (0);
 }

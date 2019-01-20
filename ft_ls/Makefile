@@ -1,7 +1,7 @@
 NAME=ft_ls
 LIBFT=../libft
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude
+CFLAGS=-Wall -Werror -Wextra -I$(LIBFT)/include -Iinclude -g
 SOURCES=\
 	src/display/vertical.c		\
 	src/display/horizontal.c	\
