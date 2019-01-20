@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 19:47:10 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 16:13:50 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 19:28:36 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ int	select_init(t_select *select, char **args)
 	select->x = 0;
 	select->y = 0;
 	select->max_length = 0;
+	select->status = -1;
 	while (args[++i])
 	{
 		if (!(curr = select_entry_create(args[i])))

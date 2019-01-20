@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 20:21:07 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 19:15:20 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 19:28:10 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,7 @@ struct							s_select
 	int				y;
 	int				count;
 	int				max_length;
+	int				status;
 	t_winsize		window;
 	t_select_entry	*entry;
 };
