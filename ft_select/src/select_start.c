@@ -6,7 +6,7 @@
 /*   By: rcaumett <rcaumett@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/19 19:47:18 by rcaumett     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/20 17:14:54 by rcaumett    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/20 19:17:47 by rcaumett    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,13 +15,13 @@
 
 static int	select_readline(t_select *select)
 {
-	char	buf[3];
+	char	buf[4];
 	int		readed;
 
 	select_render(select);
-	while ((readed = read(0, buf, 3)) > 0)
+	while ((readed = read(0, buf, 4)) > 0)
 	{
-		ft_bzero(buf + readed, 3 - readed);
+		ft_bzero(buf + readed, 4 - readed);
 		if (select_action_dispatcher(select, buf))
 			return (1);
 	}

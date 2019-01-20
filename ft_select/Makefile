@@ -9,6 +9,7 @@ SOURCES=\
 	src/action/action_arrow_up.c	\
 	src/action/action_backspace.c	\
 	src/action/action_esc.c			\
+	src/action/action_espace.c		\
 	src/action/action_return.c		\
 	src/main.c						\
 	src/select_action_dispatcher.c	\
